@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from 'axios';
 import socketIOClient from "socket.io-client";
 const ENDPOINT = "http://127.0.0.1:4001";
 
@@ -14,6 +15,10 @@ export default function ClientComponent() {
     window.location.hash.lastIndexOf("[") + 1,
     window.location.hash.lastIndexOf("]")
   ));
+
+  await axios.get("http://127.0.0.1:4001/addplayer",
+    { params: { playerName: 'bruno', roomName: 'baba' } }
+  );
 
   useEffect(() => {
     const socket = socketIOClient(ENDPOINT);
@@ -36,7 +41,9 @@ export default function ClientComponent() {
 }
 
 function checkNameAndRoomValidity(s) {
-  if (s.includes("#") || s.includes("[") || s.includes("]")) {
+  if (s == null) {
+    return "error";
+  } else if (s.includes("#") || s.includes("[") || s.includes("]")) {
     return "error";
   } else {
     return s;
