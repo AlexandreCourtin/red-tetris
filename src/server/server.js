@@ -2,7 +2,7 @@ const express = require("express");
 const http = require("http");
 const socketIo = require("socket.io");
 
-const port = process.env.PORT || 4001;
+const PORT = process.env.PORT || 4001;
 
 const app = express();
 const server = http.createServer(app);
@@ -24,7 +24,7 @@ io.on("connection", (socket) => {
 
 	socket.on('disconnect', function () {
 		if (serverState.getPlayer(socket.id)) {
-			console.log('[' + serverState.getPlayer(socket.id).room + '] ' + serverState.getPlayer(socket.id).name + ' disconnected');
+			console.log('[' + serverState.getPlayer(socket.id).getRoom() + '] ' + serverState.getPlayer(socket.id).getName() + ' disconnected');
 			serverState.removePlayer(socket.id);
 		}
 	});
@@ -34,4 +34,4 @@ setInterval(function() {
 	io.sockets.emit('serverState', serverState);
 }, 1000);
   
-server.listen(port, () => console.log(`Listening on port ${port}`));
+server.listen(PORT, () => console.log(`Listening on port ${PORT}`));

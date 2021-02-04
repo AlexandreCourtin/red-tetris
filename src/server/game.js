@@ -9,6 +9,10 @@ class Game {
 		this.players[playerId] = null;
 	}
 
+	getPlayers() {
+		return this.players;
+	}
+
 	getPlayer(playerId) {
 		return this.players[playerId];
 	}

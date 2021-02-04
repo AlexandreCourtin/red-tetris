@@ -7,11 +7,11 @@ class Player {
 		this.room = room;
 	}
 
-	get name() {
+	getName() {
 		return this.name;
 	}
 
-	get room() {
+	getRoom() {
 		return this.room;
 	}
 }
