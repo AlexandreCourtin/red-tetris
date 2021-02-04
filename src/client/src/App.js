@@ -16,7 +16,14 @@ const clientPlayerName = checkNameAndRoomValidity(window.location.hash.substring
 	window.location.hash.lastIndexOf("]")
 ));
 
+let serverState;
+
 socket.emit('new player', clientPlayerName, clientRoomName);
+
+socket.on('serverState', function (ss) {
+	serverState = ss;
+	console.log(serverState);
+});
 
 function checkNameAndRoomValidity(s) {
 	if (s == null) {

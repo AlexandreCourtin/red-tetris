@@ -32,5 +32,9 @@ io.on("connection", (socket) => {
 		}
 	});
 });
+
+setInterval(function() {
+	io.sockets.emit('serverState', serverState);
+}, 1000);
   
 server.listen(port, () => console.log(`Listening on port ${port}`));
