@@ -22,12 +22,12 @@ io.on("connection", (socket) => {
 			name: playerName,
 			room: roomName,
 		};
-		console.log('#' + roomName + '[' + playerName + '] connected');
+		console.log('[' + roomName + '] ' + playerName + ' connected');
 	});
 
 	socket.on('disconnect', function () {
 		if (serverState.players[socket.id]) {
-			console.log('#' + serverState.players[socket.id].room + '[' + serverState.players[socket.id].name + '] disconnected');
+			console.log('[' + serverState.players[socket.id].room + '] ' + serverState.players[socket.id].name + ' disconnected');
 			serverState.players[socket.id] = null;
 		}
 	});

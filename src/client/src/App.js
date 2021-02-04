@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import socketIOClient from "socket.io-client";
 import ClientComponent from "./ClientComponent";
 
@@ -16,14 +16,7 @@ const clientPlayerName = checkNameAndRoomValidity(window.location.hash.substring
 	window.location.hash.lastIndexOf("]")
 ));
 
-let serverState;
-
 socket.emit('new player', clientPlayerName, clientRoomName);
-
-socket.on('serverState', function (ss) {
-	serverState = ss;
-	console.log(serverState);
-});
 
 function checkNameAndRoomValidity(s) {
 	if (s == null) {
@@ -36,9 +29,18 @@ function checkNameAndRoomValidity(s) {
 }
 
 function App() {
+	const [response, setResponse] = useState("");
+
+	useEffect(() => {
+    socket.on("serverState", serverState => {
+			setResponse(serverState);
+		});
+		return () => socket.disconnect();
+	}, []);
+	
 	return (
 		<>
-			<ClientComponent clientRoomName={clientRoomName} clientPlayerName={clientPlayerName}/>
+			<ClientComponent clientRoomName={clientRoomName} clientPlayerName={clientPlayerName} serverState={response}/>
 		</>
 	);
 }
