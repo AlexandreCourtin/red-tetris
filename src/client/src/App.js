@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import socketIOClient from "socket.io-client";
-import ClientComponent from "./ClientComponent";
 
 const SERVERPATH = "http://127.0.0.1:4001";
 
@@ -32,16 +31,26 @@ function App() {
 	const [response, setResponse] = useState("");
 
 	useEffect(() => {
-    socket.on("serverState", serverState => {
+		socket.on("serverState", serverState => {
 			setResponse(serverState);
 		});
 		return () => socket.disconnect();
 	}, []);
 	
+	let otherPlayerNames = '';
+
+	for (let id in response.players) {
+		if (response.players[id]) {
+			otherPlayerNames += response.players[id].name + ' ';
+		}
+	}
+
 	return (
-		<>
-			<ClientComponent clientRoomName={clientRoomName} clientPlayerName={clientPlayerName} serverState={response}/>
-		</>
+		<div>
+			<p>room name: {clientRoomName}</p>
+			<p>player name: {clientPlayerName}</p>
+			<p>other players: {otherPlayerNames}</p>
+		</div>
 	);
 }
 
