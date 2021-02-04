@@ -3,32 +3,29 @@ const http = require("http");
 const socketIo = require("socket.io");
 
 const port = process.env.PORT || 4001;
-const routes = require("./routes/routes");
 
 const app = express();
-app.use(routes);
-
 const server = http.createServer(app);
-
 const io = socketIo(server);
 
-let serverState = {
-	players: {},
-};
+const Game = require("./game");
+const Player = require("./player");
+const routes = require("./routes/routes");
+
+app.use(routes);
+
+let serverState = new Game();
 
 io.on("connection", (socket) => {
 	socket.on('new player', function(playerName, roomName) {
-		serverState.players[socket.id] = {
-			name: playerName,
-			room: roomName,
-		};
+		serverState.addPlayer(socket.id, new Player(playerName, roomName));
 		console.log('[' + roomName + '] ' + playerName + ' connected');
 	});
 
 	socket.on('disconnect', function () {
-		if (serverState.players[socket.id]) {
-			console.log('[' + serverState.players[socket.id].room + '] ' + serverState.players[socket.id].name + ' disconnected');
-			serverState.players[socket.id] = null;
+		if (serverState.getPlayer(socket.id)) {
+			console.log('[' + serverState.getPlayer(socket.id).room + '] ' + serverState.getPlayer(socket.id).name + ' disconnected');
+			serverState.removePlayer(socket.id);
 		}
 	});
 });
