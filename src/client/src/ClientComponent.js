@@ -4,36 +4,22 @@ import socketIOClient from "socket.io-client";
 const SERVERPATH = "http://127.0.0.1:4001";
 
 export default function ClientComponent() {
-  const [response, setResponse] = useState("");
+  const socket = socketIOClient(SERVERPATH);
 
-  let clientRoomName = checkNameAndRoomValidity(window.location.hash.substring(
+  const clientRoomName = checkNameAndRoomValidity(window.location.hash.substring(
     window.location.hash.lastIndexOf("#") + 1,
     window.location.hash.lastIndexOf("[")
   ));
 
-  let clientPlayerName = checkNameAndRoomValidity(window.location.hash.substring(
+  const clientPlayerName = checkNameAndRoomValidity(window.location.hash.substring(
     window.location.hash.lastIndexOf("[") + 1,
     window.location.hash.lastIndexOf("]")
   ));
 
-  axios.get(SERVERPATH + "/update",
-    { params: { playerName: clientPlayerName, roomName: clientRoomName } }
-  );
-
-  useEffect(() => {
-    const socket = socketIOClient(SERVERPATH);
-    socket.on("FromAPI", data => {
-      setResponse(data);
-    });
-
-    return () => socket.disconnect();
-  }, []);
+  socket.emit('new player', clientPlayerName, clientRoomName);
 
   return (
     <div>
-      <p>
-        It's <time dateTime={response}>{response}</time>
-      </p>
       <p>room name: {clientRoomName}</p>
       <p>player name: {clientPlayerName}</p>
     </div>
