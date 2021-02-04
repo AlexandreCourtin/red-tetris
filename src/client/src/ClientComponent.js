@@ -1,27 +1,27 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import socketIOClient from "socket.io-client";
-const ENDPOINT = "http://127.0.0.1:4001";
+const SERVERPATH = "http://127.0.0.1:4001";
 
 export default function ClientComponent() {
   const [response, setResponse] = useState("");
 
-  let roomName = checkNameAndRoomValidity(window.location.hash.substring(
+  let clientRoomName = checkNameAndRoomValidity(window.location.hash.substring(
     window.location.hash.lastIndexOf("#") + 1,
     window.location.hash.lastIndexOf("[")
   ));
 
-  let playerName = checkNameAndRoomValidity(window.location.hash.substring(
+  let clientPlayerName = checkNameAndRoomValidity(window.location.hash.substring(
     window.location.hash.lastIndexOf("[") + 1,
     window.location.hash.lastIndexOf("]")
   ));
 
-  await axios.get("http://127.0.0.1:4001/addplayer",
-    { params: { playerName: 'bruno', roomName: 'baba' } }
+  axios.get(SERVERPATH + "/update",
+    { params: { playerName: clientPlayerName, roomName: clientRoomName } }
   );
 
   useEffect(() => {
-    const socket = socketIOClient(ENDPOINT);
+    const socket = socketIOClient(SERVERPATH);
     socket.on("FromAPI", data => {
       setResponse(data);
     });
@@ -34,8 +34,8 @@ export default function ClientComponent() {
       <p>
         It's <time dateTime={response}>{response}</time>
       </p>
-      <p>room name: {roomName}</p>
-      <p>player name: {playerName}</p>
+      <p>room name: {clientRoomName}</p>
+      <p>player name: {clientPlayerName}</p>
     </div>
   );
 }

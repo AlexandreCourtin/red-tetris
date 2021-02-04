@@ -3,10 +3,10 @@ const http = require("http");
 const socketIo = require("socket.io");
 
 const port = process.env.PORT || 4001;
-const index = require("./routes/index");
+const routes = require("./routes/routes");
 
 const app = express();
-app.use(index);
+app.use(routes);
 
 const server = http.createServer(app);
 
@@ -29,6 +29,8 @@ io.on("connection", (socket) => {
 const getApiAndEmit = socket => {
     const response = new Date();
     socket.emit("FromAPI", response);
+
+    console.log('put room names and player names here');
 };
 
 server.listen(port, () => console.log(`Listening on port ${port}`));
