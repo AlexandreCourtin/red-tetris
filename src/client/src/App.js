@@ -38,10 +38,13 @@ function App() {
 	}, []);
 	
 	let otherPlayerNames = '';
+	let isLeader = '';
 
 	for (let id in response.players) {
-		if (response.players[id] && response.players[id].room === clientRoomName) {
+		if (response.players[id] && response.players[id].room === clientRoomName && response.players[id].name !== clientPlayerName) {
 			otherPlayerNames += response.players[id].name + ' ';
+		} else if (response.players[id] && response.players[id].room === clientRoomName && response.players[id].name === clientPlayerName) {
+			isLeader += response.players[id].isLeader;
 		}
 	}
 
@@ -49,6 +52,7 @@ function App() {
 		<div>
 			<p>room name: {clientRoomName}</p>
 			<p>player name: {clientPlayerName}</p>
+			<p>is leader of this room: {isLeader}</p>
 			<p>other players in this room: {otherPlayerNames}</p>
 		</div>
 	);

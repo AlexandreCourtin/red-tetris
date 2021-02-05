@@ -1,10 +1,12 @@
 class Player {
 	name = 'defaultPlayer';
 	room = 'defaultRoom';
+	isLeader = 'false';
 
-	constructor(name, room) {
+	constructor(name, room, isLeader) {
 		this.name = name;
 		this.room = room;
+		this.isLeader = isLeader;
 	}
 
 	getName() {
@@ -13,6 +15,10 @@ class Player {
 
 	getRoom() {
 		return this.room;
+	}
+
+	getIsLeader() {
+		return this.isLeader;
 	}
 }
 
