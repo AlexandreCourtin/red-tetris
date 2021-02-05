@@ -40,7 +40,7 @@ function App() {
 	let otherPlayerNames = '';
 
 	for (let id in response.players) {
-		if (response.players[id]) {
+		if (response.players[id] && response.players[id].room === clientRoomName) {
 			otherPlayerNames += response.players[id].name + ' ';
 		}
 	}
@@ -49,7 +49,7 @@ function App() {
 		<div>
 			<p>room name: {clientRoomName}</p>
 			<p>player name: {clientPlayerName}</p>
-			<p>other players: {otherPlayerNames}</p>
+			<p>other players in this room: {otherPlayerNames}</p>
 		</div>
 	);
 }
