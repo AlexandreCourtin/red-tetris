@@ -1,7 +1,7 @@
 class Player {
 	name = 'defaultPlayer';
 	room = 'defaultRoom';
-	isLeader = 'false';
+	isLeader = false;
 
 	constructor(name, room, isLeader) {
 		this.name = name;
@@ -15,6 +15,10 @@ class Player {
 
 	getRoom() {
 		return this.room;
+	}
+
+	setIsLeader(b) {
+		this.isLeader = b;
 	}
 
 	getIsLeader() {

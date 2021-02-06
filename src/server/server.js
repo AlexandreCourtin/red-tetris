@@ -31,12 +31,22 @@ io.on("connection", (socket) => {
 
 		if (!breakLoop) {
 			serverState.addPlayer(socket.id, new Player(playerName, roomName, true));
-			console.log('[' + roomName + '] ' + playerName + ' created the room');
+			console.log('[' + roomName + '] ' + playerName + ' connected and created the room');
 		}
 	});
 
 	socket.on('disconnect', function () { // CHECK IF LEADER DISCONNECT GIVE LEADERSHIP TO OTHER PLAYER IN ROOM
 		if (serverState.getPlayer(socket.id)) {
+			if (serverState.getPlayer(socket.id).getIsLeader()) {
+				for (let id in serverState.getPlayers()) {
+					if (serverState.getPlayer(id) && serverState.getPlayer(id).getRoom() === serverState.getPlayer(socket.id).getRoom()
+						&& serverState.getPlayer(id) != serverState.getPlayer(socket.id)) {
+							serverState.getPlayer(id).setIsLeader(true);
+							break;
+						}
+				}
+			}
+
 			console.log('[' + serverState.getPlayer(socket.id).getRoom() + '] ' + serverState.getPlayer(socket.id).getName() + ' disconnected');
 			serverState.removePlayer(socket.id);
 		}
