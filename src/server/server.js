@@ -17,6 +17,8 @@ app.use(routes);
 let serverState = new Game();
 
 io.on("connection", (socket) => {
+
+	// WHEN ONE PLAYER CONNECTS
 	socket.on('new player', function(playerName, roomName) {
 		let breakLoop = false;
 
@@ -35,8 +37,12 @@ io.on("connection", (socket) => {
 		}
 	});
 
-	socket.on('disconnect', function () { // CHECK IF LEADER DISCONNECT GIVE LEADERSHIP TO OTHER PLAYER IN ROOM
+	// WHEN ONE PLAYER DISCONNECTS
+	socket.on('disconnect', function () {
 		if (serverState.getPlayer(socket.id)) {
+
+			// IF PLAYER THAT DISCONNECTS IS THE LEADER
+			// PASS LEADERSHIP TO OTHER PLAYER
 			if (serverState.getPlayer(socket.id).getIsLeader()) {
 				for (let id in serverState.getPlayers()) {
 					if (serverState.getPlayer(id) && serverState.getPlayer(id).getRoom() === serverState.getPlayer(socket.id).getRoom()
@@ -53,6 +59,7 @@ io.on("connection", (socket) => {
 	});
 });
 
+// SEND SERVER STATE TO CLIENTS EVERY ONE SECOND
 setInterval(function() {
 	io.sockets.emit('serverState', serverState);
 }, 1000);

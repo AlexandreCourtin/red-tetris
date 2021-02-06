@@ -30,6 +30,7 @@ function checkNameAndRoomValidity(s) {
 function App() {
 	const [response, setResponse] = useState("");
 
+	// 'useEffect' FUNCTION IS USED TO UPDATE CLIENT VISUALS EVERY TIME THE EVENT 'serverState' IS RECEIVED
 	useEffect(() => {
 		socket.on("serverState", serverState => {
 			setResponse(serverState);
