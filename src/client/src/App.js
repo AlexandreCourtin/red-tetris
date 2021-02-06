@@ -33,12 +33,14 @@ if (clientRoomName.length > 0 && clientPlayerName.length > 0) {
 }
 
 function App() {
-	const [response, setResponse] = useState("");
+	const [serverState, setServerState] = useState('');
+	const [htmlName, setHtmlName] = useState('');
+	const [htmlRoom, setHtmlRoom] = useState('');
 
 	// 'useEffect' FUNCTION IS USED TO UPDATE CLIENT VISUALS EVERY TIME THE EVENT 'serverState' IS RECEIVED
 	useEffect(() => {
-		socket.on("serverState", serverState => {
-			setResponse(serverState);
+		socket.on("serverState", _serverState => {
+			setServerState(_serverState);
 		});
 		return () => socket.disconnect();
 	}, []);
@@ -49,11 +51,11 @@ function App() {
 		let otherPlayerNames = '';
 		let isLeader = '';
 
-		for (let id in response.players) {
-			if (response.players[id] && response.players[id].room === clientRoomName && response.players[id].name !== clientPlayerName) {
-				otherPlayerNames += response.players[id].name + ' ';
-			} else if (response.players[id] && response.players[id].room === clientRoomName && response.players[id].name === clientPlayerName) {
-				isLeader += response.players[id].isLeader;
+		for (let id in serverState.players) {
+			if (serverState.players[id] && serverState.players[id].room === clientRoomName && serverState.players[id].name !== clientPlayerName) {
+				otherPlayerNames += serverState.players[id].name + ' ';
+			} else if (serverState.players[id] && serverState.players[id].room === clientRoomName && serverState.players[id].name === clientPlayerName) {
+				isLeader += serverState.players[id].isLeader;
 			}
 		}
 
@@ -65,25 +67,24 @@ function App() {
 				<p>other players in this room: {otherPlayerNames}</p>
 			</div>
 		);
+
 	} else {
 
 		// LOGIN PAGE
 
-		// function login() {
-		// 	console.log(name);
-		// }
+		function login() {
+			window.location = '#' + htmlRoom + '[' + htmlName + ']';
+			window.location.reload({forcedReload: true});
+		}
 
 		return (
 			<div>
 				<p>Name :</p>
-				<input type="text" name="htmlName"/>
+				<input type="text" value={htmlName} onInput={e => setHtmlName(e.target.value)}/>
 				<p>Room :</p>
-				<input type="text" name="htmlRoom"/>
+				<input type="text" value={htmlRoom} onInput={e => setHtmlRoom(e.target.value)}/>
 				<br /><br />
-				<button onClick={() => {
-					window.location = '#ayaa[lolo]';
-					window.location.reload({forcedReload: true});
-				}}>go</button>
+				<button onClick={login}>go</button>
 			</div>
 		);
 	}
