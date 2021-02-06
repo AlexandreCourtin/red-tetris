@@ -44,6 +44,8 @@ function App() {
 	}, []);
 
 	if (inGame) {
+
+		// GAME PAGE
 		let otherPlayerNames = '';
 		let isLeader = '';
 
@@ -64,9 +66,24 @@ function App() {
 			</div>
 		);
 	} else {
+
+		// LOGIN PAGE
+
+		// function login() {
+		// 	console.log(name);
+		// }
+
 		return (
 			<div>
-				<p>main page</p>
+				<p>Name :</p>
+				<input type="text" name="htmlName"/>
+				<p>Room :</p>
+				<input type="text" name="htmlRoom"/>
+				<br /><br />
+				<button onClick={() => {
+					window.location = '#ayaa[lolo]';
+					window.location.reload({forcedReload: true});
+				}}>go</button>
 			</div>
 		);
 	}
