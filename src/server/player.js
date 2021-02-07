@@ -2,6 +2,7 @@ class Player {
 	name = 'defaultPlayer';
 	room = 'defaultRoom';
 	isLeader = false;
+	pieces = [];
 
 	constructor(name, room, isLeader) {
 		this.name = name;
@@ -23,6 +24,14 @@ class Player {
 
 	getIsLeader() {
 		return this.isLeader;
+	}
+
+	addPiece(p) {
+		this.pieces.push(p);
+	}
+
+	getPiece(n) {
+		return this.pieces[n];
 	}
 }
 
