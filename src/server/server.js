@@ -34,9 +34,9 @@ io.on("connection", (socket) => {
 
 		if (!breakLoop) {
 			serverState.addPlayer(socket.id, new Player(playerName, roomName, true));
-			serverState.getPlayer(socket.id).addPiece(new Piece('O'));
-			serverState.getPlayer(socket.id).addPiece(new Piece('I'));
-			serverState.getPlayer(socket.id).addPiece(new Piece('L'));
+			for (let i = 0 ; i < 100 ; i++) {
+				serverState.getPlayer(socket.id).addPiece(new Piece(Piece.getTypeFromInt(Math.floor(Math.random() * Math.floor(7)))));
+			}
 			console.log('[' + roomName + '] ' + playerName + ' connected and created the room');
 		}
 	});
