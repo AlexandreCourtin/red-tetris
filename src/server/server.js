@@ -9,6 +9,7 @@ const server = http.createServer(app);
 const io = socketIo(server);
 
 const Game = require("./game");
+const Piece = require("./piece");
 const Player = require("./player");
 const routes = require("./routes/routes");
 
@@ -33,6 +34,9 @@ io.on("connection", (socket) => {
 
 		if (!breakLoop) {
 			serverState.addPlayer(socket.id, new Player(playerName, roomName, true));
+			serverState.getPlayer(socket.id).addPiece(new Piece('O'));
+			serverState.getPlayer(socket.id).addPiece(new Piece('I'));
+			serverState.getPlayer(socket.id).addPiece(new Piece('L'));
 			console.log('[' + roomName + '] ' + playerName + ' connected and created the room');
 		}
 	});

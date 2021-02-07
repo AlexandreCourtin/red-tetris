@@ -50,12 +50,18 @@ function App() {
 		// GAME PAGE
 		let otherPlayerNames = '';
 		let isLeader = '';
+		let roomPieces = '';
 
 		for (let id in serverState.players) {
 			if (serverState.players[id] && serverState.players[id].room === clientRoomName && serverState.players[id].name !== clientPlayerName) {
 				otherPlayerNames += serverState.players[id].name + ' ';
 			} else if (serverState.players[id] && serverState.players[id].room === clientRoomName && serverState.players[id].name === clientPlayerName) {
 				isLeader += serverState.players[id].isLeader;
+				for (let i = 0 ; i < 100 ; i++) {
+					if (serverState.players[id].pieces[i]) {
+						roomPieces += serverState.players[id].pieces[i].type + ', ';
+					}
+				}
 			}
 		}
 
@@ -65,13 +71,13 @@ function App() {
 				<p>player name: {clientPlayerName}</p>
 				<p>is leader of this room: {isLeader}</p>
 				<p>other players in this room: {otherPlayerNames}</p>
+				<p>pieces of this room: {roomPieces}</p>
 			</div>
 		);
 
 	} else {
 
 		// LOGIN PAGE
-
 		function login() {
 			window.location = '#' + htmlRoom + '[' + htmlName + ']';
 			window.location.reload({forcedReload: true});
