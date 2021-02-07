@@ -34,8 +34,16 @@ io.on("connection", (socket) => {
 
 		if (!breakLoop) {
 			serverState.addPlayer(socket.id, new Player(playerName, roomName, true));
+
+			// CREATE A NEW SET OF 100 RANDOM PIECES FOR THE ROOM
+			let prevPieceType = -1;
 			for (let i = 0 ; i < 100 ; i++) {
-				serverState.getPlayer(socket.id).addPiece(new Piece(Piece.getTypeFromInt(Math.floor(Math.random() * Math.floor(7)))));
+				let newPieceType = Math.floor(Math.random() * Math.floor(7));
+				while (newPieceType == prevPieceType) {
+					newPieceType = Math.floor(Math.random() * Math.floor(7));
+				}
+				serverState.getPlayer(socket.id).addPiece(new Piece(Piece.getTypeFromInt(newPieceType)));
+				prevPieceType = newPieceType;
 			}
 			console.log('[' + roomName + '] ' + playerName + ' connected and created the room');
 		}
