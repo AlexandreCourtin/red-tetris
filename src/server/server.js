@@ -24,8 +24,12 @@ io.on("connection", (socket) => {
 		let breakLoop = false;
 
 		for (let id in serverState.getPlayers()) {
-			if (serverState.getPlayer(id) && serverState.getPlayer(id).getRoom() === roomName) {
+			if (serverState.getPlayer(id) && serverState.getPlayer(id).getRoom() === roomName && serverState.getPlayer(id).getIsLeader()) {
 				serverState.addPlayer(socket.id, new Player(playerName, roomName, false));
+
+				// GET THE PIECES FROM THE LEADER
+				serverState.getPlayer(socket.id).setPieces(serverState.getPlayer(id).getPieces());
+
 				console.log('[' + roomName + '] ' + playerName + ' connected');
 				breakLoop = true;
 				break;

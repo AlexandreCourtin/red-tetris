@@ -30,8 +30,16 @@ class Player {
 		this.pieces.push(p);
 	}
 
+	setPieces(p) {
+		this.pieces = p;
+	}
+
 	getPiece(n) {
 		return this.pieces[n];
+	}
+
+	getPieces() {
+		return this.pieces;
 	}
 }
 
