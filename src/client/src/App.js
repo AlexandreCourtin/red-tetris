@@ -65,6 +65,11 @@ function App() {
 			}
 		}
 
+		let playButton;
+		if (isLeader === 'true') {
+			playButton = <button onClick={() => {}}>start game</button>;
+		}
+
 		return (
 			<div>
 				<p>room name: {clientRoomName}</p>
@@ -72,6 +77,7 @@ function App() {
 				<p>is leader of this room: {isLeader}</p>
 				<p>other players in this room: {otherPlayerNames}</p>
 				<p>pieces of this room: {roomPieces}</p>
+				{playButton}
 			</div>
 		);
 
