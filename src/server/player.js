@@ -2,6 +2,7 @@ class Player {
 	name = 'defaultPlayer';
 	room = 'defaultRoom';
 	isLeader = false;
+	isPlaying = false;
 	pieces = [];
 
 	constructor(name, room, isLeader) {
@@ -24,6 +25,14 @@ class Player {
 
 	getIsLeader() {
 		return this.isLeader;
+	}
+
+	setIsPlaying(b) {
+		this.isPlaying = b;
+	}
+
+	getIsPlaying() {
+		return this.isPlaying;
 	}
 
 	addPiece(p) {

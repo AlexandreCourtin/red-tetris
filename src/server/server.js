@@ -74,6 +74,14 @@ io.on("connection", (socket) => {
 			serverState.removePlayer(socket.id);
 		}
 	});
+
+	socket.on('launch game', function(roomName) {
+		for (let id in serverState.getPlayers()) {
+			if (serverState.getPlayer(id) && serverState.getPlayer(id).getRoom() === roomName) {
+				serverState.getPlayer(id).setIsPlaying(true);
+			}
+		}
+	});
 });
 
 // SEND SERVER STATE TO CLIENTS EVERY ONE SECOND

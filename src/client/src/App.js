@@ -50,6 +50,7 @@ function App() {
 		// GAME PAGE
 		let otherPlayerNames = '';
 		let isLeader = '';
+		let isPlaying = '';
 		let roomPieces = '';
 
 		for (let id in serverState.players) {
@@ -57,6 +58,7 @@ function App() {
 				otherPlayerNames += serverState.players[id].name + ' ';
 			} else if (serverState.players[id] && serverState.players[id].room === clientRoomName && serverState.players[id].name === clientPlayerName) {
 				isLeader += serverState.players[id].isLeader;
+				isPlaying += serverState.players[id].isPlaying;
 				for (let i = 0 ; i < 100 ; i++) {
 					if (serverState.players[id].pieces[i]) {
 						roomPieces += serverState.players[id].pieces[i].type + ', ';
@@ -65,9 +67,15 @@ function App() {
 			}
 		}
 
-		let playButton;
-		if (isLeader === 'true') {
-			playButton = <button onClick={() => {}}>start game</button>;
+		function leadLaunchGame() {
+			socket.emit('launch game', clientRoomName);
+		}
+
+		let playState;
+		if (isLeader === 'true' && isPlaying === 'false') {
+			playState = <button onClick={leadLaunchGame}>start game</button>;
+		} else if (isPlaying === 'true') {
+			playState = <p>IS IN GAME</p>;
 		}
 
 		return (
@@ -77,7 +85,7 @@ function App() {
 				<p>is leader of this room: {isLeader}</p>
 				<p>other players in this room: {otherPlayerNames}</p>
 				<p>pieces of this room: {roomPieces}</p>
-				{playButton}
+				{playState}
 			</div>
 		);
 
