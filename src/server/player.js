@@ -13,9 +13,9 @@ class Player {
 		this.room = room;
 		this.isLeader = isLeader;
 
-		for(let i = 0 ; i < 10 ; i++) {
+		for (let i = 0 ; i < 10 ; i++) {
 			this.board[i] = [];
-			for(let j = 0 ; j < 20 ; j++) {
+			for (let j = 0 ; j < 20 ; j++) {
 				this.board[i][j] = 'white';
 			}
 		}
@@ -59,6 +59,14 @@ class Player {
 
 	getPieces() {
 		return this.pieces;
+	}
+
+	setBoardAt(i, j, n) {
+		this.board[i][j] = n;
+	}
+
+	getBoardAt(i, j) {
+		return this.board[i][j];
 	}
 }
 
