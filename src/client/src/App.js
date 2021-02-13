@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import socketIOClient from "socket.io-client";
+import LoginPage from "./components/loginPage";
 
 const SERVERPATH = "http://127.0.0.1:4001";
 
@@ -34,8 +35,6 @@ if (clientRoomName.length > 0 && clientPlayerName.length > 0) {
 
 function App() {
 	const [serverState, setServerState] = useState('');
-	const [htmlName, setHtmlName] = useState('');
-	const [htmlRoom, setHtmlRoom] = useState('');
 
 	// 'useEffect' FUNCTION IS USED TO UPDATE CLIENT VISUALS EVERY TIME THE EVENT 'serverState' IS RECEIVED
 	useEffect(() => {
@@ -90,22 +89,9 @@ function App() {
 		);
 
 	} else {
-
 		// LOGIN PAGE
-		function login() {
-			window.location = '#' + htmlRoom + '[' + htmlName + ']';
-			window.location.reload({forcedReload: true});
-		}
-
 		return (
-			<div>
-				<p>Name :</p>
-				<input type="text" value={htmlName} onInput={e => setHtmlName(e.target.value)}/>
-				<p>Room :</p>
-				<input type="text" value={htmlRoom} onInput={e => setHtmlRoom(e.target.value)}/>
-				<br /><br />
-				<button onClick={login}>go</button>
-			</div>
+			<LoginPage />
 		);
 	}
 }
