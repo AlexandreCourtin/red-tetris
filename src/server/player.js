@@ -5,10 +5,20 @@ class Player {
 	isPlaying = false;
 	pieces = [];
 
+	// board[x][y] = x Horizontal | y Vertical
+	board = [];
+
 	constructor(name, room, isLeader) {
 		this.name = name;
 		this.room = room;
 		this.isLeader = isLeader;
+
+		for(let i = 0 ; i < 10 ; i++) {
+			this.board[i] = [];
+			for(let j = 0 ; j < 20 ; j++) {
+				this.board[i][j] = 'white';
+			}
+		}
 	}
 
 	getName() {

@@ -88,6 +88,6 @@ io.on("connection", (socket) => {
 // SEND SERVER STATE TO CLIENTS EVERY ONE SECOND
 setInterval(function() {
 	io.sockets.emit('serverState', serverState);
-}, 1000);
+}, 1000 / 60);
   
 server.listen(PORT, () => console.log(`Listening on port ${PORT}`));
