@@ -76,6 +76,7 @@ io.on("connection", (socket) => {
 	});
 
 	socket.on('launch game', function(roomName) {
+		console.log('[' + roomName + '] Game launched !');
 		for (let id in serverState.getPlayers()) {
 			if (serverState.getPlayer(id) && serverState.getPlayer(id).getRoom() === roomName) {
 				serverState.getPlayer(id).setIsPlaying(true);
