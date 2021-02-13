@@ -39,12 +39,12 @@ io.on("connection", (socket) => {
 		if (!breakLoop) {
 			serverState.addPlayer(socket.id, new Player(playerName, roomName, true));
 
-			// CREATE A NEW SET OF 100 RANDOM PIECES FOR THE ROOM
+			// CREATE A NEW SET OF 200 RANDOM PIECES FOR THE ROOM
 			let prevPieceType = -1;
-			for (let i = 0 ; i < 100 ; i++) {
-				let newPieceType = Math.floor(Math.random() * Math.floor(7));
-				while (newPieceType == prevPieceType) {
-					newPieceType = Math.floor(Math.random() * Math.floor(7));
+			for (let i = 0 ; i < 200 ; i++) {
+				let newPieceType = prevPieceType + Math.floor(Math.random() * Math.floor(6) + 1);
+				if (newPieceType > 6) {
+					newPieceType -= 7;
 				}
 				serverState.getPlayer(socket.id).addPiece(new Piece(Piece.getTypeFromInt(newPieceType)));
 				prevPieceType = newPieceType;

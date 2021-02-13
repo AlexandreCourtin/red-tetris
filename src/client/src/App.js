@@ -59,7 +59,7 @@ function App() {
 			} else if (serverState.players[id] && serverState.players[id].room === clientRoomName && serverState.players[id].name === clientPlayerName) {
 				isLeader += serverState.players[id].isLeader;
 				isPlaying += serverState.players[id].isPlaying;
-				for (let i = 0 ; i < 100 ; i++) {
+				for (let i = 0 ; i < 200 ; i++) {
 					if (serverState.players[id].pieces[i]) {
 						roomPieces += serverState.players[id].pieces[i].type + ', ';
 					}
