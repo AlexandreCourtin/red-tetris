@@ -74,7 +74,21 @@ function App() {
 		if (isLeader === 'true' && isPlaying === 'false') {
 			playState = <button onClick={leadLaunchGame}>start game</button>;
 		} else if (isPlaying === 'true') {
-			playState = <p>IS IN GAME</p>;
+
+			// TETRIS GAME HERE
+
+			const ColoredBox = ({ color }) => (
+				<div
+					style={{
+						color: color,
+						backgroundColor: color,
+						height: 20,
+						width: 20
+					}}
+				/>
+			);
+
+			playState = <ColoredBox color='red' />;
 		} else if (isLeader !== 'false' && isLeader !== 'true') {
 			return (
 				<div>
