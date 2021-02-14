@@ -77,19 +77,46 @@ function App() {
 
 			// TETRIS GAME HERE
 
-			const ColoredBox = ({ color }) => (
-				<div
-					style={{
-						color: color,
-						backgroundColor: color,
-						height: 20,
-						width: 20
-					}}
-				/>
+			const ColoredBox = ({ colors }) => (
+				<table>
+					<tr>
+						<td><div style={{
+							color: colors[0],
+							backgroundColor: colors[0],
+							height: 20,
+							width: 20
+						}}
+						/></td>
+						<td><div style={{
+							color: colors[1],
+							backgroundColor: colors[1],
+							height: 20,
+							width: 20
+						}}
+						/></td>
+					</tr>
+					<tr>
+						<td><div style={{
+							color: colors[1],
+							backgroundColor: colors[1],
+							height: 20,
+							width: 20
+						}}
+						/></td>
+						<td><div style={{
+							color: colors[0],
+							backgroundColor: colors[0],
+							height: 20,
+							width: 20
+						}}
+						/></td>
+					</tr>
+				</table>
 			);
 
-			playState = <ColoredBox color='red' />;
-		} else if (isLeader !== 'false' && isLeader !== 'true') {
+			let colors = ['blue', 'green'];
+			playState = <ColoredBox colors={colors} />;
+		} else if (isLeader !== 'false' || isLeader !== 'true') {
 			return (
 				<div>
 					<p>SERVER IS NOT RUNNING</p>
