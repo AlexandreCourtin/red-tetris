@@ -55,9 +55,14 @@ function App() {
 		let playerBoard;
 
 		for (let id in serverState.players) {
-			if (serverState.players[id] && serverState.players[id].room === clientRoomName && serverState.players[id].name !== clientPlayerName) {
+			if (serverState.players[id] && serverState.players[id].room === clientRoomName
+				&& serverState.players[id].name !== clientPlayerName) {
+
 				otherPlayerNames += serverState.players[id].name + ' ';
-			} else if (serverState.players[id] && serverState.players[id].room === clientRoomName && serverState.players[id].name === clientPlayerName) {
+
+			} else if (serverState.players[id] && serverState.players[id].room === clientRoomName
+				&& serverState.players[id].name === clientPlayerName) {
+
 				isLeader = '' + serverState.players[id].isLeader;
 				isPlaying = '' + serverState.players[id].isPlaying;
 				playerBoard = serverState.players[id].board;
@@ -108,12 +113,14 @@ function App() {
 						if (board[j][i] === 0) boxColor = '#9bbc0f';
 						else boxColor = '#306230';
 
-						tetrisRow.push(<td><ColoredBox color={boxColor} /></td>);
+						tetrisRow.push(<td key={'uniqueBox' + i + '' + j}><ColoredBox color={boxColor} /></td>);
 					}
-					tetrisColumn.push(<tr>{tetrisRow}</tr>);
+					tetrisColumn.push(<tr key={'uniqueRow' + i}>{tetrisRow}</tr>);
 				}
 
-				return <table>{tetrisColumn}</table>;
+				return <table style={{
+					borderSpacing: 0,
+				}}>{tetrisColumn}</table>;
 			}
 
 			playState = <TetrisGrid board={playerBoard} />;
