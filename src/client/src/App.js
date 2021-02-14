@@ -120,7 +120,7 @@ function App() {
 
 				return <table style={{
 					borderSpacing: 0,
-				}}>{tetrisColumn}</table>;
+				}}><tbody>{tetrisColumn}</tbody></table>;
 			}
 
 			playState = <TetrisGrid board={playerBoard} />;
