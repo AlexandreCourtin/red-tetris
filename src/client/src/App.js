@@ -118,9 +118,11 @@ function App() {
 					tetrisColumn.push(<tr key={'uniqueRow' + i}>{tetrisRow}</tr>);
 				}
 
-				return <table style={{
-					borderSpacing: 0,
-				}}><tbody>{tetrisColumn}</tbody></table>;
+				return (
+					<table style={{borderSpacing: 0}}>
+						<tbody>{tetrisColumn}</tbody>
+					</table>
+				);
 			}
 
 			playState = <TetrisGrid board={playerBoard} />;
