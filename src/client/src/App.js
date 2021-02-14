@@ -75,6 +75,12 @@ function App() {
 			playState = <button onClick={leadLaunchGame}>start game</button>;
 		} else if (isPlaying === 'true') {
 			playState = <p>IS IN GAME</p>;
+		} else if (isLeader !== 'false' && isLeader !== 'true') {
+			return (
+				<div>
+					<p>SERVER IS NOT RUNNING</p>
+				</div>
+			);
 		}
 
 		return (
