@@ -77,45 +77,30 @@ function App() {
 
 			// TETRIS GAME HERE
 
-			const ColoredBox = ({ colors }) => (
+			const ColoredBox = ({ color }) => (
+				<div style={{
+					backgroundColor: color,
+					height: 20,
+					width: 20
+				}}
+				/>
+			);
+
+			const TetrisGrid = ({ colors }) => (
 				<table>
 					<tr>
-						<td><div style={{
-							color: colors[0],
-							backgroundColor: colors[0],
-							height: 20,
-							width: 20
-						}}
-						/></td>
-						<td><div style={{
-							color: colors[1],
-							backgroundColor: colors[1],
-							height: 20,
-							width: 20
-						}}
-						/></td>
+						<td><ColoredBox color={colors[0][0]} /></td>
+						<td><ColoredBox color={colors[1][0]} /></td>
 					</tr>
 					<tr>
-						<td><div style={{
-							color: colors[1],
-							backgroundColor: colors[1],
-							height: 20,
-							width: 20
-						}}
-						/></td>
-						<td><div style={{
-							color: colors[0],
-							backgroundColor: colors[0],
-							height: 20,
-							width: 20
-						}}
-						/></td>
+						<td><ColoredBox color={colors[0][1]} /></td>
+						<td><ColoredBox color={colors[1][1]} /></td>
 					</tr>
 				</table>
 			);
 
-			let colors = ['blue', 'green'];
-			playState = <ColoredBox colors={colors} />;
+			let colors = [['blue', 'green'], ['green', 'blue']];
+			playState = <TetrisGrid colors={colors} />;
 		} else if (isLeader !== 'false' || isLeader !== 'true') {
 			return (
 				<div>
