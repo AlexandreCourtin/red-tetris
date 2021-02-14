@@ -16,7 +16,7 @@ class Player {
 		for (let i = 0 ; i < 10 ; i++) {
 			this.board[i] = [];
 			for (let j = 0 ; j < 20 ; j++) {
-				this.board[i][j] = 'white';
+				this.board[i][j] = 'blue';
 			}
 		}
 	}

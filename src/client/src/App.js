@@ -47,10 +47,12 @@ function App() {
 	if (inGame) {
 
 		// GAME PAGE
+
 		let otherPlayerNames = '';
 		let isLeader = '';
 		let isPlaying = '';
 		let roomPieces = '';
+		let playerBoard;
 
 		for (let id in serverState.players) {
 			if (serverState.players[id] && serverState.players[id].room === clientRoomName && serverState.players[id].name !== clientPlayerName) {
@@ -58,6 +60,7 @@ function App() {
 			} else if (serverState.players[id] && serverState.players[id].room === clientRoomName && serverState.players[id].name === clientPlayerName) {
 				isLeader += serverState.players[id].isLeader;
 				isPlaying += serverState.players[id].isPlaying;
+				playerBoard = serverState.players[id].board;
 				for (let i = 0 ; i < 200 ; i++) {
 					if (serverState.players[id].pieces[i]) {
 						roomPieces += serverState.players[id].pieces[i].type + ', ';
@@ -82,25 +85,26 @@ function App() {
 					backgroundColor: color,
 					height: 20,
 					width: 20
-				}}
-				/>
+				}}/>
 			);
 
-			const TetrisGrid = ({ colors }) => (
-				<table>
-					<tr>
-						<td><ColoredBox color={colors[0][0]} /></td>
-						<td><ColoredBox color={colors[1][0]} /></td>
-					</tr>
-					<tr>
-						<td><ColoredBox color={colors[0][1]} /></td>
-						<td><ColoredBox color={colors[1][1]} /></td>
-					</tr>
-				</table>
-			);
+			const TetrisGrid = ({ colors }) => {
+				return (
+					<table>
+						<tr>
+							<td><ColoredBox color={colors[0][0]} /></td>
+							<td><ColoredBox color={colors[1][0]} /></td>
+						</tr>
+						<tr>
+							<td><ColoredBox color={colors[0][1]} /></td>
+							<td><ColoredBox color={colors[1][1]} /></td>
+						</tr>
+					</table>
+				);
+			}
 
-			let colors = [['blue', 'green'], ['green', 'blue']];
-			playState = <TetrisGrid colors={colors} />;
+			playState = <TetrisGrid colors={playerBoard} />;
+
 		} else if (isLeader !== 'false' || isLeader !== 'true') {
 			return (
 				<div>
@@ -121,6 +125,7 @@ function App() {
 		);
 
 	} else {
+
 		// LOGIN PAGE
 		return (
 			<LoginPage />
