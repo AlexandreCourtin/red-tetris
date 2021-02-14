@@ -62,7 +62,7 @@ io.on("connection", (socket) => {
 			if (serverState.getPlayer(socket.id).getIsLeader()) {
 				for (let id in serverState.getPlayers()) {
 					if (serverState.getPlayer(id) && serverState.getPlayer(id).getRoom() === serverState.getPlayer(socket.id).getRoom()
-						&& serverState.getPlayer(id) != serverState.getPlayer(socket.id)) {
+						&& serverState.getPlayer(id) != serverState.getPlayer(socket.id) && serverState.getPlayer(id).getName().length > 0) {
 						serverState.getPlayer(id).setIsLeader(true);
 						console.log('[' + serverState.getPlayer(id).getRoom() + '] New leader: ' + serverState.getPlayer(id).getName());
 						break;

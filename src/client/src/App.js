@@ -58,9 +58,11 @@ function App() {
 			if (serverState.players[id] && serverState.players[id].room === clientRoomName && serverState.players[id].name !== clientPlayerName) {
 				otherPlayerNames += serverState.players[id].name + ' ';
 			} else if (serverState.players[id] && serverState.players[id].room === clientRoomName && serverState.players[id].name === clientPlayerName) {
-				isLeader += serverState.players[id].isLeader;
-				isPlaying += serverState.players[id].isPlaying;
+				isLeader = '' + serverState.players[id].isLeader;
+				isPlaying = '' + serverState.players[id].isPlaying;
 				playerBoard = serverState.players[id].board;
+
+				roomPieces = '';
 				for (let i = 0 ; i < 200 ; i++) {
 					if (serverState.players[id].pieces[i]) {
 						roomPieces += serverState.players[id].pieces[i].type + ', ';
@@ -74,7 +76,14 @@ function App() {
 		}
 
 		let playState;
-		if (isLeader === 'true' && isPlaying === 'false') {
+
+		if (isLeader === '') {
+			return (
+				<div>
+					<p>SERVER IS NOT RUNNING</p>
+				</div>
+			);
+		} else if (isLeader === 'true' && isPlaying === 'false') {
 			playState = <button onClick={leadLaunchGame}>start game</button>;
 		} else if (isPlaying === 'true') {
 
@@ -88,13 +97,18 @@ function App() {
 				}}/>
 			);
 
-			const TetrisGrid = ({ colors }) => {
+			const TetrisGrid = ({ board }) => {
 
 				let tetrisColumn = [];
 				for (let i = 0 ; i < 20 ; i++) {
 					let tetrisRow = [];
 					for (let j = 0 ; j < 10 ; j++) {
-						tetrisRow.push(<td><ColoredBox color={colors[j][i]} /></td>);
+						let boxColor;
+
+						if (board[j][i] === 0) boxColor = '#9bbc0f';
+						else boxColor = '#306230';
+
+						tetrisRow.push(<td><ColoredBox color={boxColor} /></td>);
 					}
 					tetrisColumn.push(<tr>{tetrisRow}</tr>);
 				}
@@ -102,14 +116,7 @@ function App() {
 				return <table>{tetrisColumn}</table>;
 			}
 
-			playState = <TetrisGrid colors={playerBoard} />;
-
-		} else if (isLeader !== 'false' || isLeader !== 'true') {
-			return (
-				<div>
-					<p>SERVER IS NOT RUNNING</p>
-				</div>
-			);
+			playState = <TetrisGrid board={playerBoard} />;
 		}
 
 		return (
