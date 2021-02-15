@@ -11,6 +11,7 @@ const io = socketIo(server);
 const Game = require("./game");
 const Piece = require("./piece");
 const Player = require("./player");
+const shuffle = require('./utils');
 const routes = require("./routes/routes");
 
 app.use(routes);
@@ -81,20 +82,9 @@ io.on("connection", (socket) => {
 	});
 });
 
-// SEND SERVER STATE TO CLIENTS EVERY ONE SECOND
+// SEND SERVER STATE TO CLIENTS
 setInterval(function() {
 	io.sockets.emit('serverState', serverState);
 }, 1000 / 60);
   
 server.listen(PORT, () => console.log(`Listening on port ${PORT}`));
-
-function shuffle(a) {
-	let j, x;
-	for (let i = a.length - 1; i > 0; i--) {
-		j = Math.floor(Math.random() * (i + 1));
-		x = a[i];
-		a[i] = a[j];
-		a[j] = x;
-	}
-	return a;
-}

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import socketIOClient from "socket.io-client";
 import LoginPage from "./components/loginPage";
-import getInputs  from './utils/input';
+import getInputs from './utils/input';
 
 const SERVERPATH = "http://127.0.0.1:4001";
 
