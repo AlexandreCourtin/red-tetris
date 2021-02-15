@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import socketIOClient from "socket.io-client";
 import LoginPage from "./components/loginPage";
+import getInputs  from './utils/input';
 
 const SERVERPATH = "http://127.0.0.1:4001";
 
@@ -27,18 +28,11 @@ function checkNameAndRoomValidity(s) {
 }
 
 let inGame = false;
+let commands;
 
 if (clientRoomName.length > 0 && clientPlayerName.length > 0) {
 	socket.emit('new player', clientPlayerName, clientRoomName);
 	inGame = true;
-}
-
-let command = {
-	up: false,
-	down: false,
-	left: false,
-	right: false,
-	space: false,
 }
 
 function App() {
@@ -137,73 +131,8 @@ function App() {
 		}
 
 		// INPUTS
-		document.addEventListener('keydown', function(event) {
-			switch (event.key) {
-				default:
-					break;
-				case 'a':
-					command.left = true;
-					break;
-				case 'w':
-					command.up = true;
-					break;
-				case 'd':
-					command.right = true;
-					break;
-				case 's':
-					command.down = true;
-					break;
-				case 'ArrowLeft':
-					command.left = true;
-					break;
-				case 'ArrowUp':
-					command.up = true;
-					break;
-				case 'ArrowRight':
-					command.right = true;
-					break;
-				case 'ArrowDown':
-					command.down = true;
-					break;
-				case 'Space':
-					command.space = true;
-					break;
-			}
-		});
-
-		document.addEventListener('keyup', function(event) {
-			switch (event.key) {
-				default:
-					break;
-				case 'a':
-					command.left = false;
-					break;
-				case 'w':
-					command.up = false;
-					break;
-				case 'd':
-					command.right = false;
-					break;
-				case 's':
-					command.down = false;
-					break;
-				case 'ArrowLeft':
-					command.left = false;
-					break;
-				case 'ArrowUp':
-					command.up = false;
-					break;
-				case 'ArrowRight':
-					command.right = false;
-					break;
-				case 'ArrowDown':
-					command.down = false;
-					break;
-				case 'Space':
-					command.space = false;
-					break;
-			}
-		});
+		commands = getInputs();
+		if (commands.up) console.log('ja');
 
 		return (
 			<div>
