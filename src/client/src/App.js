@@ -70,7 +70,7 @@ function App() {
 				playerBoard = serverState.players[id].board;
 
 				roomPieces = '';
-				for (let i = 0 ; i < 200 ; i++) {
+				for (let i = 0 ; i < 7000 ; i++) {
 					if (serverState.players[id].pieces[i]) {
 						roomPieces += serverState.players[id].pieces[i].type + ', ';
 					}

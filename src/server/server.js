@@ -40,14 +40,10 @@ io.on("connection", (socket) => {
 			serverState.addPlayer(socket.id, new Player(playerName, roomName, true));
 
 			// CREATE A NEW SET OF 200 RANDOM PIECES FOR THE ROOM
-			let prevPieceType = -1;
-			for (let i = 0 ; i < 200 ; i++) {
-				let newPieceType = prevPieceType + Math.floor(Math.random() * Math.floor(6) + 1);
-				if (newPieceType > 6) {
-					newPieceType -= 7;
-				}
-				serverState.getPlayer(socket.id).addPiece(new Piece(Piece.getTypeFromInt(newPieceType)));
-				prevPieceType = newPieceType;
+			for (let i = 0 ; i < 1000 ; i++) {
+				shuffle( ['I', 'O', 'T', 'S', 'Z', 'J', 'L'] ).forEach(e => {
+					serverState.getPlayer(socket.id).addPiece(new Piece(e));
+				});
 			}
 			console.log('[' + roomName + '] ' + playerName + ' connected and created the room');
 		}
@@ -91,3 +87,14 @@ setInterval(function() {
 }, 1000 / 60);
   
 server.listen(PORT, () => console.log(`Listening on port ${PORT}`));
+
+function shuffle(a) {
+	let j, x;
+	for (let i = a.length - 1; i > 0; i--) {
+		j = Math.floor(Math.random() * (i + 1));
+		x = a[i];
+		a[i] = a[j];
+		a[j] = x;
+	}
+	return a;
+}
