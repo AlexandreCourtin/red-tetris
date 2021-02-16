@@ -32,6 +32,11 @@ let inGame = false;
 if (clientRoomName.length > 0 && clientPlayerName.length > 0) {
 	socket.emit('new player', clientPlayerName, clientRoomName);
 	inGame = true;
+
+	// INPUTS
+	setInterval(function() {
+		socket.emit('commands', clientPlayerName, clientRoomName, getInputs());
+	}, 1000 / 60);
 }
 
 function App() {
@@ -134,9 +139,6 @@ function App() {
 			}
 
 			playState = <TetrisGrid board={playerBoard} />;
-
-			// INPUTS
-			socket.emit('commands', clientPlayerName, clientRoomName, getInputs());
 		}
 
 		return (

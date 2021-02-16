@@ -89,20 +89,30 @@ io.on("connection", (socket) => {
 				let board = serverState.getPlayer(id).getBoard();
 
 				// TESTS MOVE SQUARE
+				let hasMoved = false;
 				for (let i = 0 ; i < 10 ; i++) {
 					for (let j = 0 ; j < 20 ; j++) {
-						if (board[i][j] === 1 && j - 1 >= 0 && commands.up) {
-							board[i][j] = 0;
-							board[i][j - 1] = 1;
-						} else if (board[i][j] === 1 && j + 1 < 20 && commands.down) {
-							board[i][j] = 0;
-							board[i][j + 1] = 1;
-						} else if (board[i][j] === 1 && i - 1 >= 0 && commands.left) {
-							board[i][j] = 0;
-							board[i - 1][j] = 1;
-						} else if (board[i][j] === 1 && i + 1 < 10 && commands.right) {
-							board[i][j] = 0;
-							board[i + 1][j] = 1;
+						if (hasMoved === false) {
+							if (board[i][j] === 1 && j - 1 >= 0 && commands.up) {
+								board[i][j] = 0;
+								board[i][j - 1] = 1;
+								hasMoved = true;
+							}
+							if (board[i][j] === 1 && j + 1 < 20 && commands.down) {
+								board[i][j] = 0;
+								board[i][j + 1] = 1;
+								hasMoved = true;
+							}
+							if (board[i][j] === 1 && i - 1 >= 0 && commands.left) {
+								board[i][j] = 0;
+								board[i - 1][j] = 1;
+								hasMoved = true;
+							}
+							if (board[i][j] === 1 && i + 1 < 10 && commands.right) {
+								board[i][j] = 0;
+								board[i + 1][j] = 1;
+								hasMoved = true;
+							}
 						}
 					}
 				}
@@ -115,5 +125,5 @@ io.on("connection", (socket) => {
 setInterval(function() {
 	io.sockets.emit('serverState', serverState);
 }, 1000 / 60);
-  
+
 server.listen(PORT, () => console.log(`Listening on port ${PORT}`));
