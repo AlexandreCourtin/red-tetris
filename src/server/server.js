@@ -40,7 +40,7 @@ io.on("connection", (socket) => {
 		if (!breakLoop) {
 			serverState.addPlayer(socket.id, new Player(playerName, roomName, true));
 
-			// CREATE A NEW SET OF 200 RANDOM PIECES FOR THE ROOM
+			// CREATE A NEW SET OF 7000 RANDOM PIECES FOR THE ROOM
 			for (let i = 0 ; i < 1000 ; i++) {
 				shuffle( ['I', 'O', 'T', 'S', 'Z', 'J', 'L'] ).forEach(e => {
 					serverState.getPlayer(socket.id).addPiece(new Piece(e));
