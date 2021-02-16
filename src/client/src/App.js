@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import socketIOClient from "socket.io-client";
 import LoginPage from "./components/loginPage";
-import { getClientBoard } from './utils/input';
+import { getClientBoard, setNextPieceType, getNextPieceNumber } from './utils/input';
 
 const SERVERPATH = "http://127.0.0.1:4001";
 
@@ -75,6 +75,8 @@ function App() {
 
 				roomPieces = '';
 				previewRoomPieces = '';
+
+				setNextPieceType(serverState.players[id].pieces[getNextPieceNumber()]);
 				for (let i = 0 ; i < 7000 ; i++) {
 					if (serverState.players[id].pieces[i]) {
 						roomPieces += serverState.players[id].pieces[i].type + ', ';

@@ -6,6 +6,17 @@ let commands = {
 	space: false,
 }
 
+let nextPieceType = '';
+let nextPieceNumber = 0;
+
+export function setNextPieceType(p) {
+	nextPieceType = p;
+}
+
+export function getNextPieceNumber() {
+	return nextPieceNumber;
+}
+
 export function getInputs() {
 	document.addEventListener('keydown', function(event) {
 		switch (event.key) {
