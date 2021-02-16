@@ -28,7 +28,6 @@ function checkNameAndRoomValidity(s) {
 }
 
 let inGame = false;
-let commands;
 
 if (clientRoomName.length > 0 && clientPlayerName.length > 0) {
 	socket.emit('new player', clientPlayerName, clientRoomName);
@@ -137,8 +136,7 @@ function App() {
 			playState = <TetrisGrid board={playerBoard} />;
 
 			// INPUTS
-			commands = getInputs();
-			socket.emit('commands', clientPlayerName, commands);
+			socket.emit('commands', clientPlayerName, clientRoomName, getInputs());
 		}
 
 		return (

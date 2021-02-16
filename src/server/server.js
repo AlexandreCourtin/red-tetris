@@ -81,9 +81,11 @@ io.on("connection", (socket) => {
 		}
 	});
 
-	socket.on('commands', function(playerName, commands) {
-		if (commands.up) {
-			console.log(playerName + ' = ' + commands.up);
+	socket.on('commands', function(playerName, roomName, commands) {
+		for (let id in serverState.getPlayers()) {
+			if (serverState.getPlayer(id) && serverState.getPlayer(id).getRoom() === roomName && serverState.getPlayer(id).getName() == playerName) {
+				// MOVE SQUARE HERE
+			}
 		}
 	});
 });

@@ -70,6 +70,14 @@ class Player {
 	getBoardAt(i, j) {
 		return this.board[i][j];
 	}
+
+	setBoard(a) {
+		this.board = a;
+	}
+
+	getBoard() {
+		return this.board;
+	}
 }
 
 module.exports = Player;
