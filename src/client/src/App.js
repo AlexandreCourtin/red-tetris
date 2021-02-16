@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import socketIOClient from "socket.io-client";
 import LoginPage from "./components/loginPage";
-import getInputs from './utils/input';
+import { getClientBoard } from './utils/input';
 
 const SERVERPATH = "http://127.0.0.1:4001";
 
@@ -32,11 +32,6 @@ let inGame = false;
 if (clientRoomName.length > 0 && clientPlayerName.length > 0) {
 	socket.emit('new player', clientPlayerName, clientRoomName);
 	inGame = true;
-
-	// INPUTS
-	setInterval(function() {
-		socket.emit('commands', clientPlayerName, clientRoomName, getInputs());
-	}, 1000 / 60);
 }
 
 function App() {
@@ -59,7 +54,7 @@ function App() {
 		let isPlaying = '';
 		let roomPieces = '';
 		let previewRoomPieces = '';
-		let playerBoard;
+		// let playerBoard;
 
 		for (let id in serverState.players) {
 			if (serverState.players[id] && serverState.players[id].room === clientRoomName
@@ -72,7 +67,7 @@ function App() {
 
 				isLeader = '' + serverState.players[id].isLeader;
 				isPlaying = '' + serverState.players[id].isPlaying;
-				playerBoard = serverState.players[id].board;
+				// playerBoard = serverState.players[id].board;
 
 				roomPieces = '';
 				previewRoomPieces = '';
@@ -138,7 +133,7 @@ function App() {
 				);
 			}
 
-			playState = <TetrisGrid board={playerBoard} />;
+			playState = <TetrisGrid board={getClientBoard()} />;
 		}
 
 		return (

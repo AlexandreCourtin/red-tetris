@@ -1,4 +1,4 @@
-let command = {
+let commands = {
 	up: false,
 	down: false,
 	left: false,
@@ -6,37 +6,37 @@ let command = {
 	space: false,
 }
 
-export default function getInputs() {
+export function getInputs() {
 	document.addEventListener('keydown', function(event) {
 		switch (event.key) {
 			default:
 				break;
 			case 'a':
-				command.left = true;
+				commands.left = true;
 				break;
 			case 'w':
-				command.up = true;
+				commands.up = true;
 				break;
 			case 'd':
-				command.right = true;
+				commands.right = true;
 				break;
 			case 's':
-				command.down = true;
+				commands.down = true;
 				break;
 			case 'ArrowLeft':
-				command.left = true;
+				commands.left = true;
 				break;
 			case 'ArrowUp':
-				command.up = true;
+				commands.up = true;
 				break;
 			case 'ArrowRight':
-				command.right = true;
+				commands.right = true;
 				break;
 			case 'ArrowDown':
-				command.down = true;
+				commands.down = true;
 				break;
 			case 'Space':
-				command.space = true;
+				commands.space = true;
 				break;
 		}
 	});
@@ -46,34 +46,80 @@ export default function getInputs() {
 			default:
 				break;
 			case 'a':
-				command.left = false;
+				commands.left = false;
 				break;
 			case 'w':
-				command.up = false;
+				commands.up = false;
 				break;
 			case 'd':
-				command.right = false;
+				commands.right = false;
 				break;
 			case 's':
-				command.down = false;
+				commands.down = false;
 				break;
 			case 'ArrowLeft':
-				command.left = false;
+				commands.left = false;
 				break;
 			case 'ArrowUp':
-				command.up = false;
+				commands.up = false;
 				break;
 			case 'ArrowRight':
-				command.right = false;
+				commands.right = false;
 				break;
 			case 'ArrowDown':
-				command.down = false;
+				commands.down = false;
 				break;
 			case 'Space':
-				command.space = false;
+				commands.space = false;
 				break;
 		}
 	});
 
-	return command;
+	return commands;
+}
+
+let clientBoard = [];
+
+for (let i = 0 ; i < 10 ; i++) {
+	clientBoard[i] = [];
+	for (let j = 0 ; j < 20 ; j++) {
+		clientBoard[i][j] = 0;
+	}
+}
+
+clientBoard[5][10] = 1;
+
+export function getClientBoard() {
+	getInputs();
+
+	// TESTS MOVE SQUARE
+	let hasMoved = false;
+	for (let i = 0 ; i < 10 ; i++) {
+		for (let j = 0 ; j < 20 ; j++) {
+			if (hasMoved === false) {
+				if (clientBoard[i][j] === 1 && j - 1 >= 0 && commands.up) {
+					clientBoard[i][j] = 0;
+					clientBoard[i][j - 1] = 1;
+					hasMoved = true;
+				}
+				if (clientBoard[i][j] === 1 && j + 1 < 20 && commands.down) {
+					clientBoard[i][j] = 0;
+					clientBoard[i][j + 1] = 1;
+					hasMoved = true;
+				}
+				if (clientBoard[i][j] === 1 && i - 1 >= 0 && commands.left) {
+					clientBoard[i][j] = 0;
+					clientBoard[i - 1][j] = 1;
+					hasMoved = true;
+				}
+				if (clientBoard[i][j] === 1 && i + 1 < 10 && commands.right) {
+					clientBoard[i][j] = 0;
+					clientBoard[i + 1][j] = 1;
+					hasMoved = true;
+				}
+			}
+		}
+	}
+
+	return clientBoard;
 }

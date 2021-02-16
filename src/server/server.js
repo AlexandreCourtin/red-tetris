@@ -81,44 +81,6 @@ io.on("connection", (socket) => {
 			}
 		}
 	});
-
-	// ALWAYS RECEIVING - PLAYER INPUTS
-	socket.on('commands', function(playerName, roomName, commands) {
-		for (let id in serverState.getPlayers()) {
-			if (serverState.getPlayer(id) && serverState.getPlayer(id).getRoom() === roomName && serverState.getPlayer(id).getName() == playerName) {
-				let board = serverState.getPlayer(id).getBoard();
-
-				// TESTS MOVE SQUARE
-				let hasMoved = false;
-				for (let i = 0 ; i < 10 ; i++) {
-					for (let j = 0 ; j < 20 ; j++) {
-						if (hasMoved === false) {
-							if (board[i][j] === 1 && j - 1 >= 0 && commands.up) {
-								board[i][j] = 0;
-								board[i][j - 1] = 1;
-								hasMoved = true;
-							}
-							if (board[i][j] === 1 && j + 1 < 20 && commands.down) {
-								board[i][j] = 0;
-								board[i][j + 1] = 1;
-								hasMoved = true;
-							}
-							if (board[i][j] === 1 && i - 1 >= 0 && commands.left) {
-								board[i][j] = 0;
-								board[i - 1][j] = 1;
-								hasMoved = true;
-							}
-							if (board[i][j] === 1 && i + 1 < 10 && commands.right) {
-								board[i][j] = 0;
-								board[i + 1][j] = 1;
-								hasMoved = true;
-							}
-						}
-					}
-				}
-			}
-		}
-	});
 });
 
 // SEND SERVER STATE TO CLIENTS

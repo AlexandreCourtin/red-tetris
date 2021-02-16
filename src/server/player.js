@@ -19,8 +19,6 @@ class Player {
 				this.board[i][j] = 0;
 			}
 		}
-
-		this.board[5][10] = 1;
 	}
 
 	getName() {
