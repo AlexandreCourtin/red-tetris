@@ -81,11 +81,20 @@ io.on("connection", (socket) => {
 			}
 		}
 	});
+
+	// RECEIVED WHEN CLIENT SENDS CLIENT BOARD
+	socket.on('client board', function(playerName, roomName, playerBoard) {
+		for (let id in serverState.getPlayers()) {
+			if (serverState.getPlayer(id) && serverState.getPlayer(id).getName() === playerName && serverState.getPlayer(id).getRoom() === roomName) {
+				serverState.getPlayer(id).setBoard(playerBoard);
+			}
+		}
+	});
 });
 
 // SEND SERVER STATE TO CLIENTS
 setInterval(function() {
 	io.sockets.emit('serverState', serverState);
-}, 1000 / 60);
+}, 1000);
 
 server.listen(PORT, () => console.log(`Listening on port ${PORT}`));

@@ -28,6 +28,7 @@ function checkNameAndRoomValidity(s) {
 }
 
 let inGame = false;
+let clientBoard;
 
 if (clientRoomName.length > 0 && clientPlayerName.length > 0) {
 	socket.emit('new player', clientPlayerName, clientRoomName);
@@ -133,7 +134,8 @@ function App() {
 				);
 			}
 
-			playState = <TetrisGrid board={getClientBoard()} />;
+			clientBoard = getClientBoard();
+			playState = <TetrisGrid board={clientBoard} />;
 		}
 
 		return (
@@ -155,5 +157,10 @@ function App() {
 		);
 	}
 }
+
+// SEND CLIENT BOARD TO SERVER
+setInterval(function() {
+	socket.emit('client board', clientPlayerName, clientRoomName, clientBoard);
+}, 1000);
 
 export default App;
