@@ -102,6 +102,7 @@ function App() {
 
 			// TETRIS GAME HERE
 
+			// DRAW TETRIS
 			const ColoredBox = ({ color }) => (
 				<div style={{
 					backgroundColor: color,
@@ -134,12 +135,11 @@ function App() {
 			}
 
 			playState = <TetrisGrid board={playerBoard} />;
-		}
 
-		// INPUTS
-		commands = getInputs();
-		// SEND SERVER STATE TO CLIENTS
-		socket.emit('commands', clientPlayerName, commands);
+			// INPUTS
+			commands = getInputs();
+			socket.emit('commands', clientPlayerName, commands);
+		}
 
 		return (
 			<div>
