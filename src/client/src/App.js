@@ -132,7 +132,8 @@ function App() {
 
 		// INPUTS
 		commands = getInputs();
-		if (commands.up) console.log('ja');
+		// SEND SERVER STATE TO CLIENTS
+		socket.emit('commands', clientPlayerName, commands);
 
 		return (
 			<div>

@@ -80,6 +80,12 @@ io.on("connection", (socket) => {
 			}
 		}
 	});
+
+	socket.on('commands', function(playerName, commands) {
+		if (commands.up) {
+			console.log(playerName + ' = ' + commands.up);
+		}
+	});
 });
 
 // SEND SERVER STATE TO CLIENTS
