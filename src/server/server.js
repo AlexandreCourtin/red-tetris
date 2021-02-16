@@ -88,24 +88,22 @@ io.on("connection", (socket) => {
 			if (serverState.getPlayer(id) && serverState.getPlayer(id).getRoom() === roomName && serverState.getPlayer(id).getName() == playerName) {
 				let board = serverState.getPlayer(id).getBoard();
 
+				// TESTS MOVE SQUARE
 				for (let i = 0 ; i < 10 ; i++) {
 					for (let j = 0 ; j < 20 ; j++) {
 						if (board[i][j] === 1 && j - 1 >= 0 && commands.up) {
 							board[i][j] = 0;
 							board[i][j - 1] = 1;
-						};
-						if (board[i][j] === 1 && j + 1 < 20 && commands.down) {
+						} else if (board[i][j] === 1 && j + 1 < 20 && commands.down) {
 							board[i][j] = 0;
 							board[i][j + 1] = 1;
-						};
-						if (board[i][j] === 1 && i - 1 >= 0 && commands.left) {
+						} else if (board[i][j] === 1 && i - 1 >= 0 && commands.left) {
 							board[i][j] = 0;
 							board[i - 1][j] = 1;
-						};
-						if (board[i][j] === 1 && i + 1 < 10 && commands.right) {
+						} else if (board[i][j] === 1 && i + 1 < 10 && commands.right) {
 							board[i][j] = 0;
 							board[i + 1][j] = 1;
-						};
+						}
 					}
 				}
 			}
