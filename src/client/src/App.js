@@ -50,25 +50,28 @@ function App() {
 
 		// GAME PAGE
 
-		let otherPlayerNames = '';
+		let otherPlayerNames = [];
+		let otherPlayerBoards = [];
 		let isLeader = '';
 		let isPlaying = '';
 		let roomPieces = '';
 		let previewRoomPieces = '';
-		// let playerBoard;
 
 		for (let id in serverState.players) {
 			if (serverState.players[id] && serverState.players[id].room === clientRoomName
 				&& serverState.players[id].name !== clientPlayerName) {
 
-				otherPlayerNames += serverState.players[id].name + ' ';
+				otherPlayerNames.push(serverState.players[id].name);
+
+				if (serverState.players[id].board !== null) {
+					otherPlayerBoards.push(serverState.players[id].board);
+				}
 
 			} else if (serverState.players[id] && serverState.players[id].room === clientRoomName
 				&& serverState.players[id].name === clientPlayerName) {
 
 				isLeader = '' + serverState.players[id].isLeader;
 				isPlaying = '' + serverState.players[id].isPlaying;
-				// playerBoard = serverState.players[id].board;
 
 				roomPieces = '';
 				previewRoomPieces = '';
@@ -88,7 +91,7 @@ function App() {
 			socket.emit('launch game', clientRoomName);
 		}
 
-		let playState;
+		let playState = [];
 
 		if (isLeader === '') {
 			return (
@@ -97,21 +100,21 @@ function App() {
 				</div>
 			);
 		} else if (isLeader === 'true' && isPlaying === 'false') {
-			playState = <button onClick={leadLaunchGame}>start game</button>;
+			playState.push(<button onClick={leadLaunchGame}>start game</button>);
 		} else if (isPlaying === 'true') {
 
 			// TETRIS GAME HERE
 
 			// DRAW TETRIS
-			const ColoredBox = ({ color }) => (
+			const ColoredBox = ({ color, size }) => (
 				<div style={{
 					backgroundColor: color,
-					height: 20,
-					width: 20
+					height: size,
+					width: size
 				}}/>
 			);
 
-			const TetrisGrid = ({ board }) => {
+			const TetrisGrid = ({ board, size }) => {
 
 				let tetrisColumn = [];
 				for (let i = 0 ; i < 20 ; i++) {
@@ -121,8 +124,8 @@ function App() {
 
 						if (board[j][i] === 0) boxColor = '#9bbc0f';
 						else boxColor = '#306230';
-
-						tetrisRow.push(<td key={'uniqueBox' + i + '' + j}><ColoredBox color={boxColor} /></td>);
+						
+						tetrisRow.push(<td key={'uniqueBox' + i + '' + j}><ColoredBox color={boxColor} size={size} /></td>);
 					}
 					tetrisColumn.push(<tr key={'uniqueRow' + i}>{tetrisRow}</tr>);
 				}
@@ -135,7 +138,16 @@ function App() {
 			}
 
 			clientBoard = getClientBoard();
-			playState = <TetrisGrid board={clientBoard} />;
+			playState.push(<TetrisGrid board={clientBoard} size={20} />);
+
+			for (let i = 0 ; i < otherPlayerBoards.length ; i++) {
+				playState.push(
+					<div>
+						<p>{otherPlayerNames[i]}</p>
+						<TetrisGrid board={otherPlayerBoards[i]} size={10} />
+					</div>
+				);
+			}
 		}
 
 		return (
@@ -161,6 +173,6 @@ function App() {
 // SEND CLIENT BOARD TO SERVER
 setInterval(function() {
 	socket.emit('client board', clientPlayerName, clientRoomName, clientBoard);
-}, 1000);
+}, 500);
 
 export default App;
