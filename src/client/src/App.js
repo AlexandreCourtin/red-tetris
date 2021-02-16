@@ -54,6 +54,7 @@ function App() {
 		let isLeader = '';
 		let isPlaying = '';
 		let roomPieces = '';
+		let previewRoomPieces = '';
 		let playerBoard;
 
 		for (let id in serverState.players) {
@@ -70,9 +71,14 @@ function App() {
 				playerBoard = serverState.players[id].board;
 
 				roomPieces = '';
+				previewRoomPieces = '';
 				for (let i = 0 ; i < 7000 ; i++) {
 					if (serverState.players[id].pieces[i]) {
 						roomPieces += serverState.players[id].pieces[i].type + ', ';
+
+						if (i === 50) {
+							previewRoomPieces = roomPieces;
+						}
 					}
 				}
 			}
@@ -141,7 +147,7 @@ function App() {
 				<p>player name: {clientPlayerName}</p>
 				<p>is leader of this room: {isLeader}</p>
 				<p>other players in this room: {otherPlayerNames}</p>
-				<p>pieces of this room: {roomPieces}</p>
+				<p>preview of the pieces of this room: {previewRoomPieces}</p>
 				{playState}
 			</div>
 		);
