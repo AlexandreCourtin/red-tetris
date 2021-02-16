@@ -89,11 +89,12 @@ for (let i = 0 ; i < 10 ; i++) {
 
 clientBoard[5][10] = 1;
 
+let hasMoved = false;
+let isTimeouting = false;
 export function getClientBoard() {
 	getInputs();
 
 	// TESTS MOVE SQUARE
-	let hasMoved = false;
 	for (let i = 0 ; i < 10 ; i++) {
 		for (let j = 0 ; j < 20 ; j++) {
 			if (hasMoved === false) {
@@ -107,6 +108,8 @@ export function getClientBoard() {
 					clientBoard[i][j + 1] = 1;
 					hasMoved = true;
 				}
+			}
+			if (hasMoved === false) {
 				if (clientBoard[i][j] === 1 && i - 1 >= 0 && commands.left) {
 					clientBoard[i][j] = 0;
 					clientBoard[i - 1][j] = 1;
@@ -120,6 +123,15 @@ export function getClientBoard() {
 			}
 		}
 	}
+	if (isTimeouting === false) {
+		setTimeout(resetHasMoved, 100);
+		isTimeouting = true;
+	}
 
 	return clientBoard;
+}
+
+function resetHasMoved() {
+	hasMoved = false;
+	isTimeouting = false;
 }
