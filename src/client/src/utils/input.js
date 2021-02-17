@@ -88,4 +88,5 @@ document.addEventListener('keyup', function(event) {
 			commands.space = false;
 			break;
 	}
+
 });
