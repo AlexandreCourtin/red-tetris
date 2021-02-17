@@ -99,7 +99,7 @@ function App() {
 		if (isLeader === '') {
 			return (
 				<div>
-					<p>SERVER IS NOT RUNNING</p>
+					<p className="white-text">SERVER IS NOT RUNNING</p>
 				</div>
 			);
 		} else if (isLeader === 'true' && isPlaying === 'false') {
@@ -155,11 +155,11 @@ function App() {
 
 		return (
 			<div>
-				<p>room name: {clientRoomName}</p>
-				<p>player name: {clientPlayerName}</p>
-				<p>is leader of this room: {isLeader}</p>
-				<p>other players in this room: {otherPlayerNames}</p>
-				<p>preview of the pieces of this room: {previewRoomPieces}</p>
+				<p className="white-text">room name: {clientRoomName}</p>
+				<p className="white-text">player name: {clientPlayerName}</p>
+				<p className="white-text">is leader of this room: {isLeader}</p>
+				<p className="white-text">other players in this room: {otherPlayerNames}</p>
+				<p className="white-text">preview of the pieces of this room: {previewRoomPieces}</p>
 				{playState}
 			</div>
 		);
