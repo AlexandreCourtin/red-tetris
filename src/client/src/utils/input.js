@@ -17,6 +17,7 @@ export function getNextPieceNumber() {
 	return nextPieceNumber;
 }
 
+
 export function getInputs() {
 	console.log(commands.down);
 	return commands;
