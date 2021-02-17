@@ -141,16 +141,18 @@ function App() {
 			}
 
 			clientBoard = getClientBoard();
-			playState.push(<TetrisGrid key={'playerBoard'} board={clientBoard} size={20} />);
+			playState.push(<div className="game-main-board"><TetrisGrid key={'playerBoard'} board={clientBoard} size={20} /></div>);
 
+			let otherBardsState = [];
 			for (let i = 0 ; i < otherPlayerBoards.length ; i++) {
-				playState.push(
+				otherBardsState.push(
 					<div key={'otherBoard ' + i}>
 						<p className="game-other-name">{otherPlayerNames[i]}</p>
 						<TetrisGrid board={otherPlayerBoards[i]} size={10} />
 					</div>
 				);
 			}
+			playState.push(<div className="game-other-board" key={'otherBoard gen'}>{otherBardsState}</div>);
 		}
 
 		return (

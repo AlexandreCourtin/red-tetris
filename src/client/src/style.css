@@ -43,8 +43,15 @@ html {
 .game-tetris-board {
 	position: relative;
 	left: 50%;
-	transform: translate(-50%, 0%);
 	border-spacing: 0;
+	padding: 5px;
+	margin: 10px;
+	transform: translate(-50%, 0%);
+}
+
+.game-other-board {
+	display: flex;
+	flex-wrap: wrap;
 }
 
 .white-text {
