@@ -1,0 +1,41 @@
+html { 
+	margin:0;
+	padding:0;
+	background: url(./low-poly-background.png) no-repeat center fixed; 
+	-webkit-background-size: cover;
+	background-size: cover;
+}
+
+.login-page-title {
+	color: azure;
+	font-size: 35px;
+	display: flex;
+	justify-content: center;
+}
+
+.login-page-text {
+	color: azure;
+	font-size: 20px;
+	display: flex;
+	justify-content: center;
+}
+
+.login-page-input {
+	font-size: 20px;
+	display: flex;
+	justify-content: center;
+}
+
+.login-page-button {
+	color: darkred;
+	background-color: azure;
+	font-size: 25px;
+	border-width: 0;
+}
+
+.login-page-div {
+	position: fixed;
+	top: 25%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}

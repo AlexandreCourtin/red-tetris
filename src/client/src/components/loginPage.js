@@ -11,13 +11,14 @@ function LoginPage() {
 	}
 
 	return (
-		<div>
-			<p>Name :</p>
-			<input type="text" value={htmlName} onInput={e => setHtmlName(e.target.value)}/>
-			<p>Room :</p>
-			<input type="text" value={htmlRoom} onInput={e => setHtmlRoom(e.target.value)}/>
+		<div className="login-page-div">
+			<p className="login-page-title">RED TETRIS</p>
+			<p className="login-page-text">Name :</p>
+			<input className="login-page-input" type="text" value={htmlName} onInput={e => setHtmlName(e.target.value)}/>
+			<p className="login-page-text">Room :</p>
+			<input className="login-page-input" type="text" value={htmlRoom} onInput={e => setHtmlRoom(e.target.value)}/>
 			<br /><br />
-			<button onClick={login}>go</button>
+			<div className="login-page-text"><button className="login-page-button" onClick={login}>GO</button></div>
 		</div>
 	);
 }
