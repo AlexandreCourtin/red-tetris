@@ -54,7 +54,7 @@ document.addEventListener('keydown', function(event) {
 			commands.space = true;
 			break;
 	}
-
+});
 
 document.addEventListener('keyup', function(event) {
 	switch (event.key) {
