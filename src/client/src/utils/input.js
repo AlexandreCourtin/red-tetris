@@ -23,6 +23,7 @@ export function getInputs() {
 	return commands;
 }
 
+
 document.addEventListener('keydown', function(event) {
 	switch (event.key) {
 		default:
