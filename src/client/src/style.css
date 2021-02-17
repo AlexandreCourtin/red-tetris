@@ -40,6 +40,20 @@ html {
 	transform: translate(-50%, -50%);
 }
 
+.game-tetris-board {
+	position: relative;
+	left: 50%;
+	transform: translate(-50%, 0%);
+	border-spacing: 0;
+}
+
 .white-text {
 	color: azure;
+}
+
+.game-other-name {
+	color: azure;
+	font-size: 25px;
+	display: flex;
+	justify-content: center;
 }

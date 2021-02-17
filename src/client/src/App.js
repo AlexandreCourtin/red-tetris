@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import socketIOClient from "socket.io-client";
 import LoginPage from "./components/loginPage";
 import { getClientBoard, setNextPieceType, getNextPieceNumber } from './utils/input';
-import "./loginPage.css";
+import "./style.css";
 
 const SERVERPATH = "http://127.0.0.1:4001";
 
@@ -134,7 +134,7 @@ function App() {
 				}
 
 				return (
-					<table style={{borderSpacing: 0}}>
+					<table className="game-tetris-board">
 						<tbody>{tetrisColumn}</tbody>
 					</table>
 				);
@@ -146,7 +146,7 @@ function App() {
 			for (let i = 0 ; i < otherPlayerBoards.length ; i++) {
 				playState.push(
 					<div key={'otherBoard ' + i}>
-						<p>{otherPlayerNames[i]}</p>
+						<p className="game-other-name">{otherPlayerNames[i]}</p>
 						<TetrisGrid board={otherPlayerBoards[i]} size={10} />
 					</div>
 				);
