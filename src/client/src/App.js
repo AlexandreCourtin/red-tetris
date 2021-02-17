@@ -109,11 +109,9 @@ function App() {
 			// TETRIS GAME HERE
 
 			// DRAW TETRIS
-			const ColoredBox = ({ color, size }) => (
-				<div style={{
-					backgroundColor: color,
-					height: size,
-					width: size
+			const ColoredBox = ({ color }) => (
+				<div className="game-colored-box" style={{
+					backgroundColor: color
 				}}/>
 			);
 
@@ -128,7 +126,7 @@ function App() {
 						if (board[j][i] === 0) boxColor = '#9bbc0f';
 						else boxColor = '#306230';
 						
-						tetrisRow.push(<td key={'uniqueBox' + i + '' + j}><ColoredBox color={boxColor} size={size} /></td>);
+						tetrisRow.push(<td key={'uniqueBox' + i + '' + j}><ColoredBox color={boxColor} /></td>);
 					}
 					tetrisColumn.push(<tr key={'uniqueRow' + i}>{tetrisRow}</tr>);
 				}
@@ -141,14 +139,14 @@ function App() {
 			}
 
 			clientBoard = getClientBoard();
-			playState.push(<div className="game-main-board"><TetrisGrid key={'playerBoard'} board={clientBoard} size={20} /></div>);
+			playState.push(<div className="game-main-board"><TetrisGrid key={'playerBoard'} board={clientBoard} /></div>);
 
 			let otherBardsState = [];
 			for (let i = 0 ; i < otherPlayerBoards.length ; i++) {
 				otherBardsState.push(
 					<div key={'otherBoard ' + i}>
 						<p className="game-other-name">{otherPlayerNames[i]}</p>
-						<TetrisGrid board={otherPlayerBoards[i]} size={10} />
+						<TetrisGrid board={otherPlayerBoards[i]} />
 					</div>
 				);
 			}

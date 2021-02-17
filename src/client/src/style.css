@@ -1,6 +1,6 @@
 html { 
-	margin:0;
-	padding:0;
+	margin: 0;
+	padding: 0;
 	background: url(./low-poly-background.png) no-repeat center fixed; 
 	-webkit-background-size: cover;
 	background-size: cover;
@@ -41,11 +41,17 @@ html {
 }
 
 .game-tetris-board {
-	position: relative;
-	left: 50%;
+	width: 100%;
+	height: 100%;
 	border-spacing: 0;
-	padding: 5px;
-	margin: 10px;
+}
+
+.game-main-board {
+	background-color: black;
+	position: absolute;
+	width: 60%;
+	height: 80%;
+	left: 50%;
 	transform: translate(-50%, 0%);
 }
 
@@ -63,4 +69,9 @@ html {
 	font-size: 25px;
 	display: flex;
 	justify-content: center;
+}
+
+.game-colored-box {
+	width: 100%;
+	height: 100%;
 }
