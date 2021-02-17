@@ -102,7 +102,7 @@ function App() {
 				</div>
 			);
 		} else if (isLeader === 'true' && isPlaying === 'false') {
-			playState.push(<button onClick={leadLaunchGame}>start game</button>);
+			playState.push(<button key={'leadLaunchButton'} onClick={leadLaunchGame}>start game</button>);
 		} else if (isPlaying === 'true') {
 
 			// TETRIS GAME HERE
@@ -140,11 +140,11 @@ function App() {
 			}
 
 			clientBoard = getClientBoard();
-			playState.push(<TetrisGrid board={clientBoard} size={20} />);
+			playState.push(<TetrisGrid key={'playerBoard'} board={clientBoard} size={20} />);
 
 			for (let i = 0 ; i < otherPlayerBoards.length ; i++) {
 				playState.push(
-					<div>
+					<div key={'otherBoard ' + i}>
 						<p>{otherPlayerNames[i]}</p>
 						<TetrisGrid board={otherPlayerBoards[i]} size={10} />
 					</div>
