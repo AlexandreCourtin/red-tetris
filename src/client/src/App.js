@@ -18,6 +18,8 @@ const clientPlayerName = checkNameAndRoomValidity(window.location.hash.substring
 	window.location.hash.lastIndexOf("]")
 ));
 
+document.body.style.overflow = 'hidden';
+
 function checkNameAndRoomValidity(s) {
 	if (s == null) {
 		return '';
@@ -146,11 +148,11 @@ function App() {
 				otherBardsState.push(
 					<div key={'otherBoard ' + i}>
 						<p className="game-other-name">{otherPlayerNames[i]}</p>
-						<TetrisGrid board={otherPlayerBoards[i]} />
+						<div className="game-other-board"><TetrisGrid board={otherPlayerBoards[i]} /></div>
 					</div>
 				);
 			}
-			playState.push(<div className="game-other-board" key={'otherBoard gen'}>{otherBardsState}</div>);
+			playState.push(<div className="game-other-boards" key={'otherBoard gen'}>{otherBardsState}</div>);
 		}
 
 		return (

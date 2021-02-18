@@ -49,15 +49,24 @@ html {
 .game-main-board {
 	background-color: black;
 	position: absolute;
-	width: 60%;
-	height: 80%;
+	width: 20%;
+	height: 40vw;
 	left: 50%;
 	transform: translate(-50%, 0%);
 }
 
+.game-other-boards {
+	background-color: #000000AA;
+	position: absolute;
+	left: 0%;
+	width: 40%;
+}
+
 .game-other-board {
-	display: flex;
-	flex-wrap: wrap;
+	width: 12%;
+	height: 10vw;
+	margin-bottom: 50px;
+	transform: translate(370%, 0%);
 }
 
 .white-text {
