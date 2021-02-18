@@ -1,4 +1,5 @@
 class Player {
+	socketId;
 	name = 'defaultPlayer';
 	room = 'defaultRoom';
 	isLeader = false;
@@ -8,7 +9,8 @@ class Player {
 	// board[x][y] = x Horizontal | y Vertical
 	board = [];
 
-	constructor(name, room, isLeader) {
+	constructor(socketId, name, room, isLeader) {
+		this.socketId = socketId;
 		this.name = name;
 		this.room = room;
 		this.isLeader = isLeader;
@@ -19,6 +21,8 @@ class Player {
 				this.board[i][j] = 0;
 			}
 		}
+
+		this.board[5][10] = 1;
 	}
 
 	getName() {

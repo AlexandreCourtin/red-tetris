@@ -26,7 +26,7 @@ io.on("connection", (socket) => {
 
 		for (let id in serverState.getPlayers()) {
 			if (serverState.getPlayer(id) && serverState.getPlayer(id).getRoom() === roomName && serverState.getPlayer(id).getIsLeader()) {
-				serverState.addPlayer(socket.id, new Player(playerName, roomName, false));
+				serverState.addPlayer(socket.id, new Player(socket.id, playerName, roomName, false));
 
 				// GET THE PIECES FROM THE LEADER
 				serverState.getPlayer(socket.id).setPieces(serverState.getPlayer(id).getPieces());
@@ -38,7 +38,7 @@ io.on("connection", (socket) => {
 		}
 
 		if (!breakLoop) {
-			serverState.addPlayer(socket.id, new Player(playerName, roomName, true));
+			serverState.addPlayer(socket.id, new Player(socket.id, playerName, roomName, true));
 
 			// CREATE A NEW SET OF 7000 RANDOM PIECES FOR THE ROOM
 			for (let i = 0 ; i < 1000 ; i++) {
@@ -82,12 +82,39 @@ io.on("connection", (socket) => {
 		}
 	});
 
-	// RECEIVED WHEN CLIENT SENDS CLIENT BOARD
-	socket.on('client board', function(playerName, roomName, playerBoard) {
-		for (let id in serverState.getPlayers()) {
-			if (serverState.getPlayer(id) && serverState.getPlayer(id).getName() === playerName && serverState.getPlayer(id).getRoom() === roomName) {
-				serverState.getPlayer(id).setBoard(playerBoard);
+	// RECEIVED WHEN CLIENT SENDS COMMANDS
+	socket.on('commands', function(commands) {
+		let board;
+		if (serverState.getPlayer(socket.id) && serverState.getPlayer(socket.id).getIsPlaying()) {
+			board = serverState.getPlayer(socket.id).getBoard();
+		}
+		if (board) {
+			let hasMoved = false;
+			let movVer = commands.up * -1 + commands.down * 1;
+			let movHor = commands.left * -1 + commands.right * 1;
+
+			// TESTS MOVE SQUARE
+			let i = 0;
+			while (i < 10 && hasMoved == false) {
+				let j = 0;
+				while (j < 20 && hasMoved == false) {
+					if (hasMoved === false) {
+						if (board[i][j] === 1 && movVer !== 0 && j + movVer >= 0 && j + movVer < 20) {
+							board[i][j] = 0;
+							board[i][j + movVer] = 1;
+							hasMoved = true;
+						}
+						if (board[i][j] === 1 && movHor !== 0 && i + movHor >= 0 && i + movHor < 10) {
+							board[i][j] = 0;
+							board[i + movHor][j] = 1;
+							hasMoved = true;
+						}
+					}
+					j++;
+				}
+				i++;
 			}
+			serverState.getPlayer(socket.id).setBoard(board);
 		}
 	});
 });

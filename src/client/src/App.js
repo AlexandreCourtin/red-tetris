@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import socketIOClient from "socket.io-client";
 import LoginPage from "./components/loginPage";
-import { getClientBoard, setNextPieceType, getNextPieceNumber } from './utils/input';
+import { getInputs, setNextPieceType, getNextPieceNumber } from './utils/input';
 import "./style.css";
 
 const SERVERPATH = "http://127.0.0.1:4001";
@@ -79,6 +79,8 @@ function App() {
 				roomPieces = '';
 				previewRoomPieces = '';
 
+				clientBoard = serverState.players[id].board;
+
 				setNextPieceType(serverState.players[id].pieces[getNextPieceNumber()]);
 				for (let i = 0 ; i < 7000 ; i++) {
 					if (serverState.players[id].pieces[i]) {
@@ -140,7 +142,6 @@ function App() {
 				);
 			}
 
-			clientBoard = getClientBoard();
 			playState.push(<div className="game-main-board"><TetrisGrid key={'playerBoard'} board={clientBoard} /></div>);
 
 			let otherBardsState = [];
@@ -175,9 +176,9 @@ function App() {
 	}
 }
 
-// SEND CLIENT BOARD TO SERVER
+// SEND CLIENT COMMANDS TO SERVER
 setInterval(function() {
-	socket.emit('client board', clientPlayerName, clientRoomName, clientBoard);
+	socket.emit('commands', getInputs());
 }, 500);
 
 export default App;
