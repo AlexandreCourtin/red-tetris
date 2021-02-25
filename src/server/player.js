@@ -5,6 +5,7 @@ class Player {
 	isLeader = false;
 	isPlaying = false;
 	pieces = [];
+	currentPiece = 0;
 
 	// board[x][y] = x Horizontal | y Vertical
 	board = [];
