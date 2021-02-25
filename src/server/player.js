@@ -23,7 +23,7 @@ class Player {
 			}
 		}
 
-		this.board[5][10] = 1;
+		this.setPiece(this.currentPiece);
 	}
 
 	getName() {
@@ -80,6 +80,53 @@ class Player {
 
 	getBoard() {
 		return this.board;
+	}
+
+	setPiece(i) {
+		switch (i) {
+			default:
+				this.board[4][1] = -i;
+				this.board[4][2] = -i;
+				this.board[4][3] = -i;
+				this.board[4][4] = -i;
+				break;
+			case "O":
+				this.board[4][1] = -i;
+				this.board[5][1] = -i;
+				this.board[4][2] = -i;
+				this.board[5][2] = -i;
+				break;
+			case "T":
+				this.board[4][1] = -i;
+				this.board[5][1] = -i;
+				this.board[6][1] = -i;
+				this.board[5][2] = -i;
+				break;
+			case "S":
+				this.board[4][1] = -i;
+				this.board[5][1] = -i;
+				this.board[4][2] = -i;
+				this.board[3][2] = -i;
+				break;
+			case "Z":
+				this.board[4][1] = -i;
+				this.board[5][1] = -i;
+				this.board[5][2] = -i;
+				this.board[6][2] = -i;
+				break;
+			case "J":
+				this.board[4][1] = -i;
+				this.board[4][2] = -i;
+				this.board[4][3] = -i;
+				this.board[3][3] = -i;
+				break;
+			case "L":
+				this.board[4][1] = -i;
+				this.board[4][2] = -i;
+				this.board[4][3] = -i;
+				this.board[5][3] = -i;
+				break;
+		}
 	}
 }
 

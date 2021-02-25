@@ -55,36 +55,3 @@ document.addEventListener('keydown', function(event) {
 	}
 });
 
-document.addEventListener('keyup', function(event) {
-	switch (event.key) {
-		default:
-			break;
-		case 'a':
-			commands.left = false;
-			break;
-		case 'w':
-			commands.up = false;
-			break;
-		case 'd':
-			commands.right = false;
-			break;
-		case 's':
-			commands.down = false;
-			break;
-		case 'ArrowLeft':
-			commands.left = false;
-			break;
-		case 'ArrowUp':
-			commands.up = false;
-			break;
-		case 'ArrowRight':
-			commands.right = false;
-			break;
-		case 'ArrowDown':
-			commands.down = false;
-			break;
-		case 'Space':
-			commands.space = false;
-			break;
-	}
-});
