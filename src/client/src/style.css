@@ -81,6 +81,8 @@ html {
 }
 
 .game-colored-box {
+	min-width: 1vw;
+	min-height: 2vw;
 	width: 100%;
 	height: 100%;
 }
