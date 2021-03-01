@@ -20,7 +20,7 @@ class Player {
 
 		for (let i = 0 ; i < 10 ; i++) {
 			this.board[i] = [];
-			for (let j = 0 ; j < 20 ; j++) {
+			for (let j = 0 ; j < 22 ; j++) {
 				this.board[i][j] = 0;
 			}
 		}
@@ -29,7 +29,7 @@ class Player {
 	setTmpBoard() {
 		for (let i = 0 ; i < 10 ; i++) {
 			this.tmpBoard[i] = [];
-			for (let j = 0 ; j < 20 ; j++) {
+			for (let j = 0 ; j < 22 ; j++) {
 				if (this.board[i][j] >= 0)
 					this.tmpBoard[i][j] = this.board[i][j];
 				else
@@ -98,16 +98,28 @@ class Player {
  		console.log(i.type);
 		switch (i.type) {
 			default:
-				this.board[4][1] = -1;
-				this.board[4][2] = -1;
-				this.board[4][3] = -1;
-				this.board[4][4] = -1;
+				if (!this.board[3][1] && !this.board[4][1] && !this.board[5][1] && !this.board[6][1])
+				{
+					this.board[3][1] = -1;
+					this.board[4][1] = -1;
+					this.board[5][1] = -1;
+					this.board[6][1] = -1;
+				}
+				else if (!this.board[3][0] && !this.board[4][0] && !this.board[5][0] && !this.board[6][0])
+				{
+					this.board[3][0] = -1;
+					this.board[4][0] = -1;
+					this.board[5][0] = -1;
+					this.board[6][0] = -1;
+				}
+				else
+
 				break;
 			case "O":
+				this.board[4][0] = -2;
+				this.board[5][0] = -2;
 				this.board[4][1] = -2;
 				this.board[5][1] = -2;
-				this.board[4][2] = -2;
-				this.board[5][2] = -2;
 				break;
 			case "T":
 				this.board[4][1] = -3;
@@ -144,13 +156,89 @@ class Player {
 
 	placePiece() {
 		for (let i = 0 ; i < 10 ; i++) {
-			for (let j = 0 ; j < 20 ; j++) {
+			for (let j = 0 ; j < 22 ; j++) {
 				if (this.board[i][j] < 0)
 					this.board[i][j] = -this.board[i][j];
 			}
 		}
 		this.setPiece(this.pieces[this.currentPiece]);
 		this.currentPiece++;
+	}
+
+	rotatePiece()
+	{
+		for (let i = 0 ; i < 10 ; i++) {
+			for (let j = 0 ; j < 22 ; j++) {
+				if (this.board[i][j] < 0)
+				{
+					this.currentRotation = (this.currentRotation + 1) % 4;
+					switch (this.board[i][j]) {
+						default:
+							break;
+						case -1:
+							this.rotateI(i, j);
+							break;
+						case -3:
+							this.rotateT(i, j);
+							break;
+						case -4:
+							this.rotateS(i, j);
+							break;
+						case -5:
+							this.rotateZ(i, j);
+							break;
+						case -6:
+							this.rotateJ(i, j);
+							break;
+						case -7:
+							this.rotateL(i, j);
+							break;
+					}
+					break;
+				}
+			}
+		}
+	}
+
+	rotateJ(i, j)
+	{
+		switch (this.currentRotation) {
+			default:
+				break;
+			case 0:
+				break;
+			case 1:
+				break;
+			case 2:
+				break;
+			case 3:
+				break;
+		}
+	}
+
+	rotateL(i, j)
+	{
+
+	}
+
+	rotateZ(i, j)
+	{
+
+	}
+
+	rotateS(i, j)
+	{
+
+	}
+
+	rotateI(i, j)
+	{
+		
+	}
+
+	rotateT(i, j)
+	{
+
 	}
 }
 
