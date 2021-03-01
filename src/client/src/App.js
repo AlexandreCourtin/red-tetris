@@ -142,7 +142,7 @@ function App() {
 				);
 			}
 
-			playState.push(<div className="game-main-board"><TetrisGrid key={'playerBoard'} board={clientBoard} /></div>);
+			playState.push(<div className="game-main-board" key={'playerboard-div'}><TetrisGrid key={'playerBoard'} board={clientBoard} /></div>);
 
 			let otherBardsState = [];
 			for (let i = 0 ; i < otherPlayerBoards.length ; i++) {
