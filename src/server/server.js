@@ -47,6 +47,9 @@ io.on("connection", (socket) => {
 				});
 			}
 			console.log('[' + roomName + '] ' + playerName + ' connected and created the room');
+
+			serverState.getPlayer(socket.id).setPiece(serverState.getPlayer(socket.id).pieces[serverState.getPlayer(socket.id).currentPiece]);
+			serverState.getPlayer(socket.id).setTmpBoard();
 		}
 	});
 
@@ -83,38 +86,76 @@ io.on("connection", (socket) => {
 	});
 
 	// RECEIVED WHEN CLIENT SENDS COMMANDS
+	let start = 1;
 	socket.on('commands', function(commands) {
 		let board;
+		let player = serverState.getPlayer(socket.id);
 		if (serverState.getPlayer(socket.id) && serverState.getPlayer(socket.id).getIsPlaying()) {
 			board = serverState.getPlayer(socket.id).getBoard();
 		}
 		if (board) {
-			let hasMoved = false;
-			let movVer = commands.up * -1 + commands.down * 1;
-			let movHor = commands.left * -1 + commands.right * 1;
-
+			let hasMoved = 0;
+			let isTimeouting = false;
+			if (start) {
+				player.currentPiece++;
+				start = 0;
+			}
 			// TESTS MOVE SQUARE
-			let i = 0;
-			while (i < 10 && hasMoved == false) {
-				let j = 0;
-				while (j < 20 && hasMoved == false) {
-					if (hasMoved === false) {
-						if (board[i][j] === 1 && movVer !== 0 && j + movVer >= 0 && j + movVer < 20) {
-							board[i][j] = 0;
-							board[i][j + movVer] = 1;
-							hasMoved = true;
+			for (let i = 0 ; i < 10 ; i++) {
+				for (let j = 0 ; j < 20 ; j++) {
+					if (hasMoved < 4) {
+						if (commands.up && player.board[i][j] < 0 && j - 1 >= 0 && player.board[i][j - 1] <= 0) {
+							player.tmpBoard[i][j - 1] = player.board[i][j];
+							hasMoved++;
 						}
-						if (board[i][j] === 1 && movHor !== 0 && i + movHor >= 0 && i + movHor < 10) {
-							board[i][j] = 0;
-							board[i + movHor][j] = 1;
-							hasMoved = true;
+						else if (commands.up && player.board[i][j] < 0 && (j - 1 < 0 || player.board[i][j - 1] > 0) ) {
+							player.placePiece(player.board);
+							hasMoved = 5;
+							player.setTmpBoard();
+						}
+						else if (commands.down && player.board[i][j] < 0 && j + 1 < 20 && player.board[i][j + 1] <= 0) {
+							player.tmpBoard[i][j + 1] = player.board[i][j];
+							hasMoved++;
+						}
+						else if (commands.down && player.board[i][j] < 0 && (j + 1 >= 20 || player.board[i][j + 1] > 0)) {
+							player.placePiece(player.board);
+							player.setTmpBoard();
+							hasMoved = 5;
+						}
+						else if (commands.left && player.board[i][j] < 0 && i - 1 >= 0 && player.board[i - 1][j] <= 0) {
+							player.tmpBoard[i - 1][j] = player.board[i][j];
+							hasMoved++;
+						}
+						else if (commands.left && player.board[i][j] < 0 && (i - 1 < 0 || player.board[i - 1][j] > 0)) {
+							player.setTmpBoard();
+							hasMoved = 5;
+						}
+						else if (commands.right && player.board[i][j] < 0 && i + 1 < 10 && player.board[i + 1][j] <= 0) {
+							player.tmpBoard[i + 1][j] = player.board[i][j];
+							hasMoved++;
+						}
+						else if (commands.right && player.board[i][j] < 0 && (i + 1 >= 10 || player.board[i + 1][j] > 0)) {
+							player.setTmpBoard();
+							hasMoved = 5;
 						}
 					}
-					j++;
 				}
-				i++;
 			}
-			serverState.getPlayer(socket.id).setBoard(board);
+			if (hasMoved === 4)
+			{
+				// player.board = tmpBoard;
+				for (let i = 0 ; i < 10 ; i++) {
+					player.board[i] = [];
+					for (let j = 0 ; j < 20 ; j++) {
+						player.board[i][j] = player.tmpBoard[i][j];
+					}
+				}
+				player.setTmpBoard();
+				hasMoved = 5;
+			
+			}
+			serverState.getPlayer(socket.id).setBoard(player.board);
+			serverState.getPlayer(socket.id).setTmpBoard();
 		}
 	});
 });
@@ -125,3 +166,4 @@ setInterval(function() {
 }, 500);
 
 server.listen(PORT, () => console.log(`Listening on port ${PORT}`));
+

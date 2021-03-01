@@ -10,16 +10,19 @@ let nextPieceType = '';
 let nextPieceNumber = 0;
 
 export function setNextPieceType(p) {
-	nextPieceType = p;
+ 	nextPieceType = p;
 }
 
 export function getNextPieceNumber() {
 	return nextPieceNumber;
 }
 
+
 export function getInputs() {
+	console.log(commands.down);
 	return commands;
 }
+
 
 document.addEventListener('keydown', function(event) {
 	switch (event.key) {
