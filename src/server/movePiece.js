@@ -1,4 +1,9 @@
-function detectPiece()
+function rotatePiece()
+{
+	
+}
+
+function rotateJ()
 {
 	
 }
