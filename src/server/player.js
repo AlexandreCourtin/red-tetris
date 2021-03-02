@@ -7,6 +7,7 @@ class Player {
 	pieces = [];
 	currentPiece = 0;
 	currentRotation = 0;
+	gameOver = 0;
 
 	// board[x][y] = x Horizontal | y Vertical
 	board = [];
@@ -98,40 +99,88 @@ class Player {
  		console.log(i.type);
 		switch (i.type) {
 			default:
-				if (!this.board[3][1] && !this.board[4][1] && !this.board[5][1] && !this.board[6][1])
+				if (!this.board[3][2] && !this.board[4][2] && !this.board[5][2] && !this.board[6][2])
+				{
+					this.board[3][2] = -1;
+					this.board[4][2] = -1;
+					this.board[5][2] = -1;
+					this.board[6][2] = -1;
+				}
+				else if (!this.board[3][1] && !this.board[4][1] && !this.board[5][1] && !this.board[6][1])
 				{
 					this.board[3][1] = -1;
 					this.board[4][1] = -1;
 					this.board[5][1] = -1;
 					this.board[6][1] = -1;
 				}
-				else if (!this.board[3][0] && !this.board[4][0] && !this.board[5][0] && !this.board[6][0])
-				{
-					this.board[3][0] = -1;
-					this.board[4][0] = -1;
-					this.board[5][0] = -1;
-					this.board[6][0] = -1;
-				}
 				else
-
+				{
+					gameOver = 1;
+					console.log("game over man, game over...")
+				}
 				break;
 			case "O":
-				this.board[4][0] = -2;
-				this.board[5][0] = -2;
-				this.board[4][1] = -2;
-				this.board[5][1] = -2;
+				if (!this.board[4][1] && !this.board[5][1] && !this.board[4][2] && !this.board[5][2])
+				{
+					this.board[4][1] = -2;
+					this.board[5][1] = -2;
+					this.board[4][2] = -2;
+					this.board[5][2] = -2;
+				}
+				else if (!this.board[4][0] && !this.board[5][0] && !this.board[4][1] && !this.board[5][1])
+				{
+					this.board[4][0] = -2;
+					this.board[5][0] = -2;
+					this.board[4][1] = -2;
+					this.board[5][1] = -2;
+				}
+				else
+				{
+					gameOver = 1;
+					console.log("game over man, game over...")
+				}
 				break;
 			case "T":
-				this.board[4][1] = -3;
-				this.board[5][1] = -3;
-				this.board[6][1] = -3;
-				this.board[5][2] = -3;
+				if (!this.board[4][2] && !this.board[5][2] && !this.board[6][2] && !this.board[5][1])
+				{
+					this.board[4][2] = -3;
+					this.board[5][2] = -3;
+					this.board[6][2] = -3;
+					this.board[5][1] = -3;
+				}
+				else if (!this.board[4][1] && !this.board[5][1] && !this.board[6][1] && !this.board[5][0])
+				{
+					this.board[4][1] = -3;
+					this.board[5][1] = -3;
+					this.board[6][1] = -3;
+					this.board[5][0] = -3;
+				}
+				else
+				{
+					gameOver = 1;
+					console.log("game over man, game over...")
+				}
 				break;
 			case "S":
-				this.board[4][1] = -4;
-				this.board[5][1] = -4;
-				this.board[4][2] = -4;
-				this.board[3][2] = -4;
+				if (!this.board[4][1] && !this.board[5][1] && !this.board[4][2] && !this.board[3][2])
+				{
+					this.board[4][1] = -4;
+					this.board[5][1] = -4;
+					this.board[4][2] = -4;
+					this.board[3][2] = -4;
+				}
+				else if (!this.board[4][0] && !this.board[5][0] && !this.board[4][1] && !this.board[3][1])
+				{
+					this.board[4][0] = -4;
+					this.board[5][0] = -4;
+					this.board[4][1] = -4;
+					this.board[3][1] = -4;
+				}
+				else
+				{
+					gameOver = 1;
+					console.log("game over man, game over...")
+				}
 				break;
 			case "Z":
 				this.board[4][1] = -5;
@@ -163,6 +212,7 @@ class Player {
 		}
 		this.setPiece(this.pieces[this.currentPiece]);
 		this.currentPiece++;
+		this.currentRotation = 0;
 	}
 
 	rotatePiece()

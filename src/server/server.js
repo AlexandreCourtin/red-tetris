@@ -100,62 +100,65 @@ io.on("connection", (socket) => {
 				player.currentPiece++;
 				start = 0;
 			}
-			// TESTS MOVE SQUARE
-			for (let i = 0 ; i < 10 ; i++) {
-				for (let j = 0 ; j < 20 ; j++) {
-					if (hasMoved < 4) {
-						if (commands.up && player.board[i][j] < 0 && j - 1 >= 0 && player.board[i][j - 1] <= 0) {
-							player.tmpBoard[i][j - 1] = player.board[i][j];
-							hasMoved++;
-						}
-						else if (commands.up && player.board[i][j] < 0 && (j - 1 < 0 || player.board[i][j - 1] > 0) ) {
-							player.placePiece(player.board);
-							hasMoved = 5;
-							player.setTmpBoard();
-						}
-						else if (commands.down && player.board[i][j] < 0 && j + 1 < 20 && player.board[i][j + 1] <= 0) {
-							player.tmpBoard[i][j + 1] = player.board[i][j];
-							hasMoved++;
-						}
-						else if (commands.down && player.board[i][j] < 0 && (j + 1 >= 20 || player.board[i][j + 1] > 0)) {
-							player.placePiece(player.board);
-							player.setTmpBoard();
-							hasMoved = 5;
-						}
-						else if (commands.left && player.board[i][j] < 0 && i - 1 >= 0 && player.board[i - 1][j] <= 0) {
-							player.tmpBoard[i - 1][j] = player.board[i][j];
-							hasMoved++;
-						}
-						else if (commands.left && player.board[i][j] < 0 && (i - 1 < 0 || player.board[i - 1][j] > 0)) {
-							player.setTmpBoard();
-							hasMoved = 5;
-						}
-						else if (commands.right && player.board[i][j] < 0 && i + 1 < 10 && player.board[i + 1][j] <= 0) {
-							player.tmpBoard[i + 1][j] = player.board[i][j];
-							hasMoved++;
-						}
-						else if (commands.right && player.board[i][j] < 0 && (i + 1 >= 10 || player.board[i + 1][j] > 0)) {
-							player.setTmpBoard();
-							hasMoved = 5;
-						}
-					}
-				}
-			}
-			if (hasMoved === 4)
+			if (!player.gameOver)
 			{
-				// player.board = tmpBoard;
+				// TESTS MOVE SQUARE
 				for (let i = 0 ; i < 10 ; i++) {
-					player.board[i] = [];
-					for (let j = 0 ; j < 20 ; j++) {
-						player.board[i][j] = player.tmpBoard[i][j];
+					for (let j = 0 ; j < 22 ; j++) {
+						if (hasMoved < 4) {
+							if (commands.up && player.board[i][j] < 0 && j - 1 >= 0 && player.board[i][j - 1] <= 0) {
+								player.tmpBoard[i][j - 1] = player.board[i][j];
+								hasMoved++;
+							}
+							else if (commands.up && player.board[i][j] < 0 && (j - 1 < 0 || player.board[i][j - 1] > 0) ) {
+								player.placePiece(player.board);
+								hasMoved = 5;
+								player.setTmpBoard();
+							}
+							else if (commands.down && player.board[i][j] < 0 && j + 1 < 22 && player.board[i][j + 1] <= 0) {
+								player.tmpBoard[i][j + 1] = player.board[i][j];
+								hasMoved++;
+							}
+							else if (commands.down && player.board[i][j] < 0 && (j + 1 >= 22 || player.board[i][j + 1] > 0)) {
+								player.placePiece(player.board);
+								player.setTmpBoard();
+								hasMoved = 5;
+							}
+							else if (commands.left && player.board[i][j] < 0 && i - 1 >= 0 && player.board[i - 1][j] <= 0) {
+								player.tmpBoard[i - 1][j] = player.board[i][j];
+								hasMoved++;
+							}
+							else if (commands.left && player.board[i][j] < 0 && (i - 1 < 0 || player.board[i - 1][j] > 0)) {
+								player.setTmpBoard();
+								hasMoved = 5;
+							}
+							else if (commands.right && player.board[i][j] < 0 && i + 1 < 10 && player.board[i + 1][j] <= 0) {
+								player.tmpBoard[i + 1][j] = player.board[i][j];
+								hasMoved++;
+							}
+							else if (commands.right && player.board[i][j] < 0 && (i + 1 >= 10 || player.board[i + 1][j] > 0)) {
+								player.setTmpBoard();
+								hasMoved = 5;
+							}
+						}
 					}
 				}
-				player.setTmpBoard();
-				hasMoved = 5;
-			
+				if (hasMoved === 4)
+				{
+					// player.board = tmpBoard;
+					for (let i = 0 ; i < 10 ; i++) {
+						player.board[i] = [];
+						for (let j = 0 ; j < 22 ; j++) {
+							player.board[i][j] = player.tmpBoard[i][j];
+						}
+					}
+					player.setTmpBoard();
+					hasMoved = 5;
+				
+				}
+				serverState.getPlayer(socket.id).setBoard(player.board);
+				serverState.getPlayer(socket.id).setTmpBoard();
 			}
-			serverState.getPlayer(socket.id).setBoard(player.board);
-			serverState.getPlayer(socket.id).setTmpBoard();
 		}
 	});
 });
