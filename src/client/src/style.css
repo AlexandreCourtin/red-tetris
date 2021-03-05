@@ -58,6 +58,7 @@ html {
 	background-color: #000000AA;
 	position: absolute;
 	left: 0%;
+	height: 100%;
 	width: 40%;
 }
 
@@ -81,7 +82,7 @@ html {
 
 .game-colored-box {
 	min-width: .75vw;
-	min-height: 1.5vw;
+	min-height: 2vw;
 	width: 100%;
 	height: 100%;
 }
