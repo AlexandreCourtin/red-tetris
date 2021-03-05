@@ -115,7 +115,7 @@ class Player {
 				}
 				else
 				{
-					gameOver = 1;
+					this.gameOver = 1;
 					console.log("game over man, game over...")
 				}
 				break;
@@ -136,7 +136,7 @@ class Player {
 				}
 				else
 				{
-					gameOver = 1;
+					this.gameOver = 1;
 					console.log("game over man, game over...")
 				}
 				break;
@@ -157,48 +157,93 @@ class Player {
 				}
 				else
 				{
-					gameOver = 1;
+					this.gameOver = 1;
 					console.log("game over man, game over...")
 				}
 				break;
 			case "S":
-				if (!this.board[4][1] && !this.board[5][1] && !this.board[4][2] && !this.board[3][2])
+				if (!this.board[5][1] && !this.board[6][1] && !this.board[5][2] && !this.board[4][2])
 				{
-					this.board[4][1] = -4;
 					this.board[5][1] = -4;
+					this.board[6][1] = -4;
+					this.board[5][2] = -4;
 					this.board[4][2] = -4;
-					this.board[3][2] = -4;
 				}
-				else if (!this.board[4][0] && !this.board[5][0] && !this.board[4][1] && !this.board[3][1])
+				else if (!this.board[5][0] && !this.board[6][0] && !this.board[5][1] && !this.board[4][1])
 				{
-					this.board[4][0] = -4;
 					this.board[5][0] = -4;
+					this.board[6][0] = -4;
+					this.board[5][1] = -4;
 					this.board[4][1] = -4;
-					this.board[3][1] = -4;
 				}
 				else
 				{
-					gameOver = 1;
+					this.gameOver = 1;
 					console.log("game over man, game over...")
 				}
 				break;
 			case "Z":
-				this.board[4][1] = -5;
-				this.board[5][1] = -5;
-				this.board[5][2] = -5;
-				this.board[6][2] = -5;
+				if (!this.board[4][1] && !this.board[5][1] && !this.board[5][2] && !this.board[6][2])
+				{
+					this.board[4][1] = -5;
+					this.board[5][1] = -5;
+					this.board[5][2] = -5;
+					this.board[6][2] = -5;
+				}
+				else if (!this.board[4][0] && !this.board[5][0] && !this.board[5][1] && !this.board[6][1])
+				{
+					this.board[4][0] = -5;
+					this.board[5][0] = -5;
+					this.board[5][1] = -5;
+					this.board[6][1] = -5;
+				}
+				else
+				{
+					this.gameOver = 1;
+					console.log("game over man, game over...")
+				}
 				break;
 			case "J":
-				this.board[4][1] = -6;
-				this.board[4][2] = -6;
-				this.board[4][3] = -6;
-				this.board[3][3] = -6;
+				if (!this.board[4][1] && !this.board[4][2] && !this.board[5][2] && !this.board[6][2])
+				{
+					this.board[4][1] = -6;
+					this.board[4][2] = -6;
+					this.board[5][2] = -6;
+					this.board[6][2] = -6;
+				}
+				else if (!this.board[4][0] && !this.board[4][1] && !this.board[5][1] && !this.board[6][1])
+				{
+					this.board[4][0] = -6;
+					this.board[4][1] = -6;
+					this.board[5][1] = -6;
+					this.board[6][1] = -6;
+				}
+				else
+				{
+					this.gameOver = 1;
+					console.log("game over man, game over...")
+				}
 				break;
 			case "L":
-				this.board[4][1] = -7;
-				this.board[4][2] = -7;
-				this.board[4][3] = -7;
-				this.board[5][3] = -7;
+				if (!this.board[6][1] && !this.board[4][2] && !this.board[5][2] && !this.board[6][2])
+				{
+					this.board[6][1] = -7;
+					this.board[4][2] = -7;
+					this.board[5][2] = -7;
+					this.board[6][2] = -7;
+				}
+				else if (!this.board[6][0] && !this.board[4][1] && !this.board[5][1] && !this.board[6][1])
+				{
+					this.board[6][0] = -7;
+					this.board[4][1] = -7;
+					this.board[5][1] = -7;
+					this.board[6][1] = -7;
+				}
+				else
+				{
+					this.gameOver = 1;
+					console.log("game over man, game over...")
+				}
 				break;
 		}
 	}
@@ -258,6 +303,54 @@ class Player {
 			case 0:
 				break;
 			case 1:
+				if (((i + 2 < 10) && (j + 2 < 22)) && 
+					((this.tmpBoard[i + 1][j] <= 0) && (this.tmpBoard[i + 2][j] <= 0) && (this.tmpBoard[i + 1][j + 1] <= 0) && (this.tmpBoard[i + 1][j + 2] <= 0)))
+				{
+					this.tmpBoard[i][j] = 0;
+					this.tmpBoard[i][j + 1] = 0;
+					this.tmpBoard[i + 2][j + 1] = 0;
+					this.tmpBoard[i + 1][j] = -6;
+					this.tmpBoard[i + 1][j + 2] = -6;
+					this.tmpBoard[i + 2][j] = -6;
+				}
+				else if (((i + 1 < 10) && (j + 2 < 22) && (i - 1 >= 0)) && 
+					((this.tmpBoard[i][j] <= 0) && (this.tmpBoard[i + 1][j] <= 0) && (this.tmpBoard[i][j + 1] <= 0) && (this.tmpBoard[i][j + 2] <= 0)))
+				{
+					this.tmpBoard[i + 2][j + 1] = 0;
+					this.tmpBoard[i + 1][j + 1] = 0;
+					this.tmpBoard[i][j + 2] = -6;
+					this.tmpBoard[i + 1][j] = -6;
+				}
+				else if (((i + 1 < 10) && (j + 3 < 22) && (i - 1 >= 0)) && 
+					((this.tmpBoard[i][j + 1] <= 0) && (this.tmpBoard[i + 1][j + 1] <= 0) && (this.tmpBoard[i][j + 2] <= 0) && (this.tmpBoard[i][j + 3] <= 0)))
+				{
+					this.tmpBoard[i][j] = 0;
+					this.tmpBoard[i + 2][j + 1] = 0;
+					this.tmpBoard[i][j + 2] = -6;
+					this.tmpBoard[i][j + 3] = -6;
+				}
+				else if (((i + 2 < 10) && (j < 22) && (j - 2 >= 0)) && 
+					((this.tmpBoard[i + 1][j - 2] <= 0) && (this.tmpBoard[i + 2][j - 2] <= 0) && (this.tmpBoard[i + 1][j - 1] <= 0) && (this.tmpBoard[i + 1][j] <= 0)))
+				{
+					this.tmpBoard[i][j] = 0;
+					this.tmpBoard[i][j + 1] = 0;
+					this.tmpBoard[i + 2][j + 1] = 0;
+					this.tmpBoard[i + 1][j + 1] = 0;
+					this.tmpBoard[i + 1][j - 1] = -6;
+					this.tmpBoard[i + 1][j - 2] = -6;
+					this.tmpBoard[i + 1][j] = -6;
+					this.tmpBoard[i + 2][j - 2] = -6;
+				}
+				else if (((i + 1 < 10) && (j < 22) && (i - 1 >= 0) && (j - 2 >= 0)) && 
+					((this.tmpBoard[i][j - 2] <= 0) && (this.tmpBoard[i + 1][j - 2] <= 0) && (this.tmpBoard[i][j - 1] <= 0) && (this.tmpBoard[i][j] <= 0)))
+				{
+					this.tmpBoard[i][j + 1] = 0;
+					this.tmpBoard[i + 2][j + 1] = 0;
+					this.tmpBoard[i + 1][j + 1] = 0;
+					this.tmpBoard[i][j - 1] = -6;
+					this.tmpBoard[i][j - 2] = -6;
+					this.tmpBoard[i + 1][j - 2] = -6;
+				}
 				break;
 			case 2:
 				break;

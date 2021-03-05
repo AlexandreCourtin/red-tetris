@@ -136,9 +136,9 @@ function App() {
 				}
 
 				return (
-					<table className="game-tetris-board">
+					<div className="game-tetris-board">
 						<tbody>{tetrisColumn}</tbody>
-					</table>
+					</div>
 				);
 			}
 
