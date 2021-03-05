@@ -48,7 +48,6 @@ html {
 
 .game-main-board {
 	position: absolute;
-	width: 20%;
 	height: 40vw;
 	left: 50%;
 	transform: translate(-50%, 0%);
@@ -81,14 +80,14 @@ html {
 }
 
 .game-colored-box {
-	min-width: .75vw;
+	min-width: 2vw;
 	min-height: 2vw;
 	width: 100%;
 	height: 100%;
 }
 
 .game-colored-box-other {
-	min-width: .1875vw;
+	min-width: .5vw;
 	min-height: .375vw;
 	width: 100%;
 	height: 100%;
