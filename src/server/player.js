@@ -8,6 +8,7 @@ class Player {
 	currentPiece = 0;
 	currentRotation = 0;
 	gameOver = 0;
+	start = 1;
 
 	// board[x][y] = x Horizontal | y Vertical
 	board = [];
