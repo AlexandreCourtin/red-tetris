@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react";
 import socketIOClient from "socket.io-client";
 import LoginPage from "./components/loginPage";
-import { getInputs, setNextPieceType, getNextPieceNumber } from './utils/input';
+import { setNextPieceType, getNextPieceNumber } from './utils/input';
 import "./style.css";
 
 const SERVERPATH = "http://127.0.0.1:4001";
 
-const socket = socketIOClient(SERVERPATH);
+export const socket = socketIOClient(SERVERPATH);
 
 const clientRoomName = checkNameAndRoomValidity(window.location.hash.substring(
 	window.location.hash.lastIndexOf("#") + 1,
@@ -204,10 +204,5 @@ function App() {
 		);
 	}
 }
-
-// SEND CLIENT COMMANDS TO SERVER
-setInterval(function() {
-	socket.emit('commands', getInputs());
-}, 500);
 
 export default App;

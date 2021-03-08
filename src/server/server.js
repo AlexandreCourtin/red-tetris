@@ -163,7 +163,7 @@ io.on("connection", (socket) => {
 // SEND SERVER STATE TO CLIENTS
 setInterval(function() {
 	io.sockets.emit('serverState', serverState);
-}, 300);
+}, 100);
 
 server.listen(PORT, () => console.log(`Listening on port ${PORT}`));
 
