@@ -122,7 +122,7 @@ function App() {
 			const TetrisGrid = ({ board, size }) => {
 
 				let tetrisColumn = [];
-				for (let i = 0 ; i < 20 ; i++) {
+				for (let i = 2 ; i < 22 ; i++) {
 					let tetrisRow = [];
 					for (let j = 0 ; j < 10 ; j++) {
 						let boxColor;
@@ -136,9 +136,9 @@ function App() {
 				}
 
 				return (
-					<table className="game-tetris-board">
+					<div className="game-tetris-board">
 						<tbody>{tetrisColumn}</tbody>
-					</table>
+					</div>
 				);
 			}
 
