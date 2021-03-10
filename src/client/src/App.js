@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react";
 import socketIOClient from "socket.io-client";
 import LoginPage from "./components/loginPage";
-import { getInputs, setNextPieceType, getNextPieceNumber } from './utils/input';
+import { setNextPieceType, getNextPieceNumber } from './utils/input';
 import "./style.css";
 
 const SERVERPATH = "http://127.0.0.1:4001";
 
-const socket = socketIOClient(SERVERPATH);
+export const socket = socketIOClient(SERVERPATH);
 
 const clientRoomName = checkNameAndRoomValidity(window.location.hash.substring(
 	window.location.hash.lastIndexOf("#") + 1,
@@ -119,7 +119,36 @@ function App() {
 				}}/>
 			);
 
-			const TetrisGrid = ({ board, size }) => {
+			const ColoredBoxOther = ({ color }) => (
+				<div className="game-colored-box-other" style={{
+					backgroundColor: color
+				}}/>
+			);
+
+			const TetrisGridOther = ({ board }) => {
+
+				let tetrisColumn = [];
+				for (let i = 0 ; i < 20 ; i++) {
+					let tetrisRow = [];
+					for (let j = 0 ; j < 10 ; j++) {
+						let boxColor;
+
+						if (board[j][i] === 0) boxColor = '#9bbc0f';
+						else boxColor = '#306230';
+						
+						tetrisRow.push(<td key={'uniqueBox' + i + '' + j}><ColoredBoxOther color={boxColor} /></td>);
+					}
+					tetrisColumn.push(<tr key={'uniqueRow' + i}>{tetrisRow}</tr>);
+				}
+
+				return (
+					<div className="game-tetris-board">
+						<tbody>{tetrisColumn}</tbody>
+					</div>
+				);
+			}
+
+			const TetrisGrid = ({ board }) => {
 
 				let tetrisColumn = [];
 				for (let i = 2 ; i < 22 ; i++) {
@@ -149,7 +178,7 @@ function App() {
 				otherBardsState.push(
 					<div key={'otherBoard ' + i}>
 						<p className="game-other-name">{otherPlayerNames[i]}</p>
-						<div className="game-other-board"><TetrisGrid board={otherPlayerBoards[i]} /></div>
+						<div className="game-other-board"><TetrisGridOther board={otherPlayerBoards[i]} /></div>
 					</div>
 				);
 			}
@@ -175,10 +204,5 @@ function App() {
 		);
 	}
 }
-
-// SEND CLIENT COMMANDS TO SERVER
-setInterval(function() {
-	socket.emit('commands', getInputs());
-}, 500);
 
 export default App;
