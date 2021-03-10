@@ -156,8 +156,14 @@ function App() {
 					for (let j = 0 ; j < 10 ; j++) {
 						let boxColor;
 
-						if (board[j][i] === 0) boxColor = '#9bbc0f';
-						else boxColor = '#306230';
+						if (board[j][i] === 0) boxColor = '#000000';
+						else if (Math.abs(board[j][i]) === 1) boxColor = '#ff0000';
+						else if (Math.abs(board[j][i]) === 2) boxColor = '#00ff00';
+						else if (Math.abs(board[j][i]) === 3) boxColor = '#0000ff';
+						else if (Math.abs(board[j][i]) === 4) boxColor = '#ffff00';
+						else if (Math.abs(board[j][i]) === 5) boxColor = '#00ffff';
+						else if (Math.abs(board[j][i]) === 6) boxColor = '#ff00ff';
+						else if (Math.abs(board[j][i]) === 7) boxColor = '#ffffff';
 						
 						tetrisRow.push(<td key={'uniqueBox' + i + '' + j}><ColoredBox color={boxColor} /></td>);
 					}
