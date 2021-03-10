@@ -109,13 +109,8 @@ io.on("connection", (socket) => {
 					for (let j = 0 ; j < 22 ; j++) {
 						if (hasMoved < 4) {
 							if (commands.up && player.board[i][j] < 0 && j - 1 >= 0 && player.board[i][j - 1] <= 0) {
-								player.tmpBoard[i][j - 1] = player.board[i][j];
-								hasMoved++;
-							}
-							else if (commands.up && player.board[i][j] < 0 && (j - 1 < 0 || player.board[i][j - 1] > 0) ) {
-								player.placePiece(player.board);
-								hasMoved = 5;
-								player.setTmpBoard();
+								player.rotatePiece();
+								hasMoved = 4;
 							}
 							else if (commands.down && player.board[i][j] < 0 && j + 1 < 22 && player.board[i][j + 1] <= 0) {
 								player.tmpBoard[i][j + 1] = player.board[i][j];
