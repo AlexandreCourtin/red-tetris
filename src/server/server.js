@@ -30,7 +30,7 @@ io.on("connection", (socket) => {
 
 				// GET THE PIECES FROM THE LEADER
 				serverState.getPlayer(socket.id).setPieces(serverState.getPlayer(id).pieces);
-				serverState.getPlayer(socket.id).setPiece(serverState.getPlayer(socket.id).pieces[serverState.getPlayer(socket.id).currentPiece]);
+				serverState.getPlayer(socket.id).newPiece(serverState.getPlayer(socket.id).pieces[serverState.getPlayer(socket.id).currentPiece]);
 				serverState.getPlayer(socket.id).setTmpBoard();
 
 				console.log('[' + roomName + '] ' + playerName + ' connected');
@@ -50,7 +50,7 @@ io.on("connection", (socket) => {
 			}
 			console.log('[' + roomName + '] ' + playerName + ' connected and created the room');
 
-			serverState.getPlayer(socket.id).setPiece(serverState.getPlayer(socket.id).pieces[serverState.getPlayer(socket.id).currentPiece]);
+			serverState.getPlayer(socket.id).newPiece(serverState.getPlayer(socket.id).pieces[serverState.getPlayer(socket.id).currentPiece]);
 			serverState.getPlayer(socket.id).setTmpBoard();
 		}
 	});
