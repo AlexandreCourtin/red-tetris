@@ -31,6 +31,7 @@ class Player {
 				this.board[i][j] = 0;
 			}
 		}
+		this.setTmpBoard();
 	}
 
 	setTmpBoard() {
@@ -43,6 +44,17 @@ class Player {
 					this.tmpBoard[i][j] = 0;
 			}
 		}
+	}
+
+	setTmpToBoard()
+	{
+		for (let i = 0 ; i < 10 ; i++) {
+			this.board[i] = [];
+			for (let j = 0 ; j < 22 ; j++) {
+				this.board[i][j] = this.tmpBoard[i][j];
+			}
+		}
+		this.setTmpBoard();
 	}
 
 	getName() {
@@ -99,6 +111,30 @@ class Player {
 
 	getBoard() {
 		return this.board;
+	}
+
+	setPiece(i, j, n, t)
+	{
+		switch (t) {
+			default:
+				console.log("qu'est ce que tu fous ici");
+				break;
+			case -1:
+				return(this.setI(i, j, n));
+			case -2:
+				return(this.setO(i, j, n));
+			case -3:
+				return(this.setT(i, j, n));
+			case -4:
+				return(this.setS(i, j, n));
+			case -5:
+				return(this.setZ(i, j, n));
+			case -6:
+				return(this.setJ(i, j, n));
+			case -7:
+				return(this.setL(i, j, n));
+			}
+		return 
 	}
  	
  	newPiece(i) {
@@ -172,9 +208,9 @@ class Player {
 				break;
 			case "S":
 				this.type = -4;
-				if (!setPiece(5, 1, 1, -4))
+				if (!this. setPiece(5, 1, 1, -4))
 					break ;
-				else if (!setPiece(5, 0, 1, -4))
+				else if (!this. setPiece(5, 0, 1, -4))
 					break ;
 				else
 				{
@@ -184,9 +220,9 @@ class Player {
 				break;
 			case "Z":
 				this.type = -5;
-				if (!setPiece(4, 1, 1, -5))
+				if (!this. setPiece(4, 1, 1, -5))
 					break ;
-				else if (!setPiece(4, 0, 1, -5))
+				else if (!this. setPiece(4, 0, 1, -5))
 					break ;
 				else if (!this.board[4][0] && !this.board[5][0] && !this.board[5][1] && !this.board[6][1])
 				{
@@ -203,9 +239,9 @@ class Player {
 				break;
 			case "J":
 				this.type = -6;
-				if (!setPiece(4, 1, 1, -6))
+				if (!this. setPiece(4, 1, 1, -6))
 					break ;
-				else if (!setPiece(4, 0, 1, -6))
+				else if (!this. setPiece(4, 0, 1, -6))
 					break ;
 				else
 				{
@@ -215,9 +251,9 @@ class Player {
 				break;
 			case "L":
 				this.type = -7;
-				if (!setPiece(4, 2, 1, -7))
+				if (!this. setPiece(4, 2, 1, -7))
 					break ;
-				else if (!setPiece(4, 1, 1, -7))
+				else if (!this. setPiece(4, 1, 1, -7))
 					break ;
 				else
 				{
@@ -226,6 +262,8 @@ class Player {
 				}
 				break;
 		}
+		console.log("test");
+		this.setTmpToBoard();
 	}
 
 	placePiece() {
@@ -605,7 +643,7 @@ class Player {
 		}
 		if (this.currentRotation == 1)
 		{
-			if (t == -6 || t == -4)
+			if (t == -4)
 				i--;
 			if (t == -7)
 				i-= 2;
@@ -621,7 +659,7 @@ class Player {
 				return 0;
 			else
 			{
-				if (t == -6 || t == -4)
+				if ( t == -4)
 					i++;
 				if (t == -7)
 					i += 2;
@@ -662,7 +700,7 @@ class Player {
 		if (this.currentRotation == 3)
 		{
 			if (t == -6)
-				i++;
+				j--;
 			if (t == -7 || t == -5)
 				j--;
 			if (this.setPiece(i, j, 1, t) == 0)
@@ -678,7 +716,7 @@ class Player {
 			else
 			{
 				if (t == -6)
-					i--;
+					j++;
 				if (t == -7 || t == -5)
 					j++;
 				this.currentRotation--;
