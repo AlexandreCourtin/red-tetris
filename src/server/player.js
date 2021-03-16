@@ -337,6 +337,7 @@ class Player {
 				else
 					return (1);
 			case 1:
+				i--;
 				if (((i + 2 < 10) && (j + 2 < 22) && (i >= 0) && (j >= 0)) && 
 					((this.board[i + 1][j] <= 0) && (this.board[i + 2][j] <= 0) && 
 					(this.board[i + 1][j + 1] <= 0) && (this.board[i + 1][j + 2] <= 0)))
@@ -352,6 +353,7 @@ class Player {
 				else
 					return (1);
 			case 2:
+				j--;
 				if (((i + 2 < 10) && (j + 2 < 22) && (i >= 0) && (j >= 0)) && 
 					((this.board[i][j + 1] <= 0) && (this.board[i + 1][j + 1] <= 0) &&
 					(this.board[i + 2][j + 1] <= 0) && (this.board[i + 2][j + 2] <= 0)))
@@ -367,6 +369,7 @@ class Player {
 				else
 					return (1);
 			case 3:
+				i--;
 				if (((i + 1 < 10) && (j + 2 < 22) && (i >= 0) && (j >= 0)) && 
 					((this.board[i][j + 2] <= 0) && (this.board[i + 1][j] <= 0) &&
 					(this.board[i + 1][j + 1] <= 0) && (this.board[i + 1][j + 2] <= 0)))
@@ -610,6 +613,8 @@ class Player {
 		{
 			if (t == -4)
 				i++;
+			if (t == -6)
+				i--;
 			if (this.setPiece(i, j, 1, t) == 0)
 				return 0;
 			else if (this.setPiece(i - 1, j, 1, t) == 0)
@@ -624,12 +629,16 @@ class Player {
 			{
 				if (t == -4)
 					i--;
+				if (t == -6)
+					i++;
 				this.currentRotation = 4;
 				return (this.setPiece(i, j, 1, t));
 			}
 		}
 		if (this.currentRotation == 1)
 		{
+			if (t == -6)
+				i++;
 			if (this.setPiece(i, j, 1, t) == 0)
 				return 0;
 			else if (this.setPiece(i - 1, j, 1, t) == 0)
@@ -642,6 +651,8 @@ class Player {
 				return 0;
 			else
 			{
+				if (t == -6)
+					i--;
 				this.currentRotation--;
 				return (this.setPiece(i, j, 1, t));
 			}
@@ -650,6 +661,8 @@ class Player {
 		{
 			if (t == -4)
 				j++;
+			if (t == -6)
+				i--, j++;
 			if (this.setPiece(i, j, 1, t) == 0)
 				return 0;
 			else if (this.setPiece(i + 1, j, 1, t) == 0)
@@ -664,6 +677,8 @@ class Player {
 			{
 				if (t == -4)
 					j--;
+				if (t == -6)
+					i++, j--;
 				this.currentRotation--;
 				return (this.setPiece(i, j, 1, t));
 			}
@@ -672,6 +687,8 @@ class Player {
 		{
 			if (t == -4)
 				j--, i--;
+			if (t == -6)
+				i++, j--;
 			if (this.setPiece(i, j, 1, t) == 0)
 				return 0;
 			else if (this.setPiece(i - 1, j, 1, t) == 0)
@@ -684,6 +701,8 @@ class Player {
 				return 0;
 			else
 			{
+				if (t == -6)
+					i--, j++;
 				if (t == -4)
 					j++, i++;
 				this.currentRotation--;
