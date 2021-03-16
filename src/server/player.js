@@ -618,6 +618,8 @@ class Player {
 				i++;
 			if (t == -6)
 				i--;
+			if (t == -7)
+				i+= 2;
 			if (this.setPiece(i, j, 1, t) == 0)
 				return 0;
 			else if (this.setPiece(i - 1, j, 1, t) == 0)
@@ -630,6 +632,8 @@ class Player {
 				return 0;
 			else
 			{
+				if (t == -7)
+					i -= 2;
 				if (t == -4)
 					i--;
 				if (t == -6)
@@ -696,6 +700,8 @@ class Player {
 				j--, i--;
 			if (t == -6)
 				i++, j--;
+			if (t == -7)
+				j--;
 			if (this.setPiece(i, j, 1, t) == 0)
 				return 0;
 			else if (this.setPiece(i - 1, j, 1, t) == 0)
@@ -712,6 +718,8 @@ class Player {
 					i--, j++;
 				if (t == -4)
 					j++, i++;
+				if (t == -7)
+					j++;
 				this.currentRotation--;
 				return (this.setPiece(i, j, 1, t));
 			}
