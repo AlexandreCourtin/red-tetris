@@ -101,10 +101,8 @@ class Player {
 			case -3:
 				return(this.setT(i, j, n));
 			case -4:
-			{
 				console.log("piece S pose");
 				return(this.setS(i, j, n));
-			}
 			case -5:
 				return(this.setZ(i, j, n));
 			case -6:
@@ -291,30 +289,19 @@ class Player {
 		}
 	}
 
-
-	// setPiece(i, j, n, t)
-	// {
-	// 	switch (t) {
-	// 		default:
-	// 			console.log("qu'est ce que tu fous ici");
-	// 			break;
-	// 		case -1:
-	// 			return(this.setI(i, j, n));
-	// 		case -2:
-	// 			return(this.setO(i, j, n));
-	// 		case -3:
-	// 			return(this.setT(i, j, n));
-	// 		case -4:
-	// 			return(this.setS(i, j, n));
-	// 		case -5:
-	// 			return(this.setZ(i, j, n));
-	// 		case -6:
-	// 			return(this.setJ(i, j, n));
-	// 		case -7:
-	// 			return(this.setL(i, j, n));
-	// 		}
-	// }
-
+	setO(i, j, n)
+	{
+		if (((i + 1 < 10) && (j + 1 < 22) && (i >= 0) && (j >= 0)) &&
+			(i + 1!this.board[i][j] && !this.board[i + 1][j] && !this.board[i][j + 1] && !this.board[i + 1][j + 1]))
+		{
+			this.board[i][j] = n * -2;
+			this.board[i + 1][j] = n * -2;
+			this.board[i][j + 1] = n * -2;
+			this.board[i + 1][j + 1] = n * -2;
+			return (0);
+		}
+		return (1);
+	}
 	setJ(i, j, n)
 	{
 		console.log(i, j, n, this.currentRotation);
