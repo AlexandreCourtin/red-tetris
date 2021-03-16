@@ -17,7 +17,6 @@ class Player {
 
 	// board[x][y] = x Horizontal | y Vertical
 	board = [];
-	tmpBoard = [];
 
 	constructor(socketId, name, room, isLeader) {
 		this.socketId = socketId;
@@ -31,30 +30,6 @@ class Player {
 				this.board[i][j] = 0;
 			}
 		}
-		this.setTmpBoard();
-	}
-
-	setTmpBoard() {
-		for (let i = 0 ; i < 10 ; i++) {
-			this.tmpBoard[i] = [];
-			for (let j = 0 ; j < 22 ; j++) {
-				if (this.board[i][j] >= 0)
-					this.tmpBoard[i][j] = this.board[i][j];
-				else
-					this.tmpBoard[i][j] = 0;
-			}
-		}
-	}
-
-	setTmpToBoard()
-	{
-		for (let i = 0 ; i < 10 ; i++) {
-			this.board[i] = [];
-			for (let j = 0 ; j < 22 ; j++) {
-				this.board[i][j] = this.tmpBoard[i][j];
-			}
-		}
-		this.setTmpBoard();
 	}
 
 	getName() {
@@ -126,7 +101,10 @@ class Player {
 			case -3:
 				return(this.setT(i, j, n));
 			case -4:
+			{
+				console.log("piece S pose");
 				return(this.setS(i, j, n));
+			}
 			case -5:
 				return(this.setZ(i, j, n));
 			case -6:
@@ -263,7 +241,6 @@ class Player {
 				break;
 		}
 		console.log("test");
-		this.setTmpToBoard();
 	}
 
 	placePiece() {
@@ -315,28 +292,28 @@ class Player {
 	}
 
 
-	setPiece(i, j, n, t)
-	{
-		switch (t) {
-			default:
-				console.log("qu'est ce que tu fous ici");
-				break;
-			case -1:
-				return(this.setI(i, j, n));
-			case -2:
-				return(this.setO(i, j, n));
-			case -3:
-				return(this.setT(i, j, n));
-			case -4:
-				return(this.setS(i, j, n));
-			case -5:
-				return(this.setZ(i, j, n));
-			case -6:
-				return(this.setJ(i, j, n));
-			case -7:
-				return(this.setL(i, j, n));
-			}
-	}
+	// setPiece(i, j, n, t)
+	// {
+	// 	switch (t) {
+	// 		default:
+	// 			console.log("qu'est ce que tu fous ici");
+	// 			break;
+	// 		case -1:
+	// 			return(this.setI(i, j, n));
+	// 		case -2:
+	// 			return(this.setO(i, j, n));
+	// 		case -3:
+	// 			return(this.setT(i, j, n));
+	// 		case -4:
+	// 			return(this.setS(i, j, n));
+	// 		case -5:
+	// 			return(this.setZ(i, j, n));
+	// 		case -6:
+	// 			return(this.setJ(i, j, n));
+	// 		case -7:
+	// 			return(this.setL(i, j, n));
+	// 		}
+	// }
 
 	setJ(i, j, n)
 	{
@@ -346,13 +323,13 @@ class Player {
 				return (-1);
 			case 0:
 				if (((i + 2 < 10) && (j + 1 < 22) && (i >= 0) && (j >= 0)) && 
-					(this.tmpBoard[i][j] <= 0) && (this.tmpBoard[i][j + 1] <= 0) && 
-					(this.tmpBoard[i + 1][j + 1] <= 0) && (this.tmpBoard[i + 2][j + 1] <= 0))
+					(this.board[i][j] <= 0) && (this.board[i][j + 1] <= 0) && 
+					(this.board[i + 1][j + 1] <= 0) && (this.board[i + 2][j + 1] <= 0))
 				{
-					this.tmpBoard[i][j] = n * -6;
-					this.tmpBoard[i][j + 1] = n * -6;
-					this.tmpBoard[i + 1][j + 1] = n * -6;
-					this.tmpBoard[i + 2][j + 1] = n * -6;
+					this.board[i][j] = n * -6;
+					this.board[i][j + 1] = n * -6;
+					this.board[i + 1][j + 1] = n * -6;
+					this.board[i + 2][j + 1] = n * -6;
 					this.posJ = j;
 					this.posI = i;
 					return (0);
@@ -361,13 +338,13 @@ class Player {
 					return (1);
 			case 1:
 				if (((i + 2 < 10) && (j + 2 < 22) && (i >= 0) && (j >= 0)) && 
-					((this.tmpBoard[i + 1][j] <= 0) && (this.tmpBoard[i + 2][j] <= 0) && 
-					(this.tmpBoard[i + 1][j + 1] <= 0) && (this.tmpBoard[i + 1][j + 2] <= 0)))
+					((this.board[i + 1][j] <= 0) && (this.board[i + 2][j] <= 0) && 
+					(this.board[i + 1][j + 1] <= 0) && (this.board[i + 1][j + 2] <= 0)))
 				{
-					this.tmpBoard[i + 1][j] = n * -6;
-					this.tmpBoard[i + 2][j] = n * -6;
-					this.tmpBoard[i + 1][j + 1] = n * -6;
-					this.tmpBoard[i + 1][j + 2] = n * -6;
+					this.board[i + 1][j] = n * -6;
+					this.board[i + 2][j] = n * -6;
+					this.board[i + 1][j + 1] = n * -6;
+					this.board[i + 1][j + 2] = n * -6;
 					this.posI = i + 1;
 					this.posJ = j;
 					return (0);
@@ -376,13 +353,13 @@ class Player {
 					return (1);
 			case 2:
 				if (((i + 2 < 10) && (j + 2 < 22) && (i >= 0) && (j >= 0)) && 
-					((this.tmpBoard[i][j + 1] <= 0) && (this.tmpBoard[i + 1][j + 1] <= 0) &&
-					(this.tmpBoard[i + 2][j + 1] <= 0) && (this.tmpBoard[i + 2][j + 2] <= 0)))
+					((this.board[i][j + 1] <= 0) && (this.board[i + 1][j + 1] <= 0) &&
+					(this.board[i + 2][j + 1] <= 0) && (this.board[i + 2][j + 2] <= 0)))
 				{
-					this.tmpBoard[i][j + 1] = n * -6;
-					this.tmpBoard[i + 1][j + 1] = n * -6;
-					this.tmpBoard[i + 2][j + 1] = n * -6;
-					this.tmpBoard[i + 2][j + 2] = n * -6;
+					this.board[i][j + 1] = n * -6;
+					this.board[i + 1][j + 1] = n * -6;
+					this.board[i + 2][j + 1] = n * -6;
+					this.board[i + 2][j + 2] = n * -6;
 					this.posI = i;
 					this.posJ = j + 1;
 					return (0);
@@ -391,13 +368,13 @@ class Player {
 					return (1);
 			case 3:
 				if (((i + 1 < 10) && (j + 2 < 22) && (i >= 0) && (j >= 0)) && 
-					((this.tmpBoard[i][j + 2] <= 0) && (this.tmpBoard[i + 1][j] <= 0) &&
-					(this.tmpBoard[i + 1][j + 1] <= 0) && (this.tmpBoard[i + 1][j + 2] <= 0)))
+					((this.board[i][j + 2] <= 0) && (this.board[i + 1][j] <= 0) &&
+					(this.board[i + 1][j + 1] <= 0) && (this.board[i + 1][j + 2] <= 0)))
 				{
-					this.tmpBoard[i][j + 2] = n * -6;
-					this.tmpBoard[i + 1][j] = n * -6;
-					this.tmpBoard[i + 1][j + 1] = n * -6;
-					this.tmpBoard[i + 1][j + 2] = n * -6;
+					this.board[i][j + 2] = n * -6;
+					this.board[i + 1][j] = n * -6;
+					this.board[i + 1][j + 1] = n * -6;
+					this.board[i + 1][j + 2] = n * -6;
 					this.posI = i;
 					this.posJ = j + 2;
 					return (0);
@@ -416,13 +393,13 @@ class Player {
 				return (-1);
 			case 0:
 				if (((i + 2 < 10) && (j + 1 < 22) && (i >= 0) && (j >= 0)) && 
-					(this.tmpBoard[i + 2][j] <= 0) && (this.tmpBoard[i][j + 1] <= 0) && 
-					(this.tmpBoard[i + 1][j + 1] <= 0) && (this.tmpBoard[i + 2][j + 1] <= 0))
+					(this.board[i + 2][j] <= 0) && (this.board[i][j + 1] <= 0) && 
+					(this.board[i + 1][j + 1] <= 0) && (this.board[i + 2][j + 1] <= 0))
 				{
-					this.tmpBoard[i + 2][j] = -7 * n;
-					this.tmpBoard[i][j + 1] = -7 * n;
-					this.tmpBoard[i + 1][j + 1] = -7 * n;
-					this.tmpBoard[i + 2][j + 1] = -7 * n;
+					this.board[i + 2][j] = -7 * n;
+					this.board[i][j + 1] = -7 * n;
+					this.board[i + 1][j + 1] = -7 * n;
+					this.board[i + 2][j + 1] = -7 * n;
 					this.posJ = j + 1;
 					this.posI = i;
 					return (0);
@@ -431,13 +408,13 @@ class Player {
 					return (1);
 			case 1:
 				if (((i + 2 < 10) && (j + 2 < 22) && (i >= 0) && (j >= 0)) && 
-					((this.tmpBoard[i + 1][j] <= 0) && (this.tmpBoard[i + 2][j + 2] <= 0) && 
-					(this.tmpBoard[i + 1][j + 1] <= 0) && (this.tmpBoard[i + 1][j + 2] <= 0)))
+					((this.board[i + 1][j] <= 0) && (this.board[i + 2][j + 2] <= 0) && 
+					(this.board[i + 1][j + 1] <= 0) && (this.board[i + 1][j + 2] <= 0)))
 				{
-					this.tmpBoard[i + 1][j + 1] = -7 * n;
-					this.tmpBoard[i + 1][j] = -7 * n;
-					this.tmpBoard[i + 1][j + 2] = -7 * n;
-					this.tmpBoard[i + 2][j + 2] = -7 * n;
+					this.board[i + 1][j + 1] = -7 * n;
+					this.board[i + 1][j] = -7 * n;
+					this.board[i + 1][j + 2] = -7 * n;
+					this.board[i + 2][j + 2] = -7 * n;
 					this.posI = i + 1;
 					this.posJ = j;
 					return (0);
@@ -446,13 +423,13 @@ class Player {
 					return (1);
 			case 2:
 				if (((i + 2 < 10) && (j + 2 < 22) && (i >= 0) && (j >= 0)) && 
-					((this.tmpBoard[i][j + 1] <= 0) && (this.tmpBoard[i + 1][j + 1] <= 0) &&
-					(this.tmpBoard[i + 2][j + 1] <= 0) && (this.tmpBoard[i][j + 2] <= 0)))
+					((this.board[i][j + 1] <= 0) && (this.board[i + 1][j + 1] <= 0) &&
+					(this.board[i + 2][j + 1] <= 0) && (this.board[i][j + 2] <= 0)))
 				{
-					this.tmpBoard[i][j + 1] = -7 * n;
-					this.tmpBoard[i + 1][j + 1] = -7 * n;
-					this.tmpBoard[i + 2][j + 1] = -7 * n;
-					this.tmpBoard[i][j + 2] = -7 * n;
+					this.board[i][j + 1] = -7 * n;
+					this.board[i + 1][j + 1] = -7 * n;
+					this.board[i + 2][j + 1] = -7 * n;
+					this.board[i][j + 2] = -7 * n;
 					this.posI = i;
 					this.posJ = j + 1;
 					return (0);
@@ -461,13 +438,13 @@ class Player {
 					return (1);
 			case 3:
 				if (((i + 1 < 10) && (j + 2 < 22) && (i >= 0) && (j >= 0)) && 
-					((this.tmpBoard[i][j] <= 0) && (this.tmpBoard[i + 1][j] <= 0) &&
-					(this.tmpBoard[i + 1][j + 1] <= 0) && (this.tmpBoard[i + 1][j + 2] <= 0)))
+					((this.board[i][j] <= 0) && (this.board[i + 1][j] <= 0) &&
+					(this.board[i + 1][j + 1] <= 0) && (this.board[i + 1][j + 2] <= 0)))
 				{
-					this.tmpBoard[i][j] = -7 * n;
-					this.tmpBoard[i + 1][j] = -7 * n;
-					this.tmpBoard[i + 1][j + 1] = -7 * n;
-					this.tmpBoard[i + 1][j + 2] = -7 * n;
+					this.board[i][j] = -7 * n;
+					this.board[i + 1][j] = -7 * n;
+					this.board[i + 1][j + 1] = -7 * n;
+					this.board[i + 1][j + 2] = -7 * n;
 					this.posI = i;
 					this.posJ = j;
 					return (0);
@@ -486,13 +463,13 @@ class Player {
 				return (-1);
 			case 0:
 				if (((i + 2 < 10) && (j + 1 < 22) && (i >= 0) && (j >= 0)) && 
-					(this.tmpBoard[i + 2][j + 1] <= 0) && (this.tmpBoard[i][j] <= 0) && 
-					(this.tmpBoard[i + 1][j + 1] <= 0) && (this.tmpBoard[i + 1][j] <= 0))
+					(this.board[i + 2][j + 1] <= 0) && (this.board[i][j] <= 0) && 
+					(this.board[i + 1][j + 1] <= 0) && (this.board[i + 1][j] <= 0))
 				{
-					this.tmpBoard[i][j] = -5 * n;
-					this.tmpBoard[i + 1][j] = -5 * n;
-					this.tmpBoard[i + 1][j + 1] = -5 * n;
-					this.tmpBoard[i + 2][j + 1] = -5 * n;
+					this.board[i][j] = -5 * n;
+					this.board[i + 1][j] = -5 * n;
+					this.board[i + 1][j + 1] = -5 * n;
+					this.board[i + 2][j + 1] = -5 * n;
 					this.posJ = j;
 					this.posI = i;
 					return (0);
@@ -501,13 +478,13 @@ class Player {
 					return (1);
 			case 1:
 				if (((i + 2 < 10) && (j + 2 < 22) && (i >= 0) && (j >= 0)) && 
-					((this.tmpBoard[i + 2][j] <= 0) && (this.tmpBoard[i + 2][j + 1] <= 0) && 
-					(this.tmpBoard[i + 1][j + 1] <= 0) && (this.tmpBoard[i + 1][j + 2] <= 0)))
+					((this.board[i + 2][j] <= 0) && (this.board[i + 2][j + 1] <= 0) && 
+					(this.board[i + 1][j + 1] <= 0) && (this.board[i + 1][j + 2] <= 0)))
 				{
-					this.tmpBoard[i + 1][j + 1] = -5 * n;
-					this.tmpBoard[i + 1][j + 2] = -5 * n;
-					this.tmpBoard[i + 2][j] = -5 * n;
-					this.tmpBoard[i + 2][j + 1] = -5 * n;
+					this.board[i + 1][j + 1] = -5 * n;
+					this.board[i + 1][j + 2] = -5 * n;
+					this.board[i + 2][j] = -5 * n;
+					this.board[i + 2][j + 1] = -5 * n;
 					this.posI = i + 1;
 					this.posJ = j + 1;
 					return (0);
@@ -516,13 +493,13 @@ class Player {
 					return (1);
 			case 2:
 				if (((i + 2 < 10) && (j + 2 < 22) && (i >= 0) && (j >= 0)) && 
-					((this.tmpBoard[i + 1][j + 2] <= 0) && (this.tmpBoard[i + 1][j + 1] <= 0) &&
-					(this.tmpBoard[i + 2][j + 2] <= 0) && (this.tmpBoard[i][j + 1] <= 0)))
+					((this.board[i + 1][j + 2] <= 0) && (this.board[i + 1][j + 1] <= 0) &&
+					(this.board[i + 2][j + 2] <= 0) && (this.board[i][j + 1] <= 0)))
 				{
-					this.tmpBoard[i][j + 1] = -5 * n;
-					this.tmpBoard[i + 1][j + 1] = -5 * n;
-					this.tmpBoard[i + 1][j + 2] = -5 * n;
-					this.tmpBoard[i + 2][j + 2] = -5 * n;
+					this.board[i][j + 1] = -5 * n;
+					this.board[i + 1][j + 1] = -5 * n;
+					this.board[i + 1][j + 2] = -5 * n;
+					this.board[i + 2][j + 2] = -5 * n;
 					this.posI = i;
 					this.posJ = j + 1;
 					return (0);
@@ -531,13 +508,13 @@ class Player {
 					return (1);
 			case 3:
 				if (((i + 1 < 10) && (j + 2 < 22) && (i >= 0) && (j >= 0)) && 
-					((this.tmpBoard[i + 1][j] <= 0) && (this.tmpBoard[i][j + 1] <= 0) &&
-					(this.tmpBoard[i + 1][j + 1] <= 0) && (this.tmpBoard[i][j + 2] <= 0)))
+					((this.board[i + 1][j] <= 0) && (this.board[i][j + 1] <= 0) &&
+					(this.board[i + 1][j + 1] <= 0) && (this.board[i][j + 2] <= 0)))
 				{
-					this.tmpBoard[i][j + 1] = -5 * n;
-					this.tmpBoard[i][j + 2] = -5 * n;
-					this.tmpBoard[i + 1][j] = -5 * n;
-					this.tmpBoard[i + 1][j + 1] = -5 * n;
+					this.board[i][j + 1] = -5 * n;
+					this.board[i][j + 2] = -5 * n;
+					this.board[i + 1][j] = -5 * n;
+					this.board[i + 1][j + 1] = -5 * n;
 					this.posI = i;
 					this.posJ = j + 1;
 					return (0);
@@ -550,19 +527,21 @@ class Player {
 
 	setS(i, j, n)
 	{
-		console.log(i, j, n, this.currentRotation);
+		console.log(i, j, n, this.currentRotation, "setS");
 		switch (this.currentRotation) {
 			default:
 				return (-1);
 			case 0:
+				i--;
+				console.log("cas 0");
 				if (((i + 2 < 10) && (j + 1 < 22) && (i >= 0) && (j >= 0)) && 
-					((this.tmpBoard[i + 2][j] <= 0) && (this.tmpBoard[i][j + 1] <= 0) && 
-					(this.tmpBoard[i + 1][j + 1] <= 0) && (this.tmpBoard[i + 1][j] <= 0)))
+					((this.board[i + 2][j] <= 0) && (this.board[i][j + 1] <= 0) && 
+					(this.board[i + 1][j + 1] <= 0) && (this.board[i + 1][j] <= 0)))
 				{
-					this.tmpBoard[i][j + 1] = -4 * n;
-					this.tmpBoard[i + 1][j] = -4 * n;
-					this.tmpBoard[i + 1][j + 1] = -4 * n;
-					this.tmpBoard[i + 2][j] = -4 * n;
+					this.board[i][j + 1] = -4 * n;
+					this.board[i + 1][j] = -4 * n;
+					this.board[i + 1][j + 1] = -4 * n;
+					this.board[i + 2][j] = -4 * n;
 					this.posI = i;
 					this.posJ = j + 1;
 					return (0);
@@ -570,14 +549,16 @@ class Player {
 				else
 					return (1);
 			case 1:
+				i--;
+				console.log("cas 1");
 				if (((i + 2 < 10) && (j + 2 < 22) && (i >= 0) && (j >= 0)) && 
-					((this.tmpBoard[i + 1][j] <= 0) && (this.tmpBoard[i + 2][j + 2] <= 0) && 
-					(this.tmpBoard[i + 1][j + 1] <= 0) && (this.tmpBoard[i + 2][j + 1] <= 0)))
+					((this.board[i + 1][j] <= 0) && (this.board[i + 2][j + 2] <= 0) && 
+					(this.board[i + 1][j + 1] <= 0) && (this.board[i + 2][j + 1] <= 0)))
 				{
-					this.tmpBoard[i + 1][j] = -4 * n;
-					this.tmpBoard[i + 1][j + 1] = -4 * n;
-					this.tmpBoard[i + 2][j + 1] = -4 * n;
-					this.tmpBoard[i + 2][j + 2] = -4 * n;
+					this.board[i + 1][j] = -4 * n;
+					this.board[i + 1][j + 1] = -4 * n;
+					this.board[i + 2][j + 1] = -4 * n;
+					this.board[i + 2][j + 2] = -4 * n;
 					this.posI = i + 1;
 					this.posJ = j;
 					return (0);
@@ -585,14 +566,16 @@ class Player {
 				else
 					return (1);
 			case 2:
+				i--;
+				j--;
 				if (((i + 2 < 10) && (j + 2 < 22) && (i >= 0) && (j >= 0)) && 
-					((this.tmpBoard[i + 1][j + 2] <= 0) && (this.tmpBoard[i + 1][j + 1] <= 0) &&
-					(this.tmpBoard[i + 2][j + 1] <= 0) && (this.tmpBoard[i][j + 2] <= 0)))
+					((this.board[i + 1][j + 2] <= 0) && (this.board[i + 1][j + 1] <= 0) &&
+					(this.board[i + 2][j + 1] <= 0) && (this.board[i][j + 2] <= 0)))
 				{
-					this.tmpBoard[i][j + 2] = -4 * n;
-					this.tmpBoard[i + 1][j + 1] = -4 * n;
-					this.tmpBoard[i + 1][j + 2] = -4 * n;
-					this.tmpBoard[i + 2][j + 1] = -4 * n;
+					this.board[i][j + 2] = -4 * n;
+					this.board[i + 1][j + 1] = -4 * n;
+					this.board[i + 1][j + 2] = -4 * n;
+					this.board[i + 2][j + 1] = -4 * n;
 					this.posI = i;
 					this.posJ = j + 2;
 					return (0);
@@ -601,13 +584,13 @@ class Player {
 					return (1);
 			case 3:
 				if (((i + 2 < 10) && (j + 2 < 22) && (i >= 0) && (j >= 0)) && 
-					((this.tmpBoard[i][j] <= 0) && (this.tmpBoard[i][j + 1] <= 0) &&
-					(this.tmpBoard[i + 1][j + 1] <= 0) && (this.tmpBoard[i + 1][j + 2] <= 0)))
+					((this.board[i][j] <= 0) && (this.board[i][j + 1] <= 0) &&
+					(this.board[i + 1][j + 1] <= 0) && (this.board[i + 1][j + 2] <= 0)))
 				{
-					this.tmpBoard[i][j] = -4 * n;
-					this.tmpBoard[i][j + 1] = -4 * n;
-					this.tmpBoard[i + 1][j + 1] = -4 * n;
-					this.tmpBoard[i + 1][j + 2] = -4 * n;
+					this.board[i][j] = -4 * n;
+					this.board[i][j + 1] = -4 * n;
+					this.board[i + 1][j + 1] = -4 * n;
+					this.board[i + 1][j + 2] = -4 * n;
 					this.posI = i;
 					this.posJ = j;
 					return (0);
@@ -620,11 +603,13 @@ class Player {
 
 	rotateJLZST(i, j, t)
 	{
-		console.log(i, j, this.tmpBoard[i][j], t);
+		console.log(i, j, this.board[i][j], t);
 		this.setPiece(i, j, 0, t);
 		this.currentRotation = (this.currentRotation + 1) % 4;
 		if (this.currentRotation == 0)
 		{
+			if (t == -4)
+				i++;
 			if (this.setPiece(i, j, 1, t) == 0)
 				return 0;
 			else if (this.setPiece(i - 1, j, 1, t) == 0)
@@ -637,16 +622,14 @@ class Player {
 				return 0;
 			else
 			{
+				if (t == -4)
+					i--;
 				this.currentRotation = 4;
 				return (this.setPiece(i, j, 1, t));
 			}
 		}
 		if (this.currentRotation == 1)
 		{
-			if (t == -4)
-				i--;
-			if (t == -7)
-				i-= 2;
 			if (this.setPiece(i, j, 1, t) == 0)
 				return 0;
 			else if (this.setPiece(i - 1, j, 1, t) == 0)
@@ -659,22 +642,14 @@ class Player {
 				return 0;
 			else
 			{
-				if ( t == -4)
-					i++;
-				if (t == -7)
-					i += 2;
 				this.currentRotation--;
 				return (this.setPiece(i, j, 1, t));
 			}
 		}
 		if (this.currentRotation == 2)
 		{
-			if (t == -6 || t == -4)
-				j--;
-			if (t == -7 || t == -4)
-				i--;
-			if (t == -5)
-				i -= 2;
+			if (t == -4)
+				j++;
 			if (this.setPiece(i, j, 1, t) == 0)
 				return 0;
 			else if (this.setPiece(i + 1, j, 1, t) == 0)
@@ -687,22 +662,16 @@ class Player {
 				return 0;
 			else
 			{
-				if (t == -6 || t == -4)
-					j++;
-				if (t == -7 || t == -4)
-					i++;
-				if (t == -5)
-					i += 2;
+				if (t == -4)
+					j--;
 				this.currentRotation--;
 				return (this.setPiece(i, j, 1, t));
 			}
 		}
 		if (this.currentRotation == 3)
 		{
-			if (t == -6)
-				j--;
-			if (t == -7 || t == -5)
-				j--;
+			if (t == -4)
+				j--, i--;
 			if (this.setPiece(i, j, 1, t) == 0)
 				return 0;
 			else if (this.setPiece(i - 1, j, 1, t) == 0)
@@ -715,10 +684,8 @@ class Player {
 				return 0;
 			else
 			{
-				if (t == -6)
-					j++;
-				if (t == -7 || t == -5)
-					j++;
+				if (t == -4)
+					j++, i++;
 				this.currentRotation--;
 				return (this.setPiece(i, j, 1, t));
 			}
@@ -729,98 +696,98 @@ class Player {
 	testT0(i, j)
 	{
 		return (((i + 1 < 10) && (j + 2 < 22) && (i >= 0) && (j >= 0)) && 
-			(this.tmpBoard[i + 1][j] <= 0) && (this.tmpBoard[i][j + 1] <= 0) && 
-			(this.tmpBoard[i + 1][j + 1] <= 0) && (this.tmpBoard[i + 1][j + 2] <= 0))
+			(this.board[i + 1][j] <= 0) && (this.board[i][j + 1] <= 0) && 
+			(this.board[i + 1][j + 1] <= 0) && (this.board[i + 1][j + 2] <= 0))
 	}
 
 	resetT0(i, j)
 	{
-		this.tmpBoard[i + 1][j] = 0;
-		this.tmpBoard[i + 1][j + 1] = 0;
-		this.tmpBoard[i + 1][j + 2] = 0;
-		this.tmpBoard[i][j + 1] = 0;
+		this.board[i + 1][j] = 0;
+		this.board[i + 1][j + 1] = 0;
+		this.board[i + 1][j + 2] = 0;
+		this.board[i][j + 1] = 0;
 	}
 
 	placeT0(i, j)
 	{
-		this.tmpBoard[i + 1][j] = -3;
-		this.tmpBoard[i][j + 1] = -3;
-		this.tmpBoard[i + 1][j + 1] = -3;
-		this.tmpBoard[i + 2][j + 1] = -3;
+		this.board[i + 1][j] = -3;
+		this.board[i][j + 1] = -3;
+		this.board[i + 1][j + 1] = -3;
+		this.board[i + 2][j + 1] = -3;
 	}
 
 	testT1(i, j)
 	{
 		return (((i + 2 < 10) && (j + 2 < 22) && (i >= 0) && (j >= 0)) && 
-			((this.tmpBoard[i + 1][j] <= 0) && (this.tmpBoard[i + 2][j + 1] <= 0) && 
-			(this.tmpBoard[i + 1][j + 1] <= 0) && (this.tmpBoard[i + 1][j + 2] <= 0)))
+			((this.board[i + 1][j] <= 0) && (this.board[i + 2][j + 1] <= 0) && 
+			(this.board[i + 1][j + 1] <= 0) && (this.board[i + 1][j + 2] <= 0)))
 	}
 
 	resetT1(i, j)
 	{
-		this.tmpBoard[i + 1][j] = 0;
-		this.tmpBoard[i + 1][j + 1] = 0;
-		this.tmpBoard[i][j + 1] = 0;
-		this.tmpBoard[i + 2][j + 2] = 0;
+		this.board[i + 1][j] = 0;
+		this.board[i + 1][j + 1] = 0;
+		this.board[i][j + 1] = 0;
+		this.board[i + 2][j + 2] = 0;
 	}
 
 	placeT1(i, j)
 	{
-		this.tmpBoard[i + 1][j] = -3;
-		this.tmpBoard[i + 2][j + 1] = -3;
-		this.tmpBoard[i + 1][j + 1] = -3;
-		this.tmpBoard[i + 1][j + 2] = -3;
+		this.board[i + 1][j] = -3;
+		this.board[i + 2][j + 1] = -3;
+		this.board[i + 1][j + 1] = -3;
+		this.board[i + 1][j + 2] = -3;
 	}
 
 	testT2(i, j)
 	{
 		return (((i + 2 < 10) && (j + 2 < 22) && (i >= 0) && (j >= 0)) && 
-			((this.tmpBoard[i + 1][j] <= 0) && (this.tmpBoard[i + 1][j + 1] <= 0) &&
-			(this.tmpBoard[i + 2][j + 1] <= 0) && (this.tmpBoard[i + 1][j + 2] <= 0)))
+			((this.board[i + 1][j] <= 0) && (this.board[i + 1][j + 1] <= 0) &&
+			(this.board[i + 2][j + 1] <= 0) && (this.board[i + 1][j + 2] <= 0)))
 	}
 	
 	resetT2(i, j)
 	{
-		this.tmpBoard[i + 1][j] = 0;
-		this.tmpBoard[i + 2][j + 1] = 0;
-		this.tmpBoard[i + 1][j + 1] = 0;
-		this.tmpBoard[i + 1][j + 2] = 0;
+		this.board[i + 1][j] = 0;
+		this.board[i + 2][j + 1] = 0;
+		this.board[i + 1][j + 1] = 0;
+		this.board[i + 1][j + 2] = 0;
 	}
 
 	placeT2(i, j)
 	{
-		this.tmpBoard[i + 1][j + 2] = -3;
-		this.tmpBoard[i][j + 1] = -3;
-		this.tmpBoard[i + 1][j + 1] = -3;
-		this.tmpBoard[i + 2][j + 1] = -3;
+		this.board[i + 1][j + 2] = -3;
+		this.board[i][j + 1] = -3;
+		this.board[i + 1][j + 1] = -3;
+		this.board[i + 2][j + 1] = -3;
 	}
 
 	testT3(i, j)
 	{
 		return (((i + 1 < 10) && (j + 2 < 22) && (i >= 0) && (j >= 0)) && 
-			((this.tmpBoard[i + 1][j] <= 0) && (this.tmpBoard[i][j + 1] <= 0) &&
-			(this.tmpBoard[i + 1][j + 1] <= 0) && (this.tmpBoard[i + 1][j + 2] <= 0)))
+			((this.board[i + 1][j] <= 0) && (this.board[i][j + 1] <= 0) &&
+			(this.board[i + 1][j + 1] <= 0) && (this.board[i + 1][j + 2] <= 0)))
 
 	}
 	resetT3(i, j)
 	{
-		this.tmpBoard[i + 1][j] = 0;
-		this.tmpBoard[i + 1][j + 1] = 0;
-		this.tmpBoard[i + 2][j + 1] = 0;
-		this.tmpBoard[i + 1][j + 2] = 0;
+		this.board[i + 1][j] = 0;
+		this.board[i + 1][j + 1] = 0;
+		this.board[i + 2][j + 1] = 0;
+		this.board[i + 1][j + 2] = 0;
 	}
 
 	placeT3(i, j)
 	{
-		this.tmpBoard[i + 1][j] = -3;
-		this.tmpBoard[i][j + 1] = -3;
-		this.tmpBoard[i + 1][j + 1] = -3;
-		this.tmpBoard[i + 1][j + 2] = -3;
+		this.board[i + 1][j] = -3;
+		this.board[i][j + 1] = -3;
+		this.board[i + 1][j + 1] = -3;
+		this.board[i + 1][j + 2] = -3;
 	}
 
 	rotateT(i, j)
 	{
-		console.log(i, j, this.tmpBoard[i][j]);
+		console.log(i, j, this.board[i][j]);
 		switch (this.currentRotation) {
 			default:
 				break;
@@ -950,93 +917,93 @@ class Player {
 	testI0(i, j)
 	{
 		return (((i + 3 < 10) && (j + 1 < 22) && (i >= 0) && (j >= 0)) && 
-			(this.tmpBoard[i][j + 1] <= 0) && (this.tmpBoard[i + 1][j + 1] <= 0) && 
-			(this.tmpBoard[i + 2][j + 1] <= 0) && (this.tmpBoard[i + 3][j + 1] <= 0))
+			(this.board[i][j + 1] <= 0) && (this.board[i + 1][j + 1] <= 0) && 
+			(this.board[i + 2][j + 1] <= 0) && (this.board[i + 3][j + 1] <= 0))
 	}
 
 	resetI0(i, j)
 	{
-		this.tmpBoard[i + 1][j] = 0;
-		this.tmpBoard[i + 1][j + 1] = 0;
-		this.tmpBoard[i + 1][j + 2] = 0;
-		this.tmpBoard[i + 1][j + 3] = 0;
+		this.board[i + 1][j] = 0;
+		this.board[i + 1][j + 1] = 0;
+		this.board[i + 1][j + 2] = 0;
+		this.board[i + 1][j + 3] = 0;
 	}
 
 	placeI0(i, j)
 	{
-		this.tmpBoard[i][j + 1] = -1;
-		this.tmpBoard[i + 1][j + 1] = -1;
-		this.tmpBoard[i + 2][j + 1] = -1;
-		this.tmpBoard[i + 3][j + 1] = -1;
+		this.board[i][j + 1] = -1;
+		this.board[i + 1][j + 1] = -1;
+		this.board[i + 2][j + 1] = -1;
+		this.board[i + 3][j + 1] = -1;
 	}
 
 	testI1(i, j)
 	{
 		return (((i + 2 < 10) && (j + 3 < 22) && (i >= 0) && (j >= 0)) && 
-			((this.tmpBoard[i + 2][j] <= 0) && (this.tmpBoard[i + 2][j + 1] <= 0) && 
-			(this.tmpBoard[i + 2][j + 2] <= 0) && (this.tmpBoard[i + 2][j + 3] <= 0)))
+			((this.board[i + 2][j] <= 0) && (this.board[i + 2][j + 1] <= 0) && 
+			(this.board[i + 2][j + 2] <= 0) && (this.board[i + 2][j + 3] <= 0)))
 	}
 
 	resetI1(i, j)
 	{
-		this.tmpBoard[i][j + 1] = 0;
-		this.tmpBoard[i + 1][j + 1] = 0;
-		this.tmpBoard[i + 2][j + 1] = 0;
-		this.tmpBoard[i + 3][j + 1] = 0;
+		this.board[i][j + 1] = 0;
+		this.board[i + 1][j + 1] = 0;
+		this.board[i + 2][j + 1] = 0;
+		this.board[i + 3][j + 1] = 0;
 	}
 
 	placeI1(i, j)
 	{
-		this.tmpBoard[i + 2][j] = -1;
-		this.tmpBoard[i + 2][j + 1] = -1;
-		this.tmpBoard[i + 2][j + 2] = -1;
-		this.tmpBoard[i + 2][j + 3] = -1;
+		this.board[i + 2][j] = -1;
+		this.board[i + 2][j + 1] = -1;
+		this.board[i + 2][j + 2] = -1;
+		this.board[i + 2][j + 3] = -1;
 	}
 
 	testI2(i, j)
 	{
 		return (((i + 3 < 10) && (j + 2 < 22) && (i >= 0) && (j >= 0)) && 
-			((this.tmpBoard[i][j + 2] <= 0) && (this.tmpBoard[i + 1][j + 2] <= 0) &&
-			(this.tmpBoard[i + 2][j + 2] <= 0) && (this.tmpBoard[i + 3][j + 2] <= 0)))
+			((this.board[i][j + 2] <= 0) && (this.board[i + 1][j + 2] <= 0) &&
+			(this.board[i + 2][j + 2] <= 0) && (this.board[i + 3][j + 2] <= 0)))
 	}
 	
 	resetI2(i, j)
 	{
-		this.tmpBoard[i + 2][j] = 0;
-		this.tmpBoard[i + 2][j + 1] = 0;
-		this.tmpBoard[i + 2][j + 2] = 0;
-		this.tmpBoard[i + 2][j + 3] = 0;
+		this.board[i + 2][j] = 0;
+		this.board[i + 2][j + 1] = 0;
+		this.board[i + 2][j + 2] = 0;
+		this.board[i + 2][j + 3] = 0;
 	}
 
 	placeI2(i, j)
 	{
-		this.tmpBoard[i][j + 2] = -1;
-		this.tmpBoard[i + 1][j + 2] = -1;
-		this.tmpBoard[i + 2][j + 2] = -1;
-		this.tmpBoard[i + 3][j + 2] = -1;
+		this.board[i][j + 2] = -1;
+		this.board[i + 1][j + 2] = -1;
+		this.board[i + 2][j + 2] = -1;
+		this.board[i + 3][j + 2] = -1;
 	}
 
 	testI3(i, j)
 	{
 		return (((i + 1 < 10) && (j + 3 < 22) && (i >= 0) && (j >= 0)) && 
-			((this.tmpBoard[i + 1][j] <= 0) && (this.tmpBoard[i + 1][j + 1] <= 0) &&
-			(this.tmpBoard[i + 1][j + 2] <= 0) && (this.tmpBoard[i + 1][j + 3] <= 0)))
+			((this.board[i + 1][j] <= 0) && (this.board[i + 1][j + 1] <= 0) &&
+			(this.board[i + 1][j + 2] <= 0) && (this.board[i + 1][j + 3] <= 0)))
 
 	}
 	resetI3(i, j)
 	{
-		this.tmpBoard[i][j + 2] = 0;
-		this.tmpBoard[i + 1][j + 2] = 0;
-		this.tmpBoard[i + 2][j + 2] = 0;
-		this.tmpBoard[i + 3][j + 2] = 0;
+		this.board[i][j + 2] = 0;
+		this.board[i + 1][j + 2] = 0;
+		this.board[i + 2][j + 2] = 0;
+		this.board[i + 3][j + 2] = 0;
 	}
 
 	placeI3(i, j)
 	{
-		this.tmpBoard[i + 1][j] = -1;
-		this.tmpBoard[i + 1][j + 1] = -1;
-		this.tmpBoard[i + 1][j + 2] = -1;
-		this.tmpBoard[i + 1][j + 3] = -1;
+		this.board[i + 1][j] = -1;
+		this.board[i + 1][j + 1] = -1;
+		this.board[i + 1][j + 2] = -1;
+		this.board[i + 1][j + 3] = -1;
 	}
 
 	rotateI(i, j)
