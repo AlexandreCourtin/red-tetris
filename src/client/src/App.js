@@ -133,8 +133,14 @@ function App() {
 					for (let j = 0 ; j < 10 ; j++) {
 						let boxColor;
 
-						if (board[j][i] === 0) boxColor = '#9bbc0f';
-						else boxColor = '#306230';
+						if (board[j][i] === 0) boxColor = '#000000';
+						else if (Math.abs(board[j][i]) === 1) boxColor = '#40E0D0';
+						else if (Math.abs(board[j][i]) === 2) boxColor = '#F0E68C';
+						else if (Math.abs(board[j][i]) === 3) boxColor = '#DA70D6';
+						else if (Math.abs(board[j][i]) === 4) boxColor = '#9ACD32';
+						else if (Math.abs(board[j][i]) === 5) boxColor = '#CC0000';
+						else if (Math.abs(board[j][i]) === 6) boxColor = '#1E90FF';
+						else if (Math.abs(board[j][i]) === 7) boxColor = '#FF8C00';
 						
 						tetrisRow.push(<td key={'uniqueBox' + i + '' + j}><ColoredBoxOther color={boxColor} /></td>);
 					}
@@ -157,13 +163,13 @@ function App() {
 						let boxColor;
 
 						if (board[j][i] === 0) boxColor = '#000000';
-						else if (Math.abs(board[j][i]) === 1) boxColor = '#ff0000';
-						else if (Math.abs(board[j][i]) === 2) boxColor = '#00ff00';
-						else if (Math.abs(board[j][i]) === 3) boxColor = '#0000ff';
-						else if (Math.abs(board[j][i]) === 4) boxColor = '#ffff00';
-						else if (Math.abs(board[j][i]) === 5) boxColor = '#00ffff';
-						else if (Math.abs(board[j][i]) === 6) boxColor = '#ff00ff';
-						else if (Math.abs(board[j][i]) === 7) boxColor = '#ffffff';
+						else if (Math.abs(board[j][i]) === 1) boxColor = '#40E0D0';
+						else if (Math.abs(board[j][i]) === 2) boxColor = '#F0E68C';
+						else if (Math.abs(board[j][i]) === 3) boxColor = '#DA70D6';
+						else if (Math.abs(board[j][i]) === 4) boxColor = '#9ACD32';
+						else if (Math.abs(board[j][i]) === 5) boxColor = '#CC0000';
+						else if (Math.abs(board[j][i]) === 6) boxColor = '#1E90FF';
+						else if (Math.abs(board[j][i]) === 7) boxColor = '#FF8C00';
 						
 						tetrisRow.push(<td key={'uniqueBox' + i + '' + j}><ColoredBox color={boxColor} /></td>);
 					}
