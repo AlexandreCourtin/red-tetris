@@ -97,7 +97,6 @@ io.on("connection", (socket) => {
 			let hasMoved = 0;
 			let isTimeouting = false;
 			if (player.start) {
-				player.currentPiece++;
 				player.start = 0;
 			}
 			if (!player.gameOver)
