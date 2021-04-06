@@ -527,7 +527,7 @@ class Player {
 				return (-1);
 			case 0:
 				i--;
-				if (((i + 1 < 10) && (j + 2 < 22) && (i >= 0) && (j >= 0)) && 
+				if (((i + 1 < 10) && (j + 1 < 22) && (i >= 0) && (j >= 0)) && 
 					(this.board[i][j + 1] <= 0) && (this.board[i + 1][j] <= 0) && 
 					(this.board[i + 1][j + 1] <= 0) && (this.board[i + 2][j + 1] <= 0))
 				{
