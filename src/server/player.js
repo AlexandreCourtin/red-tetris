@@ -10,8 +10,6 @@ class Player {
 	currentRotation = 0;
 	gameOver = 0;
 	start = 1;
-	posI = 0;
-	posJ = 0;
 	type = 0;
 
 
@@ -276,8 +274,6 @@ class Player {
 					this.board[i][j + 1] = n * -6;
 					this.board[i + 1][j + 1] = n * -6;
 					this.board[i + 2][j + 1] = n * -6;
-					this.posJ = j;
-					this.posI = i;
 					return (0);
 				}
 				else
@@ -292,8 +288,6 @@ class Player {
 					this.board[i + 2][j] = n * -6;
 					this.board[i + 1][j + 1] = n * -6;
 					this.board[i + 1][j + 2] = n * -6;
-					this.posI = i + 1;
-					this.posJ = j;
 					return (0);
 				}
 				else
@@ -308,8 +302,6 @@ class Player {
 					this.board[i + 1][j + 1] = n * -6;
 					this.board[i + 2][j + 1] = n * -6;
 					this.board[i + 2][j + 2] = n * -6;
-					this.posI = i;
-					this.posJ = j + 1;
 					return (0);
 				}
 				else
@@ -324,8 +316,6 @@ class Player {
 					this.board[i + 1][j] = n * -6;
 					this.board[i + 1][j + 1] = n * -6;
 					this.board[i + 1][j + 2] = n * -6;
-					this.posI = i;
-					this.posJ = j + 2;
 					return (0);
 				}
 				else
@@ -349,8 +339,6 @@ class Player {
 					this.board[i][j + 1] = -7 * n;
 					this.board[i + 1][j + 1] = -7 * n;
 					this.board[i + 2][j + 1] = -7 * n;
-					this.posJ = j + 1;
-					this.posI = i;
 					return (0);
 				}
 				else
@@ -365,8 +353,6 @@ class Player {
 					this.board[i + 1][j] = -7 * n;
 					this.board[i + 1][j + 2] = -7 * n;
 					this.board[i + 2][j + 2] = -7 * n;
-					this.posI = i + 1;
-					this.posJ = j;
 					return (0);
 				}
 				else
@@ -381,8 +367,6 @@ class Player {
 					this.board[i + 1][j + 1] = -7 * n;
 					this.board[i + 2][j + 1] = -7 * n;
 					this.board[i][j + 2] = -7 * n;
-					this.posI = i;
-					this.posJ = j + 1;
 					return (0);
 				}
 				else
@@ -396,8 +380,6 @@ class Player {
 					this.board[i + 1][j] = -7 * n;
 					this.board[i + 1][j + 1] = -7 * n;
 					this.board[i + 1][j + 2] = -7 * n;
-					this.posI = i;
-					this.posJ = j;
 					return (0);
 				}
 				else
@@ -421,24 +403,20 @@ class Player {
 					this.board[i + 1][j] = -5 * n;
 					this.board[i + 1][j + 1] = -5 * n;
 					this.board[i + 2][j + 1] = -5 * n;
-					this.posJ = j;
-					this.posI = i;
 					return (0);
 				}
 				else
 					return (1);
 			case 1:
+				i -= 2;
 				if (((i + 2 < 10) && (j + 2 < 22) && (i >= 0) && (j >= 0)) && 
 					((this.board[i + 2][j] <= 0) && (this.board[i + 2][j + 1] <= 0) && 
 					(this.board[i + 1][j + 1] <= 0) && (this.board[i + 1][j + 2] <= 0)))
 				{
-					i -= 2;
 					this.board[i + 1][j + 1] = -5 * n;
 					this.board[i + 1][j + 2] = -5 * n;
 					this.board[i + 2][j] = -5 * n;
 					this.board[i + 2][j + 1] = -5 * n;
-					this.posI = i + 1;
-					this.posJ = j + 1;
 					return (0);
 				}
 				else
@@ -453,8 +431,6 @@ class Player {
 					this.board[i + 1][j + 1] = -5 * n;
 					this.board[i + 1][j + 2] = -5 * n;
 					this.board[i + 2][j + 2] = -5 * n;
-					this.posI = i;
-					this.posJ = j + 1;
 					return (0);
 				}
 				else
@@ -469,8 +445,6 @@ class Player {
 					this.board[i][j + 2] = -5 * n;
 					this.board[i + 1][j] = -5 * n;
 					this.board[i + 1][j + 1] = -5 * n;
-					this.posI = i;
-					this.posJ = j + 1;
 					return (0);
 				}
 				else
@@ -495,8 +469,6 @@ class Player {
 					this.board[i + 1][j] = -4 * n;
 					this.board[i + 1][j + 1] = -4 * n;
 					this.board[i + 2][j] = -4 * n;
-					this.posI = i;
-					this.posJ = j + 1;
 					return (0);
 				}
 				else
@@ -511,8 +483,6 @@ class Player {
 					this.board[i + 1][j + 1] = -4 * n;
 					this.board[i + 2][j + 1] = -4 * n;
 					this.board[i + 2][j + 2] = -4 * n;
-					this.posI = i + 1;
-					this.posJ = j;
 					return (0);
 				}
 				else
@@ -528,8 +498,6 @@ class Player {
 					this.board[i + 1][j + 1] = -4 * n;
 					this.board[i + 1][j + 2] = -4 * n;
 					this.board[i + 2][j + 1] = -4 * n;
-					this.posI = i;
-					this.posJ = j + 2;
 					return (0);
 				}
 				else
@@ -543,8 +511,6 @@ class Player {
 					this.board[i][j + 1] = -4 * n;
 					this.board[i + 1][j + 1] = -4 * n;
 					this.board[i + 1][j + 2] = -4 * n;
-					this.posI = i;
-					this.posJ = j;
 					return (0);
 				}
 				else
@@ -563,14 +529,12 @@ class Player {
 				i--;
 				if (((i + 1 < 10) && (j + 2 < 22) && (i >= 0) && (j >= 0)) && 
 					(this.board[i][j + 1] <= 0) && (this.board[i + 1][j] <= 0) && 
-					(this.board[i + 1][j + 1] <= 0) && (this.board[i + 1][j + 2] <= 0))
+					(this.board[i + 1][j + 1] <= 0) && (this.board[i + 2][j + 1] <= 0))
 				{
 					this.board[i][j + 1] = -3 * n;
 					this.board[i + 1][j] = -3 * n;
 					this.board[i + 1][j + 1] = -3 * n;
 					this.board[i + 2][j + 1] = -3 * n;
-					this.posI = i;
-					this.posJ = j + 1;
 					return (0);
 				}
 				else
@@ -585,8 +549,6 @@ class Player {
 					this.board[i + 1][j + 1] = -3 * n;
 					this.board[i + 1][j + 2] = -3 * n;
 					this.board[i + 2][j + 1] = -3 * n;
-					this.posI = i + 1;
-					this.posJ = j;
 					return (0);
 				}
 				else
@@ -594,15 +556,13 @@ class Player {
 			case 2:
 				j--;
 				if (((i + 2 < 10) && (j + 2 < 22) && (i >= 0) && (j >= 0)) && 
-					((this.board[i + 1][j] <= 0) && (this.board[i + 1][j + 1] <= 0) &&
-					(this.board[i + 2][j + 1] <= 0) && (this.board[i + 1][j + 2] <= 0)))
+					((this.board[i][j + 1] <= 0) && (this.board[i + 1][j + 2] <= 0) &&
+					(this.board[i + 1][j + 1] <= 0) && (this.board[i + 2][j + 1] <= 0)))
 				{
 					this.board[i][j + 1] = -3 * n;
 					this.board[i + 1][j + 2] = -3 * n;
 					this.board[i + 1][j + 1] = -3 * n;
 					this.board[i + 2][j + 1] = -3 * n;
-					this.posI = i;
-					this.posJ = j + 1;
 					return (0);
 				}
 				else
@@ -617,8 +577,6 @@ class Player {
 					this.board[i + 1][j] = -3 * n;
 					this.board[i + 1][j + 1] = -3 * n;
 					this.board[i + 1][j + 2] = -3 * n;
-					this.posI = i;
-					this.posJ = j + 1;
 					return (0);
 				}
 				else
