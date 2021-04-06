@@ -330,7 +330,6 @@ class Player {
 				}
 				else
 					return (1);
-
 		}
 	}
 
@@ -554,6 +553,80 @@ class Player {
 		}
 	}
 
+	setT(i, j, n)
+	{
+		console.log("piece : ", this.type, "   i, j : ", i, j,"   n : ", n, "   rotation :", this.currentRotation);
+		switch (this.currentRotation) {
+			default:
+				return (-1);
+			case 0:
+				i--;
+				if (((i + 1 < 10) && (j + 2 < 22) && (i >= 0) && (j >= 0)) && 
+					(this.board[i][j + 1] <= 0) && (this.board[i + 1][j] <= 0) && 
+					(this.board[i + 1][j + 1] <= 0) && (this.board[i + 1][j + 2] <= 0))
+				{
+					this.board[i][j + 1] = -3 * n;
+					this.board[i + 1][j] = -3 * n;
+					this.board[i + 1][j + 1] = -3 * n;
+					this.board[i + 2][j + 1] = -3 * n;
+					this.posI = i;
+					this.posJ = j + 1;
+					return (0);
+				}
+				else
+					return (1);
+			case 1:
+				i--;
+				if (((i + 2 < 10) && (j + 2 < 22) && (i >= 0) && (j >= 0)) && 
+					((this.board[i + 1][j] <= 0) && (this.board[i + 2][j + 1] <= 0) && 
+					(this.board[i + 1][j + 1] <= 0) && (this.board[i + 1][j + 2] <= 0)))
+				{
+					this.board[i + 1][j] = -3 * n;
+					this.board[i + 1][j + 1] = -3 * n;
+					this.board[i + 1][j + 2] = -3 * n;
+					this.board[i + 2][j + 1] = -3 * n;
+					this.posI = i + 1;
+					this.posJ = j;
+					return (0);
+				}
+				else
+					return (1);
+			case 2:
+				j--;
+				if (((i + 2 < 10) && (j + 2 < 22) && (i >= 0) && (j >= 0)) && 
+					((this.board[i + 1][j] <= 0) && (this.board[i + 1][j + 1] <= 0) &&
+					(this.board[i + 2][j + 1] <= 0) && (this.board[i + 1][j + 2] <= 0)))
+				{
+					this.board[i][j + 1] = -3 * n;
+					this.board[i + 1][j + 2] = -3 * n;
+					this.board[i + 1][j + 1] = -3 * n;
+					this.board[i + 2][j + 1] = -3 * n;
+					this.posI = i;
+					this.posJ = j + 1;
+					return (0);
+				}
+				else
+					return (1);
+			case 3:
+				i--;
+				if (((i + 1 < 10) && (j + 2 < 22) && (i >= 0) && (j >= 0)) && 
+					((this.board[i + 1][j] <= 0) && (this.board[i][j + 1] <= 0) &&
+					(this.board[i + 1][j + 1] <= 0) && (this.board[i + 1][j + 2] <= 0)))
+				{
+					this.board[i][j + 1] = -3 * n;
+					this.board[i + 1][j] = -3 * n;
+					this.board[i + 1][j + 1] = -3 * n;
+					this.board[i + 1][j + 2] = -3 * n;
+					this.posI = i;
+					this.posJ = j + 1;
+					return (0);
+				}
+				else
+					return (1);
+
+		}
+	}
+
 	rotateJLZST(i, j)
 	{
 		console.log(i, j, this.board[i][j], this.type, this.currentRotation);
@@ -586,7 +659,7 @@ class Player {
 				if (this.type == -6 || this.type == -5)
 					i++;
 
-				this.currentRotation = 4;
+				this.currentRotation = 3;
 				return (this.setPiece(i, j, 1));
 			}
 		}
@@ -624,7 +697,7 @@ class Player {
 		{
 			if (this.type == -4)
 				j++;
-			if (this.type == -6 || this.type == -7)
+			if (this.type == -6 || this.type == -7 || this.type == -3)
 				i--, j++;
 			if (this.type == -5)
 				i-=2, j++;
@@ -644,7 +717,7 @@ class Player {
 					i+=2, j--;
 				if (this.type == -4)
 					j--;
-				if (this.type == -6 || this.type == -7)
+				if (this.type == -6 || this.type == -7 || this.type == -3)
 					i++, j--;
 				this.currentRotation--;
 				return (this.setPiece(i, j, 1));
@@ -654,10 +727,10 @@ class Player {
 		{
 			if (this.type == -4)
 				i--, j--;
-			if (this.type == -6 || this.type == -5)
+			if (this.type == -6 || this.type == -5 || this.type == -3)
 				i++, j--;
 			if (this.type == -7)
-				j--;
+				j--;				
 			
 			if (this.setPiece(i, j, 1) == 0)
 				return 0;
@@ -673,235 +746,13 @@ class Player {
 			{
 				if (this.type == -4)
 					i++, j++;
-				if (this.type == -6 || this.type == -5)
+				if (this.type == -6 || this.type == -5 || this.type == -3)
 					i--, j++;
 				if (this.type == -7)
 					j++;
 				this.currentRotation--;
 				return (this.setPiece(i, j, 1));
 			}
-		}
-	}
-
-
-	testT0(i, j)
-	{
-		return (((i + 1 < 10) && (j + 2 < 22) && (i >= 0) && (j >= 0)) && 
-			(this.board[i + 1][j] <= 0) && (this.board[i][j + 1] <= 0) && 
-			(this.board[i + 1][j + 1] <= 0) && (this.board[i + 1][j + 2] <= 0))
-	}
-
-	resetT0(i, j)
-	{
-		this.board[i + 1][j] = 0;
-		this.board[i + 1][j + 1] = 0;
-		this.board[i + 1][j + 2] = 0;
-		this.board[i][j + 1] = 0;
-	}
-
-	placeT0(i, j)
-	{
-		this.board[i + 1][j] = -3;
-		this.board[i][j + 1] = -3;
-		this.board[i + 1][j + 1] = -3;
-		this.board[i + 2][j + 1] = -3;
-	}
-
-	testT1(i, j)
-	{
-		return (((i + 2 < 10) && (j + 2 < 22) && (i >= 0) && (j >= 0)) && 
-			((this.board[i + 1][j] <= 0) && (this.board[i + 2][j + 1] <= 0) && 
-			(this.board[i + 1][j + 1] <= 0) && (this.board[i + 1][j + 2] <= 0)))
-	}
-
-	resetT1(i, j)
-	{
-		this.board[i + 1][j] = 0;
-		this.board[i + 1][j + 1] = 0;
-		this.board[i][j + 1] = 0;
-		this.board[i + 2][j + 2] = 0;
-	}
-
-	placeT1(i, j)
-	{
-		this.board[i + 1][j] = -3;
-		this.board[i + 2][j + 1] = -3;
-		this.board[i + 1][j + 1] = -3;
-		this.board[i + 1][j + 2] = -3;
-	}
-
-	testT2(i, j)
-	{
-		return (((i + 2 < 10) && (j + 2 < 22) && (i >= 0) && (j >= 0)) && 
-			((this.board[i + 1][j] <= 0) && (this.board[i + 1][j + 1] <= 0) &&
-			(this.board[i + 2][j + 1] <= 0) && (this.board[i + 1][j + 2] <= 0)))
-	}
-	
-	resetT2(i, j)
-	{
-		this.board[i + 1][j] = 0;
-		this.board[i + 2][j + 1] = 0;
-		this.board[i + 1][j + 1] = 0;
-		this.board[i + 1][j + 2] = 0;
-	}
-
-	placeT2(i, j)
-	{
-		this.board[i + 1][j + 2] = -3;
-		this.board[i][j + 1] = -3;
-		this.board[i + 1][j + 1] = -3;
-		this.board[i + 2][j + 1] = -3;
-	}
-
-	testT3(i, j)
-	{
-		return (((i + 1 < 10) && (j + 2 < 22) && (i >= 0) && (j >= 0)) && 
-			((this.board[i + 1][j] <= 0) && (this.board[i][j + 1] <= 0) &&
-			(this.board[i + 1][j + 1] <= 0) && (this.board[i + 1][j + 2] <= 0)))
-
-	}
-	resetT3(i, j)
-	{
-		this.board[i + 1][j] = 0;
-		this.board[i + 1][j + 1] = 0;
-		this.board[i + 2][j + 1] = 0;
-		this.board[i + 1][j + 2] = 0;
-	}
-
-	placeT3(i, j)
-	{
-		this.board[i + 1][j] = -3;
-		this.board[i][j + 1] = -3;
-		this.board[i + 1][j + 1] = -3;
-		this.board[i + 1][j + 2] = -3;
-	}
-
-	rotateT(i, j)
-	{
-		console.log(i, j, this.board[i][j]);
-		switch (this.currentRotation) {
-			default:
-				break;
-			case 0:
-				i--;
-				if (this.testT0(i, j))
-				{
-					this.resetT0(i, j);
-					this.placeT0(i, j);
-				}
-				else if (this.testT0(i - 1, j))
-				{
-					this.resetT0(i, j);
-					this.placeT0(i - 1, j);
-				}
-				else if (this.testT0(i - 1, j - 1))
-				{
-					this.resetT0(i, j);
-					this.placeT0(i - 1, j - 1);
-				}
-				else if (this.testT0(i, j + 2))
-				{
-					this.resetT0(i, j);
-					this.placeT0(i, j + 2);
-				}
-				else if (this.testT0(i - 1, j + 2))
-				{
-					this.resetT0(i, j);
-					this.placeT0(i - 1, j + 2);
-				}
-				else
-					this.currentRotation = 4;
-				break;
-			case 1:
-				i--;
-				if (this.testT1(i, j))
-				{
-					this.resetT1(i, j);
-					this.placeT1(i, j);
-				}
-				else if (this.testT1(i - 1, j))
-				{
-					this.resetT1(i, j);
-					this.placeT1(i - 1, j);
-				}
-				else if (this.testT1(i - 1, j + 1))
-				{
-					this.resetT1(i, j);
-					this.placeT1(i - 1, j + 1);
-				}
-				else if (this.testT1(i, j - 2))
-				{
-					this.resetT1(i, j);
-					this.placeT1(i, j - 2);
-				}
-				else if (this.testT1(i - 1, j - 2))
-				{
-					this.resetT1(i, j);
-					this.placeT1(i - 1, j - 2);
-				}
-				else
-					this.currentRotation--;
-				break;
-			case 2:
-				i--;
-				if (this.testT2(i, j))
-				{
-					this.resetT2(i, j);
-					this.placeT2(i, j);
-				}
-				else if (this.testT2(i + 1, j))
-				{
-					this.resetT2(i, j);
-					this.placeT2(i + 1, j);
-				}
-				else if (this.testT2(i + 1, j - 1))
-				{
-					this.resetT2(i, j);
-					this.placeT2(i + 1, j - 1);
-				}
-				else if (this.testT2(i, j + 2))
-				{
-					this.resetT2(i, j);
-					this.placeT2(i, j + 2);
-				}
-				else if (this.testT2(i + 1, j + 2))
-				{
-					this.resetT2(i, j);
-					this.placeT2(i + 1, j + 2);
-				}
-				else
-					this.currentRotation--;
-				break;
-			case 3:
-				j--;
-				if (this.testT3(i, j))
-				{
-					this.resetT3(i, j);
-					this.placeT3(i, j);
-				}
-				else if (this.testT3(i - 1, j))
-				{
-					this.resetT3(i, j);
-					this.placeT3(i - 1, j);
-				}
-				else if (this.testT3(i - 1, j - 1))
-				{
-					this.resetT3(i, j);
-					this.placeT3(i - 1, j - 1);
-				}
-				else if (this.testT3(i, j + 2))
-				{
-					this.resetT3(i, j);
-					this.placeT3(i, j + 2);
-				}
-				else if (this.testT3(i - 1, j + 2))
-				{
-					this.resetT3(i, j);
-					this.placeT3(i - 1, j + 2);
-				}
-				else
-					this.currentRotation--;
-				break;
 		}
 	}
 
@@ -1030,7 +881,7 @@ class Player {
 					this.placeI0(i + 1, j + 2);
 				}
 				else
-					this.currentRotation = 4;
+					this.currentRotation = 3;
 				break;
 			case 1:
 				j--;
