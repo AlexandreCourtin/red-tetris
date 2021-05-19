@@ -2,16 +2,23 @@ class Player {
 	socketId;
 	name = 'defaultPlayer';
 	room = 'defaultRoom';
+
 	isLeader = false;
 	isPlaying = false;
+	
 	pieces = [];
 	currentPiece = 0;
 	pieceType = 0;
+	
 	currentRotation = 0;
+	
 	gameOver = 0;
 	start = 1;
+	
 	type = 0;
 
+	fullLines = [];
+	
 	// board[x][y] = x Horizontal | y Vertical
 	board = [];
 
@@ -83,6 +90,41 @@ class Player {
 
 	getBoard() {
 		return this.board;
+	}
+
+	checkLines() {
+		let flag = 1;
+
+		for (let j = 0 ; j < 22 ; j++) {
+			flag = 1;
+			for (let i = 0 ; i < 10 ; i++) {
+				flag *= (this.board[i][j] > 0)
+			}
+			if (flag)
+				this.fullLines.push(j);
+		}
+		if (this.fullLines.length >= 1)
+			return (1);
+		return (0);
+	}
+
+	cleanLines() {
+		for (let x = 0 ; x < this.fullLines.length ; x++)
+		{
+			console.log("x : ", x);
+			console.log("this.fullLines[x] : ", this.fullLines[x]);
+			for (let j = this.fullLines[x] ; j >= 0 ; j--) {
+				console.log("j : ", j);
+
+				for (let i = 0 ; i < 10 ; i++) {
+					if (j > 0)
+						this.board[i][j] = this.board[i][j - 1];
+					else
+						this.board[i][j] = 0;
+				}
+			}
+		}
+		this.fullLines = [];
 	}
 
 	setPiece(i, j, n)
@@ -217,6 +259,8 @@ class Player {
 					this.board[i][j] = -this.board[i][j];
 			}
 		}
+		if (this.checkLines())
+			this.cleanLines();
 		this.currentPiece++;
 		this.currentRotation = 0;
 		this.newPiece(this.pieces[this.currentPiece]);
@@ -279,7 +323,7 @@ class Player {
 					return (1);
 			case 1:
 				i--;
-				if (((i + 2 < 10) && (j + 2 < 22) && (i >= 0) && (j >= 0)) && 
+				if (((i + 2 < 10) && (j + 2 < 22) && (i + 1 >= 0) && (j >= 0)) && 
 					((this.board[i + 1][j] <= 0) && (this.board[i + 2][j] <= 0) && 
 					(this.board[i + 1][j + 1] <= 0) && (this.board[i + 1][j + 2] <= 0)))
 				{
