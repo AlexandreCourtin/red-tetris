@@ -554,6 +554,9 @@ class Player {
 					return (1);
 			case 2:
 				j--;
+				console.log((i + 2 < 10) && (j + 3 < 22) && (i + 2 >= 0) && (j >= 0))
+				console.log((this.board[i + 2][j] <= 0) && (this.board[i + 2][j + 1] <= 0))
+				console.log((this.board[i + 2][j + 2] <= 0) && (this.board[i + 2][j + 3] <= 0))
 				if (((i + 2 < 10) && (j + 2 < 22) && (i >= 0) && (j + 1 >= 0)) && 
 					((this.board[i][j + 1] <= 0) && (this.board[i + 1][j + 2] <= 0) &&
 					(this.board[i + 1][j + 1] <= 0) && (this.board[i + 2][j + 1] <= 0)))
@@ -667,12 +670,21 @@ class Player {
 			if (this.setPiece(i, j, 1) == 0)
 				return 0;
 			else if (this.setPiece(i - 1, j, 1) == 0)
+			{
+				console.log("first");
 				return 0;
-			else if (this.setPiece(i - 1, j - 1, 1) == 0)
+			}
+			else if (this.setPiece(i - 1, j + 1, 1) == 0)
+			{
+				console.log("2nd");
 				return 0;
-			else if (this.setPiece(i, j + 2, 1) == 0)
+			}
+			else if (this.setPiece(i, j - 2, 1) == 0)
+			{
+				console.log("3rd");
 				return 0;
-			else if (this.setPiece(i - 1, j + 2, 1) == 0)
+			}
+			else if (this.setPiece(i - 1, j - 2, 1) == 0)
 				return 0;
 			else
 			{
@@ -699,11 +711,11 @@ class Player {
 				return 0;
 			else if (this.setPiece(i - 1, j, 1) == 0)
 				return 0;
-			else if (this.setPiece(i - 1, j + 1, 1) == 0)
+			else if (this.setPiece(i - 1, j - 1, 1) == 0)
 				return 0;
-			else if (this.setPiece(i, j - 2, 1) == 0)
+			else if (this.setPiece(i, j + 2, 1) == 0)
 				return 0;
-			else if (this.setPiece(i - 1, j - 2, 1) == 0)
+			else if (this.setPiece(i - 1, j + 2, 1) == 0)
 				return 0;
 			else
 			{
@@ -729,11 +741,11 @@ class Player {
 				return 0;
 			else if (this.setPiece(i + 1, j, 1) == 0)
 				return 0;
-			else if (this.setPiece(i + 1, j - 1, 1) == 0)
+			else if (this.setPiece(i + 1, j + 1, 1) == 0)
 				return 0;
-			else if (this.setPiece(i, j + 2, 1) == 0)
+			else if (this.setPiece(i, j - 2, 1) == 0)
 				return 0;
-			else if (this.setPiece(i + 1, j + 2, 1) == 0)
+			else if (this.setPiece(i + 1, j - 2, 1) == 0)
 				return 0;
 			else
 			{
@@ -760,11 +772,11 @@ class Player {
 				return 0;
 			else if (this.setPiece(i - 1, j, 1) == 0)
 				return 0;
-			else if (this.setPiece(i - 1, j - 1, 1) == 0)
+			else if (this.setPiece(i - 1, j + 1, 1) == 0)
 				return 0;
-			else if (this.setPiece(i, j + 2, 1) == 0)
+			else if (this.setPiece(i, j - 2, 1) == 0)
 				return 0;
-			else if (this.setPiece(i - 1, j + 2, 1) == 0)
+			else if (this.setPiece(i - 1, j - 2, 1) == 0)
 				return 0;
 			else
 			{
@@ -795,9 +807,9 @@ class Player {
 				return 0;
 			else if (this.setPiece(i - 2, j, 1) == 0)
 				return 0;
-			else if (this.setPiece(i + 1, j - 2, 1) == 0)
+			else if (this.setPiece(i + 1, j + 2, 1) == 0)
 				return 0;
-			else if (this.setPiece(i - 2, j + 1, 1) == 0)
+			else if (this.setPiece(i - 2, j - 1, 1) == 0)
 				return 0;
 			else
 			{
@@ -817,9 +829,9 @@ class Player {
 				return 0;
 			else if (this.setPiece(i + 1, j, 1) == 0)
 				return 0;
-			else if (this.setPiece(i - 2, j - 1, 1) == 0)
+			else if (this.setPiece(i - 2, j + 1, 1) == 0)
 				return 0;
-			else if (this.setPiece(i + 1, j + 2, 1) == 0)
+			else if (this.setPiece(i + 1, j - 2, 1) == 0)
 				return 0;
 			else
 			{
@@ -837,11 +849,11 @@ class Player {
 				return 0;
 			else if (this.setPiece(i - 1, j, 1) == 0)
 				return 0;
-			else if (this.setPiece(i + 2, j - 1, 1) == 0)
+			else if (this.setPiece(i + 2, j + 1, 1) == 0)
 				return 0;
-			else if (this.setPiece(i - 1, j + 2, 1) == 0)
+			else if (this.setPiece(i - 1, j - 2, 1) == 0)
 				return 0;
-			else if (this.setPiece(i + 2, j - 1, 1) == 0)
+			else if (this.setPiece(i + 2, j + 1, 1) == 0)
 				return 0;
 			else
 			{
@@ -861,9 +873,9 @@ class Player {
 				return 0;
 			else if (this.setPiece(i - 1, j, 1) == 0)
 				return 0;
-			else if (this.setPiece(i + 2, j + 1, 1) == 0)
+			else if (this.setPiece(i + 2, j - 1, 1) == 0)
 				return 0;
-			else if (this.setPiece(i - 1, j - 2, 1) == 0)
+			else if (this.setPiece(i - 1, j + 2, 1) == 0)
 				return 0;
 			else
 			{
