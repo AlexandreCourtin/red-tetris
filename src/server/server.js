@@ -103,7 +103,7 @@ io.on("connection", (socket) => {
 			{
 				console.log(player.name)
 				// TESTS MOVE SQUARE
-				for (let j = 0 ; j < 22 && !placed ; j++) {
+				for (let j = 0 ; j < 22 && !placed; j++) {
 					for (let i = 0 ; i < 10 && !placed; i++) {
 						t = player.board[i][j];
 						if (commands.up && t < 0) {
@@ -134,7 +134,7 @@ io.on("connection", (socket) => {
 					}
 				}
 				placed = 0;
-				serverState.getPlayer(socket.id).setBoard(player.board);
+				player.setBoard(player.board);
 			}
 		}
 	});
@@ -147,44 +147,34 @@ setInterval(function() {
 
 // SEND SERVER STATE TO CLIENTS
 setInterval(function() {
+	let placed = 0;
+	let t = 0;
 	if (serverState) {
 		for (let id in serverState.getPlayers()) {
 			const player = serverState.getPlayer(id);
 			if (player && player.getIsPlaying()) {
 				let hasMoved = 0;
 				if (player.start) {
-					player.currentPiece++;
 					player.start = 0;
 				}
 				if (!player.gameOver) {
-					for (let i = 0 ; i < 10 ; i++) {
-						for (let j = 0 ; j < 22 ; j++) {
-							if (hasMoved < 4) {
-								if (player.board[i][j] < 0 && j + 1 < 22 && player.board[i][j + 1] <= 0) {
-									player.tmpBoard[i][j + 1] = player.board[i][j];
-									hasMoved++;
-								} else if (player.board[i][j] < 0 && (j + 1 >= 22 || player.board[i][j + 1] > 0)) {
+					for (let j = 0 ; j < 22 && !placed; j++) {
+						for (let i = 0 ; i < 10 && !placed; i++) {
+							t = player.board[i][j];
+							if (t < 0) {
+								player.setPiece(i, j, 0, t);
+								if (player.setPiece(i, j + 1, 1, t) > 0)
+								{
+									player.setPiece(i, j, 1, t);
 									player.placePiece(player.board);
-									player.setTmpBoard();
-									hasMoved = 5;
 								}
+								placed = 1;
 							}
 						}
 					}
+					placed = 0;
+					player.setBoard(player.board);
 				}
-				if (hasMoved === 4) {
-					for (let i = 0 ; i < 10 ; i++) {
-						player.board[i] = [];
-						for (let j = 0 ; j < 22 ; j++) {
-							player.board[i][j] = player.tmpBoard[i][j];
-						}
-					}
-					player.setTmpBoard();
-					hasMoved = 5;
-				
-				}
-				player.setBoard(player.board);
-				player.setTmpBoard();
 			}
 		}
 	}
