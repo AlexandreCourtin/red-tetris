@@ -116,6 +116,17 @@ io.on("connection", (socket) => {
 							{
 								player.setPiece(i, j, 1, t);
 								player.placePiece(player.board);
+								nb_cleared_lines = player.checkLines()
+								console.log("place pieces", nb_cleared_lines);
+								if (nb_cleared_lines > 0)
+								{
+									player.cleanLines();
+									player.completedLines += nb_cleared_lines;
+									player.level = 1 + player.completedLines / 10;
+									serverState.updateLevel();
+									console.log(player.completedLines, player.level, serverState.level);
+								}
+								player.currentPiece++;
 							}
 							placed = 1;
 						}
@@ -146,9 +157,12 @@ setInterval(function() {
 }, 100);
 
 // SEND SERVER STATE TO CLIENTS
-setInterval(function() {
+
+function gravity(){
 	let placed = 0;
 	let t = 0;
+	let nb_cleared_lines = 0;
+	console.log(serverState.level);
 	if (serverState) {
 		for (let id in serverState.getPlayers()) {
 			const player = serverState.getPlayer(id);
@@ -167,6 +181,16 @@ setInterval(function() {
 								{
 									player.setPiece(i, j, 1, t);
 									player.placePiece(player.board);
+									nb_cleared_lines = player.checkLines()
+									if (nb_cleared_lines > 0)
+									{
+										player.cleanLines();
+										player.completedLines += nb_cleared_lines;
+										player.level = 1 + player.completedLines / 10;
+										serverState.updateLevel();
+										console.log(player.completedLines, player.level, serverState.level);
+									}
+									player.currentPiece++;
 								}
 								placed = 1;
 							}
@@ -178,7 +202,12 @@ setInterval(function() {
 			}
 		}
 	}
-}, 1000);
+}
+
+(function repeat() {
+    gravity();
+    setTimeout(repeat, 1000 * (0.8 - ((serverState.level - 1) * 0.007))**(serverState.level - 1) );
+})();
 
 server.listen(PORT, () => console.log(`Listening on port ${PORT}`));
 
