@@ -111,10 +111,10 @@ io.on("connection", (socket) => {
 							placed = 1;
 						}
 						else if (commands.down && t < 0) {
-							player.setPiece(i, j, 0, t);
-							if (player.setPiece(i, j + 1, 1, t) > 0)
+							player.setPiece(i, j, 0);
+							if (player.setPiece(i, j + 1, 1) > 0)
 							{
-								player.setPiece(i, j, 1, t);
+								player.setPiece(i, j, 1);
 								player.placePiece(player.board);
 								nb_cleared_lines = player.checkLines()
 								console.log("place pieces", nb_cleared_lines);
@@ -126,20 +126,34 @@ io.on("connection", (socket) => {
 									serverState.updateLevel();
 									console.log(player.completedLines, player.level, serverState.level);
 								}
-								player.currentPiece++;
+							}
+							placed = 1;
+						}
+						else if (commands.space && t < 0)
+						{
+							player.hardDrop(i, j);
+							nb_cleared_lines = player.checkLines()
+							console.log("place pieces", nb_cleared_lines);
+							if (nb_cleared_lines > 0)
+							{
+								player.cleanLines();
+								player.completedLines += nb_cleared_lines;
+								player.level = 1 + player.completedLines / 10;
+								serverState.updateLevel();
+								console.log(player.completedLines, player.level, serverState.level);
 							}
 							placed = 1;
 						}
 						else if (commands.left && t < 0) {
-							player.setPiece(i, j, 0, t);
-							if (player.setPiece(i - 1, j, 1, t) > 0)
-								player.setPiece(i, j, 1, t);
+							player.setPiece(i, j, 0);
+							if (player.setPiece(i - 1, j, 1) > 0)
+								player.setPiece(i, j, 1);
 							placed = 1;
 						}
 						else if (commands.right && t < 0) {
-							player.setPiece(i, j, 0, t);
-							if (player.setPiece(i + 1, j, 1, t) > 0)
-								player.setPiece(i, j, 1, t);
+							player.setPiece(i, j, 0);
+							if (player.setPiece(i + 1, j, 1) > 0)
+								player.setPiece(i, j, 1);
 							placed = 1;
 						}
 					}
@@ -176,10 +190,10 @@ function gravity(){
 						for (let i = 0 ; i < 10 && !placed; i++) {
 							t = player.board[i][j];
 							if (t < 0) {
-								player.setPiece(i, j, 0, t);
-								if (player.setPiece(i, j + 1, 1, t) > 0)
+								player.setPiece(i, j, 0);
+								if (player.setPiece(i, j + 1, 1) > 0)
 								{
-									player.setPiece(i, j, 1, t);
+									player.setPiece(i, j, 1);
 									player.placePiece(player.board);
 									nb_cleared_lines = player.checkLines()
 									if (nb_cleared_lines > 0)
@@ -190,7 +204,6 @@ function gravity(){
 										serverState.updateLevel();
 										console.log(player.completedLines, player.level, serverState.level);
 									}
-									player.currentPiece++;
 								}
 								placed = 1;
 							}

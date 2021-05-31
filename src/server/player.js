@@ -129,8 +129,7 @@ class Player {
 	{
 		switch (this.type) {
 			default:
-				console.log("qu'est ce que tu fous ici");
-				break;
+				return (1);
 			case -1:
 				return(this.setI(i, j, n));
 			case -2:
@@ -146,7 +145,7 @@ class Player {
 			case -7:
 				return(this.setL(i, j, n));
 			}
-		return 
+		return (1);
 	}
  	
  	newPiece(i) {
@@ -248,6 +247,18 @@ class Player {
 				break;
 		}
 		console.log("test");
+	}
+
+	hardDrop(i, j) {
+		let k = 0;
+		while (k == 0)
+		{
+			this.setPiece(i, j, 0);
+			k = this.setPiece(i, ++j, 1);
+		}
+		this.setPiece(i, --j, 1);
+		this.placePiece();
+		console.log("zzz");
 	}
 
 	placePiece() {

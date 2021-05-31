@@ -22,7 +22,7 @@ class Game {
 	{
 		for (let id in this.getPlayers())
 		{
-			if (this.level < this.getPlayer(id).level)
+			if (this.getPlayer(id) && this.level < this.getPlayer(id).level)
 				this.level = this.getPlayer(id).level | 0;
 		}
 	}

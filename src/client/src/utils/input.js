@@ -31,8 +31,7 @@ function emitCommands() {
 			commands.up = false;
 			commands.right = false;
 			commands.down = false;
-			commands.space = false;
-		}, 100);
+		}, 25);
 	}
 }
 document.addEventListener('keydown', function(event) {
@@ -50,9 +49,17 @@ document.addEventListener('keydown', function(event) {
 		} else if (commands.up === false && (event.key === 'w' || event.key === 'ArrowUp')) {
 			commands.up = true;
 			emitCommands();
-		} else if (commands.space === false && event.key === 'Space') {
+		} else if (commands.space === false && event.key === ' ') {
 			commands.space = true;
 			emitCommands();
 		}
 	}
 });
+
+document.addEventListener('keyup', function(event) {
+	if (commands.space == true && event.key == ' ')
+	{
+		commands.space = false;
+		emitCommands();
+	}
+})
