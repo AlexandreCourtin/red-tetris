@@ -120,9 +120,12 @@ io.on("connection", (socket) => {
 								console.log("place pieces", nb_cleared_lines);
 								if (nb_cleared_lines > 0)
 								{
+									console.log("lines",nb_cleared_lines);
 									player.cleanLines();
 									player.completedLines += nb_cleared_lines;
 									player.level = 1 + player.completedLines / 10;
+									if (nb_cleared_lines >= 1)
+										serverState.sendGarbage(player, nb_cleared_lines - 1);
 									serverState.updateLevel();
 									console.log(player.completedLines, player.level, serverState.level);
 								}
@@ -136,9 +139,12 @@ io.on("connection", (socket) => {
 							console.log("place pieces", nb_cleared_lines);
 							if (nb_cleared_lines > 0)
 							{
+								console.log("lines",nb_cleared_lines);
 								player.cleanLines();
 								player.completedLines += nb_cleared_lines;
 								player.level = 1 + player.completedLines / 10;
+								if (nb_cleared_lines >= 1)
+									serverState.sendGarbage(player, nb_cleared_lines - 1);
 								serverState.updateLevel();
 								console.log(player.completedLines, player.level, serverState.level);
 							}
@@ -176,7 +182,6 @@ function gravity(){
 	let placed = 0;
 	let t = 0;
 	let nb_cleared_lines = 0;
-	console.log(serverState.level);
 	if (serverState) {
 		for (let id in serverState.getPlayers()) {
 			const player = serverState.getPlayer(id);
@@ -198,9 +203,12 @@ function gravity(){
 									nb_cleared_lines = player.checkLines()
 									if (nb_cleared_lines > 0)
 									{
+										console.log("lines",nb_cleared_lines);
 										player.cleanLines();
 										player.completedLines += nb_cleared_lines;
 										player.level = 1 + player.completedLines / 10;
+										if (nb_cleared_lines >= 1)
+											serverState.sendGarbage(player, nb_cleared_lines - 1);
 										serverState.updateLevel();
 										console.log(player.completedLines, player.level, serverState.level);
 									}

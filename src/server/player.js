@@ -20,6 +20,7 @@ class Player {
 	type = 0;
 
 	fullLines = [];
+	garbageLines = 0;
 	
 	// board[x][y] = x Horizontal | y Vertical
 	board = [];
@@ -94,6 +95,15 @@ class Player {
 		return this.board;
 	}
 
+	getGarbage(){
+		return this.garbageLines;
+	}
+
+	setGarbage(n) {
+		this.garbageLines = n;
+		console.log("add garbage ", n);
+	}
+
 	checkLines() {
 		let flag = 1;
 
@@ -106,7 +116,7 @@ class Player {
 				this.fullLines.push(j);
 		}
 		if (this.fullLines.length >= 1)
-			return (1);
+			return (this.fullLines.length);
 		return (0);
 	}
 
@@ -123,6 +133,30 @@ class Player {
 			}
 		}
 		this.fullLines = [];
+	}
+
+	addGarbage(){
+		let n = this.garbageLines;
+
+		console.log("garbage", n);
+		if (n > 4)
+			n = 4;
+		for (let j = 0 ; j < 22 - n ; j++) {
+			for (let i = 0 ; i < 10 ; i++) {
+				this.board[i][j] = this.board[i][j + n]
+			}
+		}
+		let k = Math.floor(Math.random() * 10);
+		for (let j = 22 ; j >= 22 - n ; j--) {
+			for (let i = 0 ; i < 10 ; i++) {
+				this.board[i][j] = 1;
+				if (i == k)
+					this.board[i][j] = 0
+			}
+		}
+		this.garbageLines -= n;
+		if (this.garbageLines <= 0)
+			this.garbageLines = 0;
 	}
 
 	setPiece(i, j, n)
@@ -270,6 +304,7 @@ class Player {
 		}
 		this.currentPiece++;
 		this.currentRotation = 0;
+		this.addGarbage()
 		this.newPiece(this.pieces[this.currentPiece]);
 	}
 
@@ -295,7 +330,7 @@ class Player {
 
 	setO(i, j, n)
 	{
-		console.log("piece : ", this.type, "   i, j : ", i, j,"   n : ", n, "   rotation :", this.currentRotation);
+		//console.log("piece : ", this.type, "   i, j : ", i, j,"   n : ", n, "   rotation :", this.currentRotation);
 		if (((i + 1 < 10) && (j + 1 < 22) && (i >= 0) && (j >= 0)) &&
 			(this.board[i][j] <= 0) && (this.board[i + 1][j] <= 0) &&
 			(this.board[i][j + 1] <= 0) && (this.board[i + 1][j + 1] <= 0))
@@ -311,7 +346,7 @@ class Player {
 
 	setJ(i, j, n)
 	{
-		console.log("piece : ", this.type, "   i, j : ", i, j,"   n : ", n, "   rotation :", this.currentRotation);
+		//console.log("piece : ", this.type, "   i, j : ", i, j,"   n : ", n, "   rotation :", this.currentRotation);
 		switch (this.currentRotation) {
 			default:
 				return (-1);
@@ -375,7 +410,7 @@ class Player {
 
 	setL(i, j, n)
 	{
-		console.log("piece : ", this.type, "   i, j : ", i, j,"   n : ", n, "   rotation :", this.currentRotation);
+		//console.log("piece : ", this.type, "   i, j : ", i, j,"   n : ", n, "   rotation :", this.currentRotation);
 		switch (this.currentRotation) {
 			default:
 				return (-1);
@@ -440,7 +475,7 @@ class Player {
 
 	setZ(i, j, n)
 	{
-		console.log("piece : ", this.type, "   i, j : ", i, j,"   n : ", n, "   rotation :", this.currentRotation);
+		//console.log("piece : ", this.type, "   i, j : ", i, j,"   n : ", n, "   rotation :", this.currentRotation);
 		switch (this.currentRotation) {
 			default:
 				return (-1);
@@ -505,7 +540,7 @@ class Player {
 
 	setS(i, j, n)
 	{
-		console.log("piece : ", this.type, "   i, j : ", i, j,"   n : ", n, "   rotation :", this.currentRotation);
+		//console.log("piece : ", this.type, "   i, j : ", i, j,"   n : ", n, "   rotation :", this.currentRotation);
 		switch (this.currentRotation) {
 			default:
 				return (-1);
@@ -571,7 +606,7 @@ class Player {
 
 	setT(i, j, n)
 	{
-		console.log("piece : ", this.type, "   i, j : ", i, j,"   n : ", n, "   rotation :", this.currentRotation);
+		//console.log("piece : ", this.type, "   i, j : ", i, j,"   n : ", n, "   rotation :", this.currentRotation);
 		switch (this.currentRotation) {
 			default:
 				return (-1);
@@ -637,7 +672,7 @@ class Player {
 
 	setI(i, j, n)
 	{
-		console.log("piece : ", this.type, "   i, j : ", i, j,"   n : ", n, "   rotation :", this.currentRotation);
+		//console.log("piece : ", this.type, "   i, j : ", i, j,"   n : ", n, "   rotation :", this.currentRotation);
 		switch (this.currentRotation) {
 			default:
 				return (-1);
@@ -704,7 +739,7 @@ class Player {
 
 	rotateJLZST(i, j)
 	{
-		console.log(i, j, this.board[i][j], this.type, this.currentRotation);
+		//console.log(i, j, this.board[i][j], this.type, this.currentRotation);
 		this.setPiece(i, j, 0);
 		this.currentRotation = (this.currentRotation + 1) % 4;
 		if (this.currentRotation == 0)
@@ -842,7 +877,7 @@ class Player {
 
 	rotateI(i, j)
 	{
-		console.log(i, j, this.board[i][j], this.type, this.currentRotation);
+		//console.log(i, j, this.board[i][j], this.type, this.currentRotation);
 		this.setPiece(i, j, 0);
 		this.currentRotation = (this.currentRotation + 1) % 4;
 		if (this.currentRotation == 0)

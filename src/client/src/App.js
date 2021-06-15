@@ -3,6 +3,8 @@ import socketIOClient from "socket.io-client";
 import LoginPage from "./components/loginPage";
 import { setNextPieceType, getNextPieceNumber } from './utils/input';
 import "./style.css";
+import {random} from 'mathjs';
+
 
 const SERVERPATH = "http://127.0.0.1:4001";
 
@@ -128,7 +130,7 @@ function App() {
 			const TetrisGridOther = ({ board }) => {
 
 				let tetrisColumn = [];
-				for (let i = 0 ; i < 20 ; i++) {
+				for (let i = 2 ; i < 22 ; i++) {
 					let tetrisRow = [];
 					for (let j = 0 ; j < 10 ; j++) {
 						let boxColor;

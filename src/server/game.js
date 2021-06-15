@@ -2,6 +2,7 @@ class Game {
 	players = {};
 	level = 1;
 
+
 	addPlayer(playerId, newPlayer) {
 		this.players[playerId] = newPlayer;
 	}
@@ -24,6 +25,16 @@ class Game {
 		{
 			if (this.getPlayer(id) && this.level < this.getPlayer(id).level)
 				this.level = this.getPlayer(id).level | 0;
+		}
+	}
+
+	sendGarbage(playerId, n)
+	{
+		for (let id in this.getPlayers())
+		{
+			if (this.getPlayer(id) && this.getPlayer(id) != playerId)
+				this.getPlayer(id).setGarbage(this.getPlayer(id).garbageLines + n);
+		//	console.log("garbage", this.getPlayer(id), this.getPlayer(id).garbageLines);
 		}
 	}
 }
