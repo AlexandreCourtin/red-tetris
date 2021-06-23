@@ -143,6 +143,8 @@ function App() {
 						else if (Math.abs(board[j][i]) === 5) boxColor = '#CC0000';
 						else if (Math.abs(board[j][i]) === 6) boxColor = '#1E90FF';
 						else if (Math.abs(board[j][i]) === 7) boxColor = '#FF8C00';
+						else if (Math.abs(board[j][i]) === 8) boxColor = '#888888';
+						
 						
 						tetrisRow.push(<td key={'uniqueBox' + i + '' + j}><ColoredBoxOther color={boxColor} /></td>);
 					}
@@ -172,6 +174,8 @@ function App() {
 						else if (Math.abs(board[j][i]) === 5) boxColor = '#CC0000';
 						else if (Math.abs(board[j][i]) === 6) boxColor = '#1E90FF';
 						else if (Math.abs(board[j][i]) === 7) boxColor = '#FF8C00';
+						else if (Math.abs(board[j][i]) === 8) boxColor = '#888888';
+
 						
 						tetrisRow.push(<td key={'uniqueBox' + i + '' + j}><ColoredBox color={boxColor} /></td>);
 					}

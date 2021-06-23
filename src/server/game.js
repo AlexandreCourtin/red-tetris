@@ -34,7 +34,6 @@ class Game {
 		{
 			if (this.getPlayer(id) && this.getPlayer(id) != playerId)
 				this.getPlayer(id).setGarbage(this.getPlayer(id).garbageLines + n);
-		//	console.log("garbage", this.getPlayer(id), this.getPlayer(id).garbageLines);
 		}
 	}
 }

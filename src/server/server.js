@@ -76,6 +76,7 @@ io.on("connection", (socket) => {
 
 	// RECEIVED WHEN LEADER LAUNCH GAME
 	socket.on('launch game', function(roomName) {
+		serverState.level = 1;
 		console.log('[' + roomName + '] Game launched !');
 		for (let id in serverState.getPlayers()) {
 			if (serverState.getPlayer(id) && serverState.getPlayer(id).getRoom() === roomName) {
@@ -87,8 +88,6 @@ io.on("connection", (socket) => {
 	// RECEIVED WHEN CLIENT SENDS COMMANDS
 	socket.on('commands', function(commands) {
 		let board;
-		let placed = 0;
-		let t = 0;
 		let player = serverState.getPlayer(socket.id);
 		if (serverState.getPlayer(socket.id) && serverState.getPlayer(socket.id).getIsPlaying()) {
 			board = serverState.getPlayer(socket.id).getBoard();
@@ -103,72 +102,68 @@ io.on("connection", (socket) => {
 			{
 				console.log(player.name)
 				// TESTS MOVE SQUARE
-				for (let j = 0 ; j < 22 && !placed; j++) {
-					for (let i = 0 ; i < 10 && !placed; i++) {
-						t = player.board[i][j];
-						if (commands.up && t < 0) {
-							player.rotatePiece();
-							placed = 1;
-						}
-						else if (commands.down && t < 0) {
-							player.setPiece(i, j, 0);
-							if (player.setPiece(i, j + 1, 1) > 0)
-							{
-								player.setPiece(i, j, 1);
-								player.placePiece(player.board);
-								nb_cleared_lines = player.checkLines()
-								console.log("place pieces", nb_cleared_lines);
-								if (nb_cleared_lines > 0)
-								{
-									console.log("lines",nb_cleared_lines);
-									player.cleanLines();
-									player.completedLines += nb_cleared_lines;
-									player.level = 1 + player.completedLines / 10;
-									if (nb_cleared_lines >= 1)
-										serverState.sendGarbage(player, nb_cleared_lines - 1);
-									serverState.updateLevel();
-									console.log(player.completedLines, player.level, serverState.level);
-								}
-							}
-							placed = 1;
-						}
-						else if (commands.space && t < 0)
+				if (commands.up) {
+					player.removeGhost()
+					player.rotatePiece();
+					player.ghostPiece(player.posx, player.posy);
+				}
+				else if (commands.down) {
+					player.setPiece(player.posx, player.posy, 0);
+					if (player.setPiece(player.posx, player.posy + 1, 1) > 0)
+					{
+						player.setPiece(player.posx, player.posy, 1);
+						player.placePiece();
+						if (player.nbClearedLines > 0)
 						{
-							player.hardDrop(i, j);
-							nb_cleared_lines = player.checkLines()
-							console.log("place pieces", nb_cleared_lines);
-							if (nb_cleared_lines > 0)
-							{
-								console.log("lines",nb_cleared_lines);
-								player.cleanLines();
-								player.completedLines += nb_cleared_lines;
-								player.level = 1 + player.completedLines / 10;
-								if (nb_cleared_lines >= 1)
-									serverState.sendGarbage(player, nb_cleared_lines - 1);
-								serverState.updateLevel();
-								console.log(player.completedLines, player.level, serverState.level);
-							}
-							placed = 1;
-						}
-						else if (commands.left && t < 0) {
-							player.setPiece(i, j, 0);
-							if (player.setPiece(i - 1, j, 1) > 0)
-								player.setPiece(i, j, 1);
-							placed = 1;
-						}
-						else if (commands.right && t < 0) {
-							player.setPiece(i, j, 0);
-							if (player.setPiece(i + 1, j, 1) > 0)
-								player.setPiece(i, j, 1);
-							placed = 1;
+							console.log("lines", player.nbClearedLines);
+							if (player.nbClearedLines >= 1)
+								serverState.sendGarbage(player, player.nbClearedLines - 1);
+							serverState.updateLevel();
+							console.log(player.completedLines, player.level, serverState.level);
 						}
 					}
 				}
-				placed = 0;
-				player.setBoard(player.board);
+				else if (commands.space)
+				{
+					player.hardDrop(player.posx, player.posy);
+					if (player.nbClearedLines > 0)
+						{
+							console.log("lines", player.nbClearedLines);
+							if (player.nbClearedLines >= 1)
+								serverState.sendGarbage(player, player.nbClearedLines - 1);
+							serverState.updateLevel();
+							console.log(player.completedLines, player.level, serverState.level);
+						}
+					placed = 1;
+				}
+				else if (commands.left) {
+					player.setPiece(player.posx, player.posy, 0);
+					if (player.setPiece(player.posx - 1, player.posy, 1) > 0)
+						player.setPiece(player.posx, player.posy, 1);
+					else
+					{
+						player.removeGhost()
+						player.ghostPiece(player.posx, player.posy);
+					}
+					placed = 1;
+				}
+				else if (commands.right) {
+					player.setPiece(player.posx, player.posy, 0);
+					if (player.setPiece(player.posx + 1, player.posy, 1) > 0)
+						player.setPiece(player.posx, player.posy, 1);
+					else
+					{
+						player.removeGhost()
+						player.ghostPiece(player.posx, player.posy);
+					}
+					placed = 1;
+				}
 			}
 		}
-	});
+		player.setBoard(player.board);
+	}
+	
+	);
 });
 
 // SEND SERVER STATE TO CLIENTS
@@ -179,9 +174,6 @@ setInterval(function() {
 // SEND SERVER STATE TO CLIENTS
 
 function gravity(){
-	let placed = 0;
-	let t = 0;
-	let nb_cleared_lines = 0;
 	if (serverState) {
 		for (let id in serverState.getPlayers()) {
 			const player = serverState.getPlayer(id);
@@ -191,33 +183,21 @@ function gravity(){
 					player.start = 0;
 				}
 				if (!player.gameOver) {
-					for (let j = 0 ; j < 22 && !placed; j++) {
-						for (let i = 0 ; i < 10 && !placed; i++) {
-							t = player.board[i][j];
-							if (t < 0) {
-								player.setPiece(i, j, 0);
-								if (player.setPiece(i, j + 1, 1) > 0)
-								{
-									player.setPiece(i, j, 1);
-									player.placePiece(player.board);
-									nb_cleared_lines = player.checkLines()
-									if (nb_cleared_lines > 0)
-									{
-										console.log("lines",nb_cleared_lines);
-										player.cleanLines();
-										player.completedLines += nb_cleared_lines;
-										player.level = 1 + player.completedLines / 10;
-										if (nb_cleared_lines >= 1)
-											serverState.sendGarbage(player, nb_cleared_lines - 1);
-										serverState.updateLevel();
-										console.log(player.completedLines, player.level, serverState.level);
-									}
-								}
-								placed = 1;
-							}
+					player.setPiece(player.posx, player.posy, 0);
+					console.log("coucou", 1000 * (0.8 - ((serverState.level - 1) * 0.007))**(serverState.level - 1));
+					if (player.setPiece(player.posx, player.posy + 1, 1) > 0)
+					{
+						player.setPiece(player.posx, player.posy, 1);
+						player.placePiece();
+						if (player.nbClearedLines > 0)
+						{
+							console.log("lines", player.nbClearedLines);
+							if (player.nbClearedLines >= 1)
+								serverState.sendGarbage(player, player.nbClearedLines - 1);
+							serverState.updateLevel();
+							console.log(player.completedLines, player.level, serverState.level);
 						}
 					}
-					placed = 0;
 					player.setBoard(player.board);
 				}
 			}
@@ -227,7 +207,7 @@ function gravity(){
 
 (function repeat() {
     gravity();
-    setTimeout(repeat, 1000 * (0.8 - ((serverState.level - 1) * 0.007))**(serverState.level - 1) );
+    setTimeout(repeat, 1000 * (0.8 - ((serverState.level - 1) * 0.007))**(serverState.level - 1));
 })();
 
 server.listen(PORT, () => console.log(`Listening on port ${PORT}`));
